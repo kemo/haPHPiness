@@ -1,8 +1,8 @@
 # haPHPiness — Complete PHP Feature Reference
 
-> 59 things in PHP that make modern PHP genuinely great to write.
+> 67 things in PHP that make modern PHP genuinely great to write.
 > Source: <https://haphpiness.com> | Structured data: <https://haphpiness.com/entries.json>
-> Covers PHP 5.4 through 8.5. Organized in 19 thematic categories.
+> Covers PHP 5.4 through 8.5. Organized in 20 thematic categories.
 
 This document is optimized for direct inclusion in AI context windows. For structured/filterable data, use [entries.json](https://haphpiness.com/entries.json).
 
@@ -71,6 +71,14 @@ This document is optimized for direct inclusion in AI context windows. For struc
 | 57 | intl MessageFormatter — ICU-Backed Proper i18n | — | World Ready |
 | 58 | PHPStan & Psalm — Static Analysis as a First-Class Citizen | — | Trust but Verify |
 | 59 | Numeric Literal Separators — 1_000_000 | 7.4 | Elegance in Brevity |
+| 60 | 77% of the Web Runs on PHP | — | The Numbers Don't Lie |
+| 61 | 173 Billion Packagist Installs | — | The Numbers Don't Lie |
+| 62 | 10 Clockwork Annual Releases | — | The Numbers Don't Lie |
+| 63 | The Performance Glow-Up | — | The Numbers Don't Lie |
+| 64 | 505 Million Laravel Installs | — | The Numbers Don't Lie |
+| 65 | WordPress Powers 43% of All Websites | — | The Numbers Don't Lie |
+| 66 | From Zero Types to Full Type Algebra in 10 Years | — | The Numbers Don't Lie |
+| 67 | 5.2 Million Developers and 40K Stars on php-src | — | The Numbers Don't Lie |
 
 ---
 
@@ -2261,5 +2269,69 @@ $threshold  = 1_000_000.00; // one million
 ```
 
 > **Readability:** Misreading a number's magnitude is a real bug category. Off-by-a-power-of-ten errors in timeouts, file size limits, and financial calculations have real consequences. Numeric separators make the magnitude visible at a glance, in the same way that formatting a number for display would.
+
+---
+### #60 — 77% of the Web Runs on PHP (PHP classic)
+**Category:** The Numbers Don't Lie | **Significance:** Dominance
+
+Not 7%. Not 17%. Seventy-seven percent. According to W3Techs, PHP powers roughly 77–79% of all websites with a known server-side programming language. The next closest competitor, ASP.NET, sits at around 6–7%. Nothing else is remotely close. And this isn't a number in decline. PHP's market share has oscillated between 78–80% for the past five years. It peaked at ~83% in 2017, and the slight dip reflects the rise of static sites and SPA architectures — not PHP shrinking. Every time someone tweets "PHP is dead", they're talking about a language that powers more websites than all other server-side languages combined. The data doesn't care about hot takes.
+
+> **Dominance:** Market share this dominant doesn't happen by accident. It means billions of users interact with PHP-powered sites every day. It means the language works at scale, for every kind of application, in every kind of hosting environment. "Is PHP relevant?" is not even a question. It's the answer.
+
+---
+### #61 — 173 Billion Packagist Installs (PHP classic)
+**Category:** The Numbers Don't Lie | **Significance:** Ecosystem Health
+
+Since April 2012, Composer packages have been installed 172,958,793,375 times. That's 173 billion. Not downloads of Composer itself — installs of PHP packages, in real projects, by real developers. Packagist is the 3rd largest package registry in any language, behind only npm and PyPI: This isn't bloat — these are production installs driven by Composer's dependency resolver. Every composer install in a CI pipeline, every deployment, every local dev setup counts. 173 billion means PHP's package ecosystem is not just alive — it's one of the most active in software engineering.
+
+> **Ecosystem Health:** An ecosystem's health isn't measured by how many packages exist — it's measured by how many are actually used. 173 billion installs across 446K packages means the average PHP package gets real adoption. Composer's strict semantic versioning and deterministic lockfiles make this ecosystem uniquely reliable.
+
+---
+### #62 — 10 Clockwork Annual Releases (PHP classic)
+**Category:** The Numbers Don't Lie | **Significance:** Reliability
+
+Since PHP 7.0 in December 2015, PHP has shipped a new minor or major version every single November/December. Ten years. Ten releases. Zero missed. Each version gets a 4-year support window: 2 years of active bug fixes, then 2 more years of security patches. This means you always know exactly when to plan your upgrades. Compare this with other languages: Python mostly hits its October target but has slipped. Node.js uses a different model with twice-yearly LTS releases. Ruby ships annually on Christmas Day. But PHP's decade-long streak of November releases — never early, never late — is a feat of engineering discipline.
+
+> **Reliability:** A predictable release cadence is a signal to the entire ecosystem: framework maintainers, hosting providers, CI pipelines, and enterprise teams can all plan around it. When PHP says "November", they mean November. That kind of reliability compounds over a decade into deep ecosystem trust.
+
+---
+### #63 — The Performance Glow-Up (PHP classic)
+**Category:** The Numbers Don't Lie | **Significance:** Free Speed
+
+PHP keeps getting faster without you changing a single line of code. Kinsta benchmarked 13 CMSs and frameworks across PHP versions in 2026 — here's what upgrading buys you: WooCommerce jumped from 44 to 71 requests per second — a 61% improvement — just by upgrading PHP. CodeIgniter hit 1,874 req/s on PHP 8.5, a 54% leap from 8.4. Grav nearly doubled. This is free performance. No code changes. Just apt upgrade php. The JIT compiler introduced in PHP 8.0, combined with continuous Zend Engine optimizations, means PHP gets measurably faster with every version. Your existing codebase benefits automatically.
+
+> **Free Speed:** In most languages, performance improvements require code changes — new APIs, refactored hot paths, async rewrites. In PHP, you upgrade the runtime and your existing code runs faster. For WooCommerce shops processing real revenue, a 61% throughput increase from a version bump is the difference between scaling comfortably and throwing hardware at the problem.
+
+---
+### #64 — 505 Million Laravel Installs (PHP classic)
+**Category:** The Numbers Don't Lie | **Significance:** Renaissance
+
+The laravel/framework package has been installed 505,141,044 times via Composer. The Laravel starter project has 83,992 GitHub stars — making it one of the most-starred repositories in any programming language's ecosystem. To put 84K stars in perspective: that's in the same league as React, Vue.js, and Angular. This is a PHP framework competing with the most popular JavaScript projects on the planet. Nearly 20,000 Packagist packages depend on Laravel — an entire sub-ecosystem of tools, integrations, and packages built specifically for it. Forge, Vapor, Nova, Livewire, Inertia, Cashier, Sanctum, Horizon, Telescope, Pulse — the official first-party ecosystem alone covers deployment, billing, real-time, monitoring, and more. Laravel proved that PHP could have a modern, elegant developer experience that rivals anything in any language. It didn't just keep PHP relevant — it made PHP exciting again.
+
+> **Renaissance:** Laravel is the single biggest reason PHP's reputation changed. It showed that you could write beautiful, expressive, well-tested PHP with a framework that respected developers' time. Half a billion installs later, the evidence is overwhelming: the modern PHP renaissance is real, and Laravel is its flagship.
+
+---
+### #65 — WordPress Powers 43% of All Websites (PHP classic)
+**Category:** The Numbers Don't Lie | **Significance:** Scale of Impact
+
+Not 43% of CMS sites. 43% of all websites on the entire internet. WordPress alone — a single PHP application — runs nearly half the web. And it's still growing. In January 2013, WordPress powered 17.4% of all websites. By 2025, that doubled to 43.4%. Some projections show it crossing 50% by 2027. A PHP application might soon power the majority of websites in existence. The top three CMS platforms by market share — WordPress, Joomla, and Drupal — are all written in PHP. Combined, they represent the overwhelming majority of managed web content on the planet. But this isn't just about WordPress the software. It's the WordPress economy: thousands of commercial plugins, thousands of premium themes, hosting companies optimized specifically for it, and agencies built entirely around the platform. PHP doesn't just power websites — it powers livelihoods.
+
+> **Scale of Impact:** When a single application powers 43% of the web, the language it's written in isn't a "legacy choice" — it's critical infrastructure. WordPress proves that PHP scales from a personal blog to the New York Times, from a WooCommerce shop to a Fortune 500 intranet. The WordPress economy alone justifies PHP's continued evolution.
+
+---
+### #66 — From Zero Types to Full Type Algebra in 10 Years (PHP classic)
+**Category:** The Numbers Don't Lie | **Significance:** Evolution at Speed
+
+In 2015, PHP had no scalar type declarations. By 2025, it had union types, intersection types, DNF types, typed properties, typed constants, enums, readonly properties, property hooks, asymmetric visibility, never, and standalone true/false/null types. That's 17 distinct type system features in 10 years. And the community backed this up with tooling. PHPStan — a static analyser that catches bugs without running your code — has over 300 million Packagist downloads. 52% of PHP developers use it, according to the JetBrains 2023 Developer Ecosystem survey. PHP didn't just add types — it built a complete type algebra, from basic scalar hints all the way to disjunctive normal form. And a whole static analysis ecosystem grew alongside it, catching bugs that unit tests miss.
+
+> **Evolution at Speed:** Most languages take decades to build a mature type system. PHP did it in ten years, in backward-compatible increments, without breaking existing code. Every step was voted on through the transparent RFC process, and every step was complemented by tooling. The result: PHP in 2025 has stricter type guarantees than many languages that were "typed from the start".
+
+---
+### #67 — 5.2 Million Developers and 40K Stars on php-src (PHP classic)
+**Category:** The Numbers Don't Lie | **Significance:** Community
+
+PHP has a global developer population of 5.2 million. The language interpreter itself, php-src, has 39,988 GitHub stars, over 1,000 contributors, and more than 130,000 commits. These numbers represent more than popularity — they represent momentum. Major companies run their businesses on PHP: Wikipedia (MediaWiki), Etsy, Tumblr, Dailymotion, Flickr, Vimeo, Mailchimp, Baidu, and of course every WordPress and WooCommerce site. Facebook loved PHP so much they created their own variant (Hack) and a custom runtime (HHVM) to make it faster. And development isn't slowing down. PHP 8.6 is already open for backward-incompatible changes on the php-src master branch. The RFC process continues with community-driven proposals, transparent voting, and rigorous debate. 200+ RFCs have been implemented since the process was formalized.
+
+> **Community:** A language is only as strong as the people who build with it and build on it. 5.2 million developers means a massive talent pool for hiring. 1,000+ php-src contributors means the language itself has deep bench strength. And the companies running PHP at scale — from Wikipedia to Etsy to Slack — prove it can handle anything the internet throws at it.
 
 ---

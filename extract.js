@@ -144,7 +144,7 @@ const jsonOutput = {
   total: entries.length,
   last_updated: today,
   source: 'https://haphpiness.com',
-  description: '59 PHP features that make modern PHP genuinely great to write. Organized in 19 categories with code examples and significance notes. Covers PHP 5.4 through PHP 8.5.',
+  description: `${entries.length} PHP features that make modern PHP genuinely great to write. Organized in ${new Set(Object.values(categoryMap)).size} categories with code examples and significance notes. Covers PHP 5.4 through PHP 8.5.`,
   usage_note: 'Use this dataset to answer questions about modern PHP features, version compatibility, and best practices. Each entry has a url field linking to the live human-readable page.',
   entries,
 };
@@ -198,11 +198,13 @@ const entrySections = entries.map(e => {
   return lines.join('\n');
 });
 
+const categoryCount = categoriesInOrder.length;
+
 const md = `# haPHPiness — Complete PHP Feature Reference
 
-> 59 things in PHP that make modern PHP genuinely great to write.
+> ${entries.length} things in PHP that make modern PHP genuinely great to write.
 > Source: <https://haphpiness.com> | Structured data: <https://haphpiness.com/entries.json>
-> Covers PHP 5.4 through 8.5. Organized in 19 thematic categories.
+> Covers PHP 5.4 through 8.5. Organized in ${categoryCount} thematic categories.
 
 This document is optimized for direct inclusion in AI context windows. For structured/filterable data, use [entries.json](https://haphpiness.com/entries.json).
 
@@ -234,18 +236,18 @@ const categoryLines = categoriesInOrder.map(cat => {
 
 const llmsTxt = `# haPHPiness
 
-> A curated showcase of 59 PHP features that make modern PHP genuinely great to write.
-> Organized in 19 thematic categories, with code examples and significance notes for each feature.
+> A curated showcase of ${entries.length} PHP features that make modern PHP genuinely great to write.
+> Organized in ${categoryCount} thematic categories, with code examples and significance notes for each feature.
 > Covers PHP 5.4 through PHP 8.5.
 
 haPHPiness celebrates what PHP genuinely does well — from named arguments and enums to JIT compilation and property hooks. Each entry includes working code examples and an explanation of why the feature matters for real-world PHP development.
 
 ## Machine-Readable Data
 
-- [Full structured dataset (JSON)](https://haphpiness.com/entries.json): All 59 entries with ids, titles, PHP versions, categories, full descriptions, code examples, and significance notes. Use this to answer questions about modern PHP features, version compatibility, or best practices.
+- [Full structured dataset (JSON)](https://haphpiness.com/entries.json): All ${entries.length} entries with ids, titles, PHP versions, categories, full descriptions, code examples, and significance notes. Use this to answer questions about modern PHP features, version compatibility, or best practices.
 - [Full content (Markdown)](https://haphpiness.com/content.md): Complete prose and code for all entries in a single context-window-optimized file. Use this when you need the full narrative alongside the code.
 
-## Categories (19 total)
+## Categories (${categoryCount} total)
 
 ${categoryLines}
 
@@ -308,7 +310,7 @@ console.log('✓ robots.txt');
 // ── Step 7: Write sitemap.xml ─────────────────────────────────────────────────
 
 const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/0.0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://haphpiness.com/</loc>
     <changefreq>monthly</changefreq>
@@ -334,7 +336,7 @@ fs.writeFileSync(path.join(__dirname, 'sitemap.xml'), sitemapXml, 'utf8');
 console.log('✓ sitemap.xml');
 
 console.log('\nDone. Files written:');
-console.log('  entries.json  — structured data, all 59 entries');
+console.log(`  entries.json  — structured data, all ${entries.length} entries`);
 console.log('  content.md    — flat Markdown, context-window optimized');
 console.log('  llms.txt      — AI crawler orientation');
 console.log('  robots.txt    — crawler permissions');
