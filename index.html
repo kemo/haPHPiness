@@ -1,0 +1,1895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>haPHPiness</title>
+<meta name="description" content="Things in PHP which make me mass_happy(); — celebrating what PHP genuinely does well.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ── Reset & Base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --php-purple: #777BB4;
+  --php-purple-dark: #4F5B93;
+  --php-purple-deep: #3b3d5a;
+  --php-purple-light: #a5a8d0;
+  --php-purple-glow: rgba(119, 123, 180, 0.12);
+  --warm-gold: #d4930d;
+  --warm-amber: #b8860b;
+  --warm-orange: #e8a735;
+  --cream: #faf7f2;
+  --cream-dark: #f0ebe3;
+  --cream-deeper: #e6dfd4;
+  --text: #2d2a26;
+  --text-muted: #6b6560;
+  --text-light: #9a938b;
+  --code-bg: #f5f0e8;
+  --code-border: #e0d8cc;
+  --success-green: #4a8c5c;
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Fira Code', monospace;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--cream);
+  color: var(--text);
+  line-height: 1.7;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--warm-gold); text-decoration: none; transition: color 0.2s; }
+a:hover { color: var(--warm-amber); text-decoration: underline; }
+
+/* ── Header ── */
+.header {
+  background: linear-gradient(135deg, var(--php-purple-dark) 0%, var(--php-purple) 50%, #8b8fd0 100%);
+  padding: 2.5rem 2rem 2rem 4rem;
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.header::after {
+  content: '<?= happiness ?>';
+  position: absolute;
+  right: 4rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.2);
+  letter-spacing: 0.05em;
+}
+.header h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 2.8rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+.header h1 a {
+  color: #fff;
+  text-decoration: none;
+}
+.header h1 a:hover { color: var(--warm-orange); text-decoration: none; }
+.header h1 .php-highlight {
+  color: var(--warm-orange);
+  font-style: italic;
+}
+.header .tagline {
+  font-family: var(--font-mono);
+  color: rgba(255,255,255,0.65);
+  font-size: 0.85rem;
+  margin-top: 0.35rem;
+  letter-spacing: 0.02em;
+}
+
+/* ── Content Container ── */
+.content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 2rem 8rem;
+}
+
+/* ── Index Page ── */
+.intro {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  line-height: 1.8;
+}
+.intro strong { color: var(--text); }
+
+.category-heading {
+  margin-top: 3rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: var(--php-purple);
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--php-purple-glow);
+}
+
+.entry-link {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid transparent;
+  transition: all 0.15s;
+  cursor: pointer;
+}
+.entry-link:hover {
+  border-bottom-color: var(--cream-deeper);
+}
+.entry-link:hover .entry-title { color: var(--warm-gold); text-decoration: none; }
+
+.entry-number {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-light);
+  min-width: 2.5rem;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.entry-title {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--php-purple-deep);
+  transition: color 0.2s;
+}
+.entry-title code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--php-purple-glow);
+  padding: 0.1em 0.35em;
+  border-radius: 3px;
+  color: var(--php-purple-dark);
+}
+
+.version-tag {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--success-green);
+  background: rgba(74, 140, 92, 0.08);
+  padding: 0.15em 0.5em;
+  border-radius: 3px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* ── Detail Page ── */
+.detail-view { display: none; }
+.detail-view.active { display: block; }
+.index-view.hidden { display: none; }
+
+.nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--cream-deeper);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+.nav-buttons a {
+  color: var(--php-purple);
+  padding: 0.4rem 0;
+}
+.nav-buttons a:hover { color: var(--warm-gold); text-decoration: none; }
+.nav-buttons .nav-index { font-weight: 600; }
+
+.detail-view h2 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--text);
+  margin-bottom: 1.5rem;
+  line-height: 1.3;
+}
+
+.detail-view p {
+  margin-bottom: 1.2rem;
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.detail-view pre {
+  background: var(--code-bg);
+  border: 1px solid var(--code-border);
+  border-left: 3px solid var(--php-purple);
+  padding: 1.2rem 1.5rem;
+  margin: 1.5rem 0;
+  overflow-x: auto;
+  border-radius: 0 4px 4px 0;
+  font-size: 0.88rem;
+  line-height: 1.65;
+}
+.detail-view code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+}
+.detail-view p code, .detail-view li code {
+  background: var(--php-purple-glow);
+  padding: 0.15em 0.4em;
+  border-radius: 3px;
+  color: var(--php-purple-dark);
+  font-size: 0.85em;
+}
+.detail-view pre code {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  color: inherit;
+  font-size: inherit;
+}
+
+/* ── PHP link badges (matching phpsadness style) ── */
+.link-php {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--php-purple);
+  background: var(--cream);
+  color: var(--php-purple-deep);
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  white-space: nowrap;
+  overflow: hidden;
+  margin: 0.15rem 0.1rem;
+  transition: all 0.15s;
+  text-decoration: none !important;
+}
+.link-php:hover {
+  background: #fff;
+  border-color: var(--php-purple-light);
+  color: var(--php-purple);
+  text-decoration: none;
+}
+.link-php-tag {
+  background: var(--php-purple);
+  color: #fff;
+  padding: 0.15em 0.4em;
+  font-weight: 600;
+  font-size: 0.75em;
+  letter-spacing: 0.03em;
+}
+.link-php:hover .link-php-tag {
+  background: var(--php-purple-light);
+}
+.link-php-name {
+  padding: 0.1em 0.5em;
+}
+
+/* ── Significance Box ── */
+.significance {
+  border: 2px solid var(--php-purple);
+  border-radius: 6px;
+  margin: 2.5rem 0;
+  overflow: hidden;
+}
+.significance h3 {
+  background: var(--php-purple);
+  color: #fff;
+  margin: 0;
+  padding: 0.75rem 1.2rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+.significance h3 .sig-label {
+  color: rgba(255,255,255,0.6);
+}
+.significance .sig-body {
+  padding: 1.2rem 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+  background: var(--php-purple-glow);
+}
+
+/* ── Bottom nav ── */
+.nav-bottom {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--cream-deeper);
+}
+
+/* ── Footer ── */
+.footer {
+  text-align: center;
+  padding: 2rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-light);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .header { padding: 1.5rem 1.25rem; }
+  .header h1 { font-size: 2rem; }
+  .header::after { display: none; }
+  .content { padding: 1.25rem 1.25rem 6rem; }
+  .detail-view h2 { font-size: 1.5rem; }
+  .nav-buttons { font-size: 0.72rem; gap: 0.5rem; flex-wrap: wrap; justify-content: center; }
+  .detail-view pre { padding: 0.8rem 1rem; font-size: 0.8rem; }
+  .entry-link { gap: 0.5rem; }
+}
+
+/* ── Animations ── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.detail-view.active {
+  animation: fadeIn 0.25s ease-out;
+}
+.index-view {
+  animation: fadeIn 0.2s ease-out;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1><a href="#/" onclick="showIndex()">ha<span class="php-highlight">PHP</span>iness</a></h1>
+  <div class="tagline">These are things in PHP which make me mass_happy();</div>
+</div>
+
+<!-- ════════════════════════════════════════ INDEX ════════════════════════════════════════ -->
+<div class="content">
+<div class="index-view" id="index-view">
+
+<p class="intro">
+  PHP has changed. The language that powered the early web grew up, learned from its mistakes, and became something genuinely <strong>great</strong>. These are real, objective improvements that make PHP a joy to write — features I use every day and never want to give up.
+</p>
+<p class="intro">
+  Inspired by <a href="http://phpsadness.com/" target="_blank">PHP Sadness</a> — but this time, we're smiling.
+</p>
+
+<!-- ── Excellent Error Reporting ── -->
+<h2 class="category-heading">Excellent Error Reporting</h2>
+
+<a class="entry-link" href="#/happy/1">
+  <span class="entry-number">#1</span>
+  <span class="entry-title">PHP 8 named arguments — no more positional confusion</span>
+  <span class="version-tag">8.0</span>
+</a>
+<a class="entry-link" href="#/happy/2">
+  <span class="entry-number">#2</span>
+  <span class="entry-title">Union types and intersection types</span>
+  <span class="version-tag">8.0+</span>
+</a>
+<a class="entry-link" href="#/happy/3">
+  <span class="entry-number">#3</span>
+  <span class="entry-title">Enums — finally, proper enumerations</span>
+  <span class="version-tag">8.1</span>
+</a>
+
+<!-- ── Consistency Wins ── -->
+<h2 class="category-heading">Consistency Wins</h2>
+
+<a class="entry-link" href="#/happy/4">
+  <span class="entry-number">#4</span>
+  <span class="entry-title"><code>str_contains()</code>, <code>str_starts_with()</code>, <code>str_ends_with()</code> — finally consistent</span>
+  <span class="version-tag">8.0</span>
+</a>
+<a class="entry-link" href="#/happy/5">
+  <span class="entry-number">#5</span>
+  <span class="entry-title">Array unpacking with string keys</span>
+  <span class="version-tag">8.1</span>
+</a>
+<a class="entry-link" href="#/happy/6">
+  <span class="entry-number">#6</span>
+  <span class="entry-title">Fibers — proper async primitives</span>
+  <span class="version-tag">8.1</span>
+</a>
+
+<!-- ── Things That Just Work ── -->
+<h2 class="category-heading">Things That Just Work</h2>
+
+<a class="entry-link" href="#/happy/7">
+  <span class="entry-number">#7</span>
+  <span class="entry-title">Composer — best-in-class dependency management</span>
+</a>
+<a class="entry-link" href="#/happy/8">
+  <span class="entry-number">#8</span>
+  <span class="entry-title">Built-in development server (<code>php -S</code>)</span>
+  <span class="version-tag">5.4+</span>
+</a>
+<a class="entry-link" href="#/happy/9">
+  <span class="entry-number">#9</span>
+  <span class="entry-title">PDO — clean, consistent database abstraction</span>
+</a>
+
+<!-- ── Modern Elegance ── -->
+<h2 class="category-heading">Modern Elegance</h2>
+
+<a class="entry-link" href="#/happy/10">
+  <span class="entry-number">#10</span>
+  <span class="entry-title">Arrow functions</span>
+  <span class="version-tag">7.4</span>
+</a>
+<a class="entry-link" href="#/happy/11">
+  <span class="entry-number">#11</span>
+  <span class="entry-title"><code>match</code> expressions</span>
+  <span class="version-tag">8.0</span>
+</a>
+<a class="entry-link" href="#/happy/12">
+  <span class="entry-number">#12</span>
+  <span class="entry-title">Null coalescing operator <code>??</code> and <code>??=</code></span>
+  <span class="version-tag">7.0+</span>
+</a>
+
+<!-- ── Crystal Clear ── -->
+<h2 class="category-heading">Crystal Clear</h2>
+
+<a class="entry-link" href="#/happy/13">
+  <span class="entry-number">#13</span>
+  <span class="entry-title">Typed properties</span>
+  <span class="version-tag">7.4</span>
+</a>
+<a class="entry-link" href="#/happy/14">
+  <span class="entry-number">#14</span>
+  <span class="entry-title">Constructor property promotion</span>
+  <span class="version-tag">8.0</span>
+</a>
+<a class="entry-link" href="#/happy/15">
+  <span class="entry-number">#15</span>
+  <span class="entry-title">Readonly properties and classes</span>
+  <span class="version-tag">8.1+</span>
+</a>
+
+<!-- ── No Limits ── -->
+<h2 class="category-heading">No Limits</h2>
+
+<a class="entry-link" href="#/happy/16">
+  <span class="entry-number">#16</span>
+  <span class="entry-title">First-class callable syntax</span>
+  <span class="version-tag">8.1</span>
+</a>
+<a class="entry-link" href="#/happy/17">
+  <span class="entry-number">#17</span>
+  <span class="entry-title">Attributes — native metadata</span>
+  <span class="version-tag">8.0</span>
+</a>
+<a class="entry-link" href="#/happy/18">
+  <span class="entry-number">#18</span>
+  <span class="entry-title">Named arguments</span>
+  <span class="version-tag">8.0</span>
+</a>
+
+<!-- ── Functional Joy ── -->
+<h2 class="category-heading">Functional Joy</h2>
+
+<a class="entry-link" href="#/happy/19">
+  <span class="entry-number">#19</span>
+  <span class="entry-title"><code>array_map</code>, <code>array_filter</code>, <code>array_reduce</code> — the functional trio</span>
+</a>
+<a class="entry-link" href="#/happy/20">
+  <span class="entry-number">#20</span>
+  <span class="entry-title">Closures and variable binding with <code>use()</code></span>
+</a>
+<a class="entry-link" href="#/happy/21">
+  <span class="entry-number">#21</span>
+  <span class="entry-title">Generators and <code>yield</code></span>
+  <span class="version-tag">5.5+</span>
+</a>
+
+<!-- ── Batteries Included ── -->
+<h2 class="category-heading">Batteries Included</h2>
+
+<a class="entry-link" href="#/happy/22">
+  <span class="entry-number">#22</span>
+  <span class="entry-title">Built-in JSON support</span>
+</a>
+<a class="entry-link" href="#/happy/23">
+  <span class="entry-number">#23</span>
+  <span class="entry-title"><code>DateTime</code> and <code>DateTimeImmutable</code></span>
+</a>
+<a class="entry-link" href="#/happy/24">
+  <span class="entry-number">#24</span>
+  <span class="entry-title"><code>password_hash()</code> and <code>password_verify()</code></span>
+  <span class="version-tag">5.5+</span>
+</a>
+
+<!-- ── OOP Done Right ── -->
+<h2 class="category-heading">OOP Done Right</h2>
+
+<a class="entry-link" href="#/happy/25">
+  <span class="entry-number">#25</span>
+  <span class="entry-title">Interfaces, traits, and abstract classes</span>
+</a>
+<a class="entry-link" href="#/happy/26">
+  <span class="entry-number">#26</span>
+  <span class="entry-title">Late static binding</span>
+  <span class="version-tag">5.3+</span>
+</a>
+<a class="entry-link" href="#/happy/27">
+  <span class="entry-number">#27</span>
+  <span class="entry-title">Anonymous classes</span>
+  <span class="version-tag">7.0</span>
+</a>
+
+<!-- ── Parser Perfection ── -->
+<h2 class="category-heading">Parser Perfection</h2>
+
+<a class="entry-link" href="#/happy/28">
+  <span class="entry-number">#28</span>
+  <span class="entry-title">Heredoc/Nowdoc flexibility</span>
+  <span class="version-tag">7.3</span>
+</a>
+<a class="entry-link" href="#/happy/29">
+  <span class="entry-number">#29</span>
+  <span class="entry-title">Trailing commas everywhere</span>
+  <span class="version-tag">8.0</span>
+</a>
+<a class="entry-link" href="#/happy/30">
+  <span class="entry-number">#30</span>
+  <span class="entry-title">Nullsafe operator <code>?-&gt;</code></span>
+  <span class="version-tag">8.0</span>
+</a>
+
+</div><!-- /index-view -->
+
+<!-- ════════════════════════════════════════ ENTRIES ════════════════════════════════════════ -->
+
+<!-- ──────────── #1 ──────────── -->
+<div class="detail-view" id="happy-1" data-id="1" data-prev="30" data-next="2">
+<div class="nav-buttons">
+  <a href="#/happy/30">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/2">Next Happiness &raquo;</a>
+</div>
+<h2>PHP 8 Named Arguments</h2>
+<p>Before PHP 8, calling a function with many optional parameters meant counting commas and passing <code>null</code> for every parameter you didn't care about. Named arguments eliminated this entirely.</p>
+<pre><code>// Before: Which argument is which? Good luck.
+htmlspecialchars($string, ENT_COMPAT | ENT_HTML401, 'UTF-8', false);
+
+// After: Crystal clear intent.
+htmlspecialchars($string, double_encode: false);</code></pre>
+<p>Named arguments aren't just syntactic sugar — they're self-documenting code. When you read <code>double_encode: false</code>, you know exactly what's happening without checking the docs. They also let you skip optional parameters entirely, calling only what matters.</p>
+<p>Combined with <a href="https://php.net/array_slice" target="_blank" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">array_slice</span></a> and other functions that have many optional parameters, named arguments turn frustrating API calls into readable, maintainable code.</p>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Readability</h3><div class="sig-body">Code is read far more often than it is written. Named arguments make function calls self-documenting, reducing the cognitive load of understanding existing code and eliminating an entire class of positional bugs.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/30">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/2">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #2 ──────────── -->
+<div class="detail-view" id="happy-2" data-id="2" data-prev="1" data-next="3">
+<div class="nav-buttons">
+  <a href="#/happy/1">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/3">Next Happiness &raquo;</a>
+</div>
+<h2>Union Types and Intersection Types</h2>
+<p>PHP's type system took a giant leap in 8.0 with union types, and again in 8.1 with intersection types. You can now express exactly what a function accepts or returns — no more docblock-only type hints.</p>
+<pre><code>// Union types (PHP 8.0): accept multiple types
+function processInput(int|string $input): string|false {
+    return is_int($input) ? str_pad((string)$input, 5, '0', STR_PAD_LEFT) : $input;
+}
+
+// Intersection types (PHP 8.1): require multiple interfaces
+function saveEntity(Countable&Iterator $collection): void {
+    foreach ($collection as $item) {
+        // We know it's both Countable AND Iterator
+    }
+}
+
+// DNF types (PHP 8.2): combine both
+function process((Countable&Iterator)|null $items): void {
+    // Nullable intersection type — the full expression
+}</code></pre>
+<p>The type system went from "basically untyped" to one of the most expressive among dynamic languages. Static analyzers like PHPStan and Psalm can now catch entire categories of bugs at analysis time rather than runtime.</p>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Type Safety</h3><div class="sig-body">A strong type system doesn't just catch bugs — it makes refactoring safe, enables IDE autocompletion, and serves as living documentation. PHP's gradual typing lets you adopt types incrementally without rewriting your entire codebase.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/1">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/3">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #3 ──────────── -->
+<div class="detail-view" id="happy-3" data-id="3" data-prev="2" data-next="4">
+<div class="nav-buttons">
+  <a href="#/happy/2">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/4">Next Happiness &raquo;</a>
+</div>
+<h2>Enums — Finally, Proper Enumerations</h2>
+<p>For decades, PHP developers faked enums with class constants, abstract classes full of <code>const</code> values, or — worst of all — magic strings. PHP 8.1 delivered real, first-class enums that are type-safe, autocompletable, and impossible to misuse.</p>
+<pre><code>// Pure enum — when you just need named cases
+enum Suit {
+    case Hearts;
+    case Diamonds;
+    case Clubs;
+    case Spades;
+}
+
+// Backed enum — when you need database/API values
+enum Status: string {
+    case Active = 'active';
+    case Inactive = 'inactive';
+    case Pending = 'pending';
+
+    public function label(): string {
+        return match($this) {
+            self::Active => 'Active',
+            self::Inactive => 'Inactive',
+            self::Pending => 'Awaiting Review',
+        };
+    }
+}
+
+// Type-safe function signatures
+function setStatus(Status $status): void {
+    // No invalid values possible — the type system enforces it
+}
+
+setStatus(Status::Active);     // ✓
+setStatus('active');           // TypeError — exactly what we want</code></pre>
+<p>Enums can implement interfaces, use traits, and have methods. They're a proper part of the type system, not a bolted-on afterthought. The <code>match</code> expression ensures exhaustive handling — miss a case and your static analyzer catches it.</p>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Correctness</h3><div class="sig-body">Enums eliminate an entire category of bugs: invalid state. When a function accepts <code>Status</code> instead of <code>string</code>, it's impossible to pass a misspelled value, an outdated constant, or an empty string. The type system does the validation for you.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/2">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/4">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #4 ──────────── -->
+<div class="detail-view" id="happy-4" data-id="4" data-prev="3" data-next="5">
+<div class="nav-buttons">
+  <a href="#/happy/3">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/5">Next Happiness &raquo;</a>
+</div>
+<h2><code>str_contains()</code>, <code>str_starts_with()</code>, <code>str_ends_with()</code></h2>
+<p>This was the single most-requested feature in PHP's history, and 8.0 finally delivered. No more <code>strpos() !== false</code> gymnastics, no more off-by-one risks with index 0, no more <code>substr($str, 0, strlen($prefix)) === $prefix</code>.</p>
+<pre><code>// Before — the classic footgun
+if (strpos($url, 'https') !== false) { /* ... */ }  // Easy to write === 0 when you mean !== false
+if (substr($file, -4) === '.php') { /* ... */ }     // Works but reads terribly
+
+// After — say what you mean
+if (str_contains($url, 'https')) { /* ... */ }
+if (str_starts_with($file, '/var/www')) { /* ... */ }
+if (str_ends_with($file, '.php')) { /* ... */ }</code></pre>
+<p>These functions are named exactly as you'd expect. They take the haystack first, needle second — consistently. They return booleans. There is zero ambiguity about what they do or how to use them. This is what consistency looks like when a language team listens to its community.</p>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Consistency</h3><div class="sig-body">Consistent naming and behavior let developers write code from memory instead of constantly checking documentation. These three functions fixed one of PHP's most-cited inconsistencies and proved that the language is willing to evolve based on real developer pain.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/3">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/5">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #5 ──────────── -->
+<div class="detail-view" id="happy-5" data-id="5" data-prev="4" data-next="6">
+<div class="nav-buttons">
+  <a href="#/happy/4">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/6">Next Happiness &raquo;</a>
+</div>
+<h2>Array Unpacking with String Keys</h2>
+<p>PHP 7.4 introduced the spread operator for arrays, but it only worked with integer keys. PHP 8.1 completed the feature by supporting string keys — making array merging clean and expressive.</p>
+<pre><code>$defaults = ['timeout' => 30, 'retries' => 3, 'verify' => true];
+$custom   = ['timeout' => 60, 'debug' => true];
+
+// Clean, readable merge with override semantics
+$config = [...$defaults, ...$custom];
+// ['timeout' => 60, 'retries' => 3, 'verify' => true, 'debug' => true]
+
+// Works beautifully in function calls too
+function createClient(string $host, array $options = []) {
+    $opts = [...self::DEFAULT_OPTIONS, ...$options];
+    // ...
+}</code></pre>
+<p>The spread operator for arrays follows the same <code>...</code> syntax used for function arguments, keeping the language consistent. Later values override earlier ones, just like <a href="https://php.net/array_merge" target="_blank" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">array_merge</span></a>, but with cleaner syntax.</p>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Expressiveness</h3><div class="sig-body">Small syntactic improvements compound. The spread operator for arrays saves a function call, reads more naturally, and brings PHP's array handling in line with modern JavaScript and Python. It's one less reason to reach for <code>array_merge()</code>.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/4">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/6">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #6 ──────────── -->
+<div class="detail-view" id="happy-6" data-id="6" data-prev="5" data-next="7">
+<div class="nav-buttons">
+  <a href="#/happy/5">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/7">Next Happiness &raquo;</a>
+</div>
+<h2>Fibers — Proper Async Primitives</h2>
+<p>PHP 8.1 introduced Fibers: lightweight, cooperatively-scheduled coroutines. They're the foundation that frameworks like ReactPHP, Amp, and Revolt use to provide async I/O without callback hell.</p>
+<pre><code>$fiber = new Fiber(function (): void {
+    $value = Fiber::suspend('paused');
+    echo "Resumed with: $value\n";
+});
+
+$result = $fiber->start();    // "paused"
+$fiber->resume('hello');      // "Resumed with: hello"
+
+// Real-world: async HTTP with Revolt/Amp
+use function Amp\async;
+use function Amp\Future\await;
+
+$responses = await([
+    async(fn() => $httpClient->request('GET', '/users')),
+    async(fn() => $httpClient->request('GET', '/posts')),
+    async(fn() => $httpClient->request('GET', '/comments')),
+]);
+// All three requests ran concurrently!</code></pre>
+<p>Fibers aren't meant to be used directly by most developers — they're an infrastructure primitive. But they enabled the PHP async ecosystem to mature rapidly, giving framework authors the tools to build ergonomic async APIs that look and feel like synchronous code.</p>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Foundation</h3><div class="sig-body">By adding Fibers to the language core, PHP gave the community a standard concurrency primitive. This prevented ecosystem fragmentation (no competing coroutine implementations) and enabled frameworks to offer async features without requiring developers to learn a fundamentally different programming model.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/5">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/7">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #7 ──────────── -->
+<div class="detail-view" id="happy-7" data-id="7" data-prev="6" data-next="8">
+<div class="nav-buttons">
+  <a href="#/happy/6">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/8">Next Happiness &raquo;</a>
+</div>
+<h2>Composer — Best-in-Class Dependency Management</h2>
+<p>Composer didn't just give PHP a package manager — it gave PHP one of the <em>best</em> package managers in any language. Semantic versioning, autoloading, platform requirements, scripts, and a rich ecosystem of 350,000+ packages on Packagist.</p>
+<pre><code>// composer.json — clean, declarative, powerful
+{
+    "require": {
+        "php": "^8.1",
+        "laravel/framework": "^11.0",
+        "league/flysystem": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    }
+}
+
+// That's it. Run `composer install` and everything works.
+// PSR-4 autoloading means no more require/include spaghetti:
+use App\Services\PaymentGateway;
+$gateway = new PaymentGateway(); // Autoloaded. No require() needed.</code></pre>
+<p>Composer solved autoloading (via PSR-0/PSR-4), dependency resolution, and package distribution in one tool. The <code>composer.lock</code> file ensures reproducible builds. The <code>platform-check</code> plugin catches PHP version mismatches before deployment. It's genuinely world-class infrastructure.</p>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Ecosystem</h3><div class="sig-body">A great package manager transforms a language's ecosystem. Composer turned PHP from a language where you copy-pasted libraries into your project into one with a thriving, interoperable package ecosystem. It's the single most important tool in modern PHP development.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/6">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/8">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #8 ──────────── -->
+<div class="detail-view" id="happy-8" data-id="8" data-prev="7" data-next="9">
+<div class="nav-buttons">
+  <a href="#/happy/7">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/9">Next Happiness &raquo;</a>
+</div>
+<h2>Built-in Development Server</h2>
+<p>No Apache config. No Nginx. No Docker. Just one command and you're running:</p>
+<pre><code>$ php -S localhost:8000
+PHP Development Server started at http://localhost:8000
+Document root is /var/www/myapp
+Press Ctrl-C to quit.
+
+# With a router script:
+$ php -S localhost:8000 router.php
+
+# Serve from a specific directory:
+$ php -S localhost:8000 -t public/</code></pre>
+<p>The built-in server ships with every PHP installation since 5.4. It supports routing scripts, custom document roots, and outputs request logs to your terminal. For development, prototyping, and quick demos, it's unbeatable. Zero configuration, zero dependencies, instant feedback.</p>
+<p>While not meant for production, it's perfectly adequate for local development — and it means any machine with PHP installed can serve a web application immediately.</p>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Accessibility</h3><div class="sig-body">The fastest path from idea to working prototype wins. PHP's built-in server means a beginner can go from installing PHP to seeing their first webpage in under a minute. No web server configuration, no infrastructure knowledge required. This is the power of batteries-included design.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/7">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/9">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #9 ──────────── -->
+<div class="detail-view" id="happy-9" data-id="9" data-prev="8" data-next="10">
+<div class="nav-buttons">
+  <a href="#/happy/8">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/10">Next Happiness &raquo;</a>
+</div>
+<h2>PDO — Clean, Consistent Database Abstraction</h2>
+<p>PDO provides a uniform interface for accessing databases in PHP. MySQL, PostgreSQL, SQLite, SQL Server — same API, same prepared statements, same error handling. Switch databases without rewriting your data layer.</p>
+<pre><code>$pdo = new PDO('sqlite:app.db');
+$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+
+// Prepared statements — SQL injection is simply not possible
+$stmt = $pdo->prepare('SELECT * FROM users WHERE email = :email AND active = :active');
+$stmt->execute(['email' => $email, 'active' => true]);
+$user = $stmt->fetch();
+
+// Transactions with automatic rollback
+try {
+    $pdo->beginTransaction();
+    $pdo->prepare('UPDATE accounts SET balance = balance - ? WHERE id = ?')->execute([100, $from]);
+    $pdo->prepare('UPDATE accounts SET balance = balance + ? WHERE id = ?')->execute([100, $to]);
+    $pdo->commit();
+} catch (PDOException $e) {
+    $pdo->rollBack();
+    throw $e;
+}</code></pre>
+<p>PDO's prepared statements make SQL injection protection the path of least resistance. The parameterized query API is cleaner than string concatenation, so doing the safe thing is also the easy thing.</p>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Security by Design</h3><div class="sig-body">When the secure approach is also the most convenient approach, developers choose security by default. PDO's prepared statements are easier to write than concatenated SQL, making SQL injection a conscious choice rather than an accidental oversight.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/8">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/10">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #10 ──────────── -->
+<div class="detail-view" id="happy-10" data-id="10" data-prev="9" data-next="11">
+<div class="nav-buttons">
+  <a href="#/happy/9">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/11">Next Happiness &raquo;</a>
+</div>
+<h2>Arrow Functions</h2>
+<p>PHP 7.4 introduced short closures with the <code>fn</code> keyword. They automatically capture variables from the parent scope (no <code>use()</code> needed), have implicit returns, and are perfect for callbacks.</p>
+<pre><code>// Before: verbose closure with explicit `use`
+$doubled = array_map(function ($n) {
+    return $n * 2;
+}, $numbers);
+
+// After: clean, concise, readable
+$doubled = array_map(fn($n) => $n * 2, $numbers);
+
+// Parent scope is captured automatically
+$tax = 0.21;
+$withTax = array_map(fn($price) => $price * (1 + $tax), $prices);
+
+// Great for sorting
+usort($users, fn($a, $b) => $a->name <=> $b->name);
+
+// Chain beautifully
+$result = array_filter(
+    array_map(fn($u) => $u->getProfile(), $users),
+    fn($p) => $p->isActive(),
+);</code></pre>
+<p>Arrow functions don't replace regular closures — they complement them. Use <code>fn</code> for simple transforms and predicates, full closures for multi-line logic. The language gives you both tools and lets you choose.</p>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Ergonomics</h3><div class="sig-body">Reducing syntactic overhead for common patterns makes functional-style code practical. When a callback fits on one line, it should only take one line to write. Arrow functions made PHP's array functions genuinely pleasant to use.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/9">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/11">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #11 ──────────── -->
+<div class="detail-view" id="happy-11" data-id="11" data-prev="10" data-next="12">
+<div class="nav-buttons">
+  <a href="#/happy/10">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/12">Next Happiness &raquo;</a>
+</div>
+<h2>Match Expressions</h2>
+<p><code>match</code> is what <code>switch</code> should have been. It uses strict comparison, returns a value, doesn't fall through, and throws an error if no arm matches. It's an expression, not a statement.</p>
+<pre><code>// switch: verbose, fall-through prone, loose comparison
+switch ($statusCode) {
+    case 200:
+    case 201:
+        $text = 'Success';
+        break;
+    case 404:
+        $text = 'Not Found';
+        break;
+    default:
+        $text = 'Unknown';
+        break;
+}
+
+// match: concise, strict, returns a value
+$text = match($statusCode) {
+    200, 201 => 'Success',
+    404      => 'Not Found',
+    500      => 'Server Error',
+    default  => 'Unknown',
+};
+
+// No expression arms — use match(true) for conditions
+$category = match(true) {
+    $age < 13  => 'child',
+    $age < 18  => 'teenager',
+    $age < 65  => 'adult',
+    default    => 'senior',
+};</code></pre>
+<p>The fact that <code>match</code> throws <code>UnhandledMatchError</code> when no arm matches is a feature, not a bug. It forces you to handle all cases explicitly, catching logic errors at runtime instead of silently producing wrong results.</p>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Safety</h3><div class="sig-body">Every <code>switch</code> fall-through bug that ever shipped to production was a consequence of <code>switch</code>'s design. <code>match</code> makes the common case (no fall-through, strict comparison, return a value) the default, and eliminates the <code>break</code> ceremony entirely.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/10">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/12">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #12 ──────────── -->
+<div class="detail-view" id="happy-12" data-id="12" data-prev="11" data-next="13">
+<div class="nav-buttons">
+  <a href="#/happy/11">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/13">Next Happiness &raquo;</a>
+</div>
+<h2>Null Coalescing Operator <code>??</code> and <code>??=</code></h2>
+<p>The null coalescing operator is the perfect tool for defaults. It checks for <code>null</code> (and unset variables) without triggering notices, and it chains beautifully.</p>
+<pre><code>// Before: verbose isset checks
+$username = isset($_GET['user']) ? $_GET['user'] : 'anonymous';
+$config = isset($options['timeout']) ? $options['timeout'] : 30;
+
+// After: clean and obvious
+$username = $_GET['user'] ?? 'anonymous';
+$config = $options['timeout'] ?? 30;
+
+// Chaining — try multiple sources, fall back gracefully
+$color = $user->preference('color') ?? $team->default('color') ?? '#777BB4';
+
+// Null coalescing assignment (PHP 7.4)
+$this->cache ??= [];                    // Initialize only if null
+$options['retries'] ??= 3;              // Set default without overwriting
+
+// Perfect for lazy initialization
+public function getLogger(): LoggerInterface {
+    return $this->logger ??= new NullLogger();
+}</code></pre>
+<p>Unlike the ternary operator, <code>??</code> specifically checks for <code>null</code> — not falsy values. <code>0</code>, <code>''</code>, and <code>false</code> pass through, which is almost always what you want. This distinction alone prevents countless bugs.</p>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Pragmatism</h3><div class="sig-body">PHP's shared-nothing architecture means every request starts fresh, and default values are everywhere. The null coalescing operator turns a three-line <code>isset</code> check into three characters, making the most common PHP pattern — "use this value or fall back to that one" — effortless to write and read.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/11">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/13">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #13 ──────────── -->
+<div class="detail-view" id="happy-13" data-id="13" data-prev="12" data-next="14">
+<div class="nav-buttons">
+  <a href="#/happy/12">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/14">Next Happiness &raquo;</a>
+</div>
+<h2>Typed Properties</h2>
+<p>PHP 7.4 introduced type declarations for class properties. No more hoping someone passes the right type, no more docblock-only contracts — the engine enforces it.</p>
+<pre><code>class Product {
+    public string $name;
+    public float $price;
+    public ?string $description = null;
+    public array $tags = [];
+    public DateTimeInterface $createdAt;
+
+    public function __construct(string $name, float $price) {
+        $this->name = $name;
+        $this->price = $price;
+        $this->createdAt = new DateTimeImmutable();
+    }
+}
+
+$product = new Product('Widget', 9.99);
+$product->price = 'free'; // TypeError: Cannot assign string to property Product::$price of type float
+
+// Combined with union types (PHP 8.0):
+public int|float $quantity;
+
+// And intersection types (PHP 8.1):
+public (Stringable&Countable) $value;</code></pre>
+<p>Typed properties work with all PHP types: scalars, arrays, classes, interfaces, nullable types, union types, and intersection types. The engine enforces them on every assignment, catching type errors immediately rather than letting corrupt data propagate through your system.</p>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Reliability</h3><div class="sig-body">Typed properties turn classes into enforceable contracts. An object with typed properties is always in a valid state — you can trust that <code>$product->price</code> is a float without checking. This cascading trust eliminates defensive type-checking throughout your codebase.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/12">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/14">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #14 ──────────── -->
+<div class="detail-view" id="happy-14" data-id="14" data-prev="13" data-next="15">
+<div class="nav-buttons">
+  <a href="#/happy/13">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/15">Next Happiness &raquo;</a>
+</div>
+<h2>Constructor Property Promotion</h2>
+<p>PHP 8.0 eliminated the most tedious boilerplate in the language: declaring a property, listing it as a constructor parameter, and assigning one to the other. Three places to maintain the same information, reduced to one.</p>
+<pre><code>// Before: say the same thing three times
+class User {
+    private string $name;
+    private string $email;
+    private int $age;
+    private bool $active;
+
+    public function __construct(string $name, string $email, int $age, bool $active = true) {
+        $this->name = $name;
+        $this->email = $email;
+        $this->age = $age;
+        $this->active = $active;
+    }
+}
+
+// After: say it once
+class User {
+    public function __construct(
+        private string $name,
+        private string $email,
+        private int $age,
+        private bool $active = true,
+    ) {}
+}
+
+// Combined with readonly (PHP 8.1) — immutable value objects in one line:
+class Point {
+    public function __construct(
+        public readonly float $x,
+        public readonly float $y,
+    ) {}
+}</code></pre>
+<p>You can mix promoted and non-promoted parameters freely. Promoted properties support all visibility modifiers and the <code>readonly</code> flag. It's one of those features that, once you use it, you can never go back.</p>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Developer Experience</h3><div class="sig-body">Boilerplate isn't just annoying — it's a source of bugs (forget to assign one property, misspell a name, mismatch types). Constructor promotion eliminates the boilerplate entirely, making simple value objects and DTOs a joy to define.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/13">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/15">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #15 ──────────── -->
+<div class="detail-view" id="happy-15" data-id="15" data-prev="14" data-next="16">
+<div class="nav-buttons">
+  <a href="#/happy/14">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/16">Next Happiness &raquo;</a>
+</div>
+<h2>Readonly Properties and Classes</h2>
+<p>PHP 8.1 added <code>readonly</code> properties — set once, then immutable. PHP 8.2 extended this to entire classes. Immutability is no longer a convention; it's enforced by the engine.</p>
+<pre><code>// Readonly properties (PHP 8.1)
+class Invoice {
+    public function __construct(
+        public readonly string $number,
+        public readonly float $total,
+        public readonly DateTimeImmutable $issuedAt,
+    ) {}
+}
+
+$invoice = new Invoice('INV-001', 250.00, new DateTimeImmutable());
+$invoice->total = 0; // Error: Cannot modify readonly property Invoice::$total
+
+// Readonly classes (PHP 8.2) — all properties are implicitly readonly
+readonly class Money {
+    public function __construct(
+        public int $amount,
+        public string $currency,
+    ) {}
+
+    public function add(Money $other): self {
+        if ($this->currency !== $other->currency) {
+            throw new \InvalidArgumentException('Currency mismatch');
+        }
+        return new self($this->amount + $other->amount, $this->currency);
+    }
+}
+
+$price = new Money(1000, 'EUR');
+$tax = new Money(210, 'EUR');
+$total = $price->add($tax); // New object — originals unchanged</code></pre>
+<p>Readonly properties make value objects trivial to implement correctly. No more writing private properties with getters, no more worrying about someone mutating shared state. The language guarantees immutability.</p>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Correctness</h3><div class="sig-body">Immutability eliminates entire categories of bugs: unexpected mutation, shared state corruption, order-dependent initialization. When the engine enforces that a value can't change, you can reason about your code with confidence.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/14">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/16">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #16 ──────────── -->
+<div class="detail-view" id="happy-16" data-id="16" data-prev="15" data-next="17">
+<div class="nav-buttons">
+  <a href="#/happy/15">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/17">Next Happiness &raquo;</a>
+</div>
+<h2>First-Class Callable Syntax</h2>
+<p>PHP 8.1 introduced a clean way to create closures from existing functions and methods using the <code>(...)</code> syntax. No more string-based function references, no more <code>Closure::fromCallable()</code>.</p>
+<pre><code>// Before: strings as callables — no static analysis, no autocompletion
+$lengths = array_map('strlen', $strings);           // String reference
+$filtered = array_filter($items, [$this, 'isValid']); // Array reference
+
+// After: real, type-safe callable references
+$lengths = array_map(strlen(...), $strings);
+$filtered = array_filter($items, $this->isValid(...));
+
+// Works with static methods, named functions, everything:
+$encoder = json_encode(...);
+$sorter = strcmp(...);
+$validator = Validator::validate(...);
+
+// They're real Closures — you can pass, store, and compose them:
+$pipeline = array_reduce(
+    [trim(...), strtolower(...), htmlspecialchars(...)],
+    fn($carry, $fn) => fn($x) => $fn($carry($x)),
+    fn($x) => $x,
+);</code></pre>
+<p>First-class callables are proper <code>Closure</code> objects that IDEs can analyze, static analyzers can check, and refactoring tools can rename. They make PHP's functional capabilities genuinely first-class.</p>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Composability</h3><div class="sig-body">String-based callables were PHP's weakest link in functional programming: unanalyzable, unrenamable, and error-prone. First-class callables bring PHP in line with languages where functions are values, enabling safer and more composable code.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/15">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/17">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #17 ──────────── -->
+<div class="detail-view" id="happy-17" data-id="17" data-prev="16" data-next="18">
+<div class="nav-buttons">
+  <a href="#/happy/16">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/18">Next Happiness &raquo;</a>
+</div>
+<h2>Attributes — Native Metadata</h2>
+<p>PHP 8.0 replaced the docblock-annotation hack with proper, first-class attributes. They're real syntax, parseable by the engine, checked by static analysis, and validated at compile time.</p>
+<pre><code>// Define an attribute
+#[Attribute(Attribute::TARGET_METHOD | Attribute::IS_REPEATABLE)]
+class Route {
+    public function __construct(
+        public string $path,
+        public string $method = 'GET',
+    ) {}
+}
+
+// Use it — clean, native syntax
+class UserController {
+    #[Route('/users', method: 'GET')]
+    public function index(): Response { /* ... */ }
+
+    #[Route('/users/{id}', method: 'GET')]
+    #[Route('/user/{id}', method: 'GET')]  // Repeatable!
+    public function show(int $id): Response { /* ... */ }
+
+    #[Route('/users', method: 'POST')]
+    #[RequiresAuth(role: 'admin')]
+    public function create(): Response { /* ... */ }
+}
+
+// Read attributes via Reflection
+$method = new ReflectionMethod(UserController::class, 'index');
+$routes = $method->getAttributes(Route::class);
+foreach ($routes as $attr) {
+    $route = $attr->newInstance(); // Route object with path and method
+}</code></pre>
+<p>Attributes replaced the fragile docblock annotation ecosystem (Doctrine Annotations) with something that's part of the language. They support named arguments, validation via reflection, and target constraints. Frameworks like Symfony and Laravel adopted them immediately.</p>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Standardization</h3><div class="sig-body">Docblock annotations were a community hack that required third-party parsers and couldn't be validated by the engine. Native attributes are faster, safer, and standardized — every framework can rely on the same mechanism without shipping their own annotation parser.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/16">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/18">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #18 ──────────── -->
+<div class="detail-view" id="happy-18" data-id="18" data-prev="17" data-next="19">
+<div class="nav-buttons">
+  <a href="#/happy/17">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/19">Next Happiness &raquo;</a>
+</div>
+<h2>Named Arguments</h2>
+<p>Named arguments (PHP 8.0) let you pass values by parameter name instead of position. They make complex function calls readable, let you skip optional parameters, and serve as inline documentation.</p>
+<pre><code>// setcookie has 7 parameters. Which is which?
+setcookie('theme', 'dark', 0, '/', '', true, true);
+
+// Named arguments: crystal clear intent
+setcookie('theme', 'dark', httponly: true, secure: true);
+
+// Perfect for functions with boolean flags
+$text = str_pad($input, length: 20, pad_type: STR_PAD_LEFT);
+
+// Named arguments + array unpacking = powerful patterns
+$defaults = ['secure' => true, 'httponly' => true, 'samesite' => 'Strict'];
+setcookie('token', $value, ...$defaults);
+
+// Great for test readability
+$user = UserFactory::create(
+    name: 'Alice',
+    email: 'alice@example.com',
+    role: Role::Admin,
+    verified: true,
+);</code></pre>
+<p>Named arguments work with all functions — built-in and user-defined. They interoperate with positional arguments (positional first, then named). They even work with <a href="https://php.net/call_user_func_array" target="_blank" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">call_user_func_array</span></a> when you pass an associative array.</p>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Readability</h3><div class="sig-body">Named arguments turn cryptic function calls into self-documenting expressions. They're especially powerful for PHP's large standard library, where many functions have accumulated optional parameters over decades. You no longer need to memorize parameter positions.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/17">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/19">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #19 ──────────── -->
+<div class="detail-view" id="happy-19" data-id="19" data-prev="18" data-next="20">
+<div class="nav-buttons">
+  <a href="#/happy/18">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/20">Next Happiness &raquo;</a>
+</div>
+<h2>array_map, array_filter, array_reduce — The Functional Trio</h2>
+<p>PHP's array functions have always been powerful, but with arrow functions (7.4) and first-class callables (8.1), they've become genuinely elegant. Transform, filter, and reduce collections without a single <code>foreach</code> loop.</p>
+<pre><code>$orders = getOrders();
+
+// Transform: extract what you need
+$totals = array_map(fn($o) => $o->total, $orders);
+
+// Filter: keep what matches
+$large = array_filter($orders, fn($o) => $o->total > 100);
+
+// Reduce: collapse to a single value
+$sum = array_reduce($orders, fn($carry, $o) => $carry + $o->total, 0);
+
+// Compose them for expressive pipelines
+$report = array_reduce(
+    array_map(
+        fn($o) => ['month' => $o->date->format('Y-m'), 'total' => $o->total],
+        array_filter($orders, fn($o) => $o->status === Status::Completed),
+    ),
+    function ($acc, $item) {
+        $acc[$item['month']] = ($acc[$item['month']] ?? 0) + $item['total'];
+        return $acc;
+    },
+    [],
+);
+
+// Plus the underrated helpers:
+$keys     = array_keys($map);
+$values   = array_values($filtered);  // Re-index after filter
+$combined = array_combine($keys, $values);
+$unique   = array_unique($tags);
+$chunks   = array_chunk($items, 50);   // Batch processing</code></pre>
+<p>PHP arrays are ordered hash maps — they work as lists, dictionaries, sets, stacks, and queues. The standard library gives you <a href="https://php.net/array_map" target="_blank" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">array_map</span></a>, <a href="https://php.net/array_filter" target="_blank" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">array_filter</span></a>, <a href="https://php.net/array_reduce" target="_blank" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">array_reduce</span></a>, and 75+ other array functions out of the box.</p>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Versatility</h3><div class="sig-body">PHP's array is the Swiss Army knife of data structures. Its combination of ordered keys, mixed types, and a massive standard library of manipulation functions means you rarely need external collection libraries. With arrow functions, the functional style is now as concise as any language.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/18">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/20">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #20 ──────────── -->
+<div class="detail-view" id="happy-20" data-id="20" data-prev="19" data-next="21">
+<div class="nav-buttons">
+  <a href="#/happy/19">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/21">Next Happiness &raquo;</a>
+</div>
+<h2>Closures and Variable Binding with <code>use()</code></h2>
+<p>PHP closures explicitly capture variables from the enclosing scope with <code>use()</code>. This isn't a limitation — it's a feature. You always know exactly what a closure depends on, making the code easier to reason about and debug.</p>
+<pre><code>// Explicit capture — no hidden dependencies
+$multiplier = 1.21;  // VAT rate
+$applyVat = function (float $price) use ($multiplier): float {
+    return $price * $multiplier;
+};
+
+// Capture by reference for stateful closures
+function createCounter(int $start = 0): Closure {
+    $count = $start;
+    return function () use (&$count): int {
+        return $count++;
+    };
+}
+$counter = createCounter();
+echo $counter(); // 0
+echo $counter(); // 1
+
+// Closures can bind to objects — powerful for DSLs
+$closure = Closure::bind(function () {
+    return $this->secret; // Access private property
+}, $object, get_class($object));
+
+// Middleware pattern with closures
+$middleware = function (Request $request, Closure $next): Response {
+    // Before
+    $response = $next($request);
+    // After
+    return $response;
+};</code></pre>
+<p>The explicit <code>use()</code> clause means you can look at any closure and immediately see its external dependencies. Combined with <code>Closure::bind()</code> and <code>Closure::fromCallable()</code>, PHP closures are flexible enough for any functional or object-oriented pattern.</p>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Explicitness</h3><div class="sig-body">Implicit variable capture (like JavaScript's) can lead to subtle bugs and memory leaks. PHP's explicit <code>use()</code> clause makes the closure's contract visible: you see exactly what it captures, whether by value or reference. Explicit is better than implicit.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/19">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/21">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #21 ──────────── -->
+<div class="detail-view" id="happy-21" data-id="21" data-prev="20" data-next="22">
+<div class="nav-buttons">
+  <a href="#/happy/20">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/22">Next Happiness &raquo;</a>
+</div>
+<h2>Generators and <code>yield</code></h2>
+<p>Generators let you iterate over data without loading everything into memory. Process a million-row CSV, stream API results, or build infinite sequences — all with constant memory usage.</p>
+<pre><code>// Read a 10GB file with constant memory
+function readLines(string $file): Generator {
+    $handle = fopen($file, 'r');
+    while (($line = fgets($handle)) !== false) {
+        yield trim($line);
+    }
+    fclose($handle);
+}
+
+foreach (readLines('/var/log/huge.log') as $line) {
+    // Each line is read one at a time — never all in memory
+}
+
+// Generate infinite sequences
+function fibonacci(): Generator {
+    [$a, $b] = [0, 1];
+    while (true) {
+        yield $a;
+        [$a, $b] = [$b, $a + $b];
+    }
+}
+
+// Delegate with yield from
+function allUsers(): Generator {
+    yield from getAdmins();        // Generator
+    yield from getEditors();       // Generator
+    yield from [User::guest()];    // Array — also works!
+}
+
+// Two-way communication with send()
+function accumulator(): Generator {
+    $total = 0;
+    while (true) {
+        $value = yield $total;
+        $total += $value;
+    }
+}
+$acc = accumulator();
+$acc->current(); // 0
+$acc->send(10);  // 10
+$acc->send(20);  // 30</code></pre>
+<p>Generators follow the same <code>Iterator</code> interface as any other iterable, so they work seamlessly with <code>foreach</code>, <a href="https://php.net/iterator_to_array" target="_blank" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">iterator_to_array</span></a>, and the spread operator.</p>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Efficiency</h3><div class="sig-body">Generators make memory efficiency the default rather than an optimization. Processing large datasets with generators uses the same clean syntax as processing small arrays — no pagination logic, no batch callbacks, no manual iterator implementations.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/20">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/22">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #22 ──────────── -->
+<div class="detail-view" id="happy-22" data-id="22" data-prev="21" data-next="23">
+<div class="nav-buttons">
+  <a href="#/happy/21">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/23">Next Happiness &raquo;</a>
+</div>
+<h2>Built-in JSON Support</h2>
+<p>JSON encoding and decoding is built into PHP core. No packages to install, no extensions to enable — it just works. Two functions, consistently named, with rich option flags.</p>
+<pre><code>// Encode — with formatting options
+$data = ['users' => [['name' => 'Alice', 'age' => 30], ['name' => 'Bob', 'age' => 25]]];
+$json = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+
+// Decode — returns associative arrays or objects
+$decoded = json_decode($json, associative: true);  // Named argument!
+echo $decoded['users'][0]['name']; // Alice
+
+// Error handling (PHP 7.3+): throw on invalid JSON
+$result = json_decode($input, flags: JSON_THROW_ON_ERROR);
+// Throws JsonException instead of returning null silently
+
+// Implement JsonSerializable for custom objects
+class Money implements JsonSerializable {
+    public function __construct(
+        private int $cents,
+        private string $currency,
+    ) {}
+
+    public function jsonSerialize(): mixed {
+        return [
+            'amount' => $this->cents / 100,
+            'currency' => $this->currency,
+        ];
+    }
+}
+
+echo json_encode(new Money(1999, 'USD'));
+// {"amount":19.99,"currency":"USD"}</code></pre>
+<p>The <a href="https://php.net/json_encode" target="_blank" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">json_encode</span></a> and <a href="https://php.net/json_decode" target="_blank" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">json_decode</span></a> functions handle all edge cases: Unicode, numeric precision, recursive structures, custom serialization. They're fast (PHP's JSON extension is implemented in C) and battle-tested across millions of applications.</p>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Web-Native</h3><div class="sig-body">PHP is a web language, and JSON is the web's data format. Having fast, reliable JSON support built into the language core means every PHP application can speak the lingua franca of web APIs without any additional dependencies.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/21">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/23">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #23 ──────────── -->
+<div class="detail-view" id="happy-23" data-id="23" data-prev="22" data-next="24">
+<div class="nav-buttons">
+  <a href="#/happy/22">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/24">Next Happiness &raquo;</a>
+</div>
+<h2>DateTime and DateTimeImmutable</h2>
+<p>PHP's DateTime classes handle time zones, formatting, parsing, intervals, and arithmetic correctly. <code>DateTimeImmutable</code> ensures date calculations never accidentally mutate the original — a lesson learned from years of DateTime bugs.</p>
+<pre><code>// DateTimeImmutable — every operation returns a new instance
+$now = new DateTimeImmutable();
+$nextWeek = $now->modify('+1 week');     // $now is unchanged
+$formatted = $now->format('Y-m-d H:i');  // "2026-03-12 14:30"
+
+// Time zone handling — built in, not bolted on
+$ny = new DateTimeImmutable('now', new DateTimeZone('America/New_York'));
+$tokyo = $ny->setTimezone(new DateTimeZone('Asia/Tokyo'));
+echo $tokyo->format('H:i'); // Correct local time in Tokyo
+
+// Intervals and periods
+$interval = new DateInterval('P30D');        // 30 days
+$future = $now->add($interval);
+$diff = $future->diff($now);
+echo $diff->days; // 30
+
+// Date periods — iterate over date ranges
+$period = new DatePeriod(
+    new DateTimeImmutable('2026-01-01'),
+    new DateInterval('P1M'),
+    new DateTimeImmutable('2026-12-31'),
+);
+foreach ($period as $month) {
+    echo $month->format('F Y') . "\n"; // "January 2026", "February 2026", ...
+}
+
+// Parse anything
+$parsed = DateTimeImmutable::createFromFormat('d/m/Y', '12/03/2026');</code></pre>
+<p>The distinction between <a href="https://php.net/DateTimeImmutable" target="_blank" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">DateTimeImmutable</span></a> and <a href="https://php.net/DateTime" target="_blank" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">DateTime</span></a> is one of PHP's best design decisions. Use <code>DateTimeImmutable</code> everywhere and date-related bugs virtually disappear.</p>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Correctness</h3><div class="sig-body">Date and time handling is one of programming's hardest problems (time zones, daylight saving, leap seconds). PHP's DateTime classes handle these correctly out of the box, and DateTimeImmutable prevents the mutation bugs that plagued the mutable DateTime class.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/22">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/24">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #24 ──────────── -->
+<div class="detail-view" id="happy-24" data-id="24" data-prev="23" data-next="25">
+<div class="nav-buttons">
+  <a href="#/happy/23">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/25">Next Happiness &raquo;</a>
+</div>
+<h2><code>password_hash()</code> and <code>password_verify()</code></h2>
+<p>PHP 5.5 gave developers secure password hashing with the simplest possible API. Two functions. No salt management. No algorithm selection anxiety. It defaults to bcrypt with a reasonable cost, and it's future-proof.</p>
+<pre><code>// Hash a password — that's it
+$hash = password_hash('correct horse battery staple', PASSWORD_DEFAULT);
+// $2y$12$eUz3RiQ... (bcrypt, cost 12, random salt — all automatic)
+
+// Verify — constant-time comparison, safe against timing attacks
+if (password_verify($userInput, $storedHash)) {
+    // Correct password
+}
+
+// Future-proof: check if rehashing is needed (algorithm/cost changed)
+if (password_needs_rehash($storedHash, PASSWORD_DEFAULT)) {
+    $newHash = password_hash($userInput, PASSWORD_DEFAULT);
+    updateStoredHash($userId, $newHash);
+}
+
+// Argon2 support (PHP 7.2+)
+$hash = password_hash($password, PASSWORD_ARGON2ID, [
+    'memory_cost' => PASSWORD_ARGON2_DEFAULT_MEMORY_COST,
+    'time_cost'   => PASSWORD_ARGON2_DEFAULT_TIME_COST,
+    'threads'     => PASSWORD_ARGON2_DEFAULT_THREADS,
+]);
+
+// Get algorithm info
+$info = password_get_info($hash);
+// ['algo' => '2y', 'algoName' => 'bcrypt', 'options' => ['cost' => 12]]</code></pre>
+<p>The <a href="https://php.net/password_hash" target="_blank" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">password_hash</span></a> function generates a random salt automatically, encodes the algorithm and cost in the hash string, and uses a timing-safe comparison. It's nearly impossible to misuse. When <code>PASSWORD_DEFAULT</code> changes to a stronger algorithm in a future PHP version, <a href="https://php.net/password_needs_rehash" target="_blank" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">password_needs_rehash</span></a> handles the migration transparently.</p>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Security by Default</h3><div class="sig-body">Before <code>password_hash()</code>, developers used md5(), sha1(), or rolled their own salting. The result was millions of insecure password stores. By making the secure approach the easiest approach — literally two functions — PHP eliminated an entire class of security vulnerabilities across its ecosystem.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/23">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/25">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #25 ──────────── -->
+<div class="detail-view" id="happy-25" data-id="25" data-prev="24" data-next="26">
+<div class="nav-buttons">
+  <a href="#/happy/24">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/26">Next Happiness &raquo;</a>
+</div>
+<h2>Interfaces, Traits, and Abstract Classes</h2>
+<p>PHP's OOP toolkit gives you three complementary tools for code organization: interfaces for contracts, abstract classes for shared structure, and traits for horizontal code reuse. Together, they solve the diamond problem without multiple inheritance.</p>
+<pre><code>// Interface: define the contract
+interface Cacheable {
+    public function getCacheKey(): string;
+    public function getCacheTTL(): int;
+}
+
+// Trait: reuse implementation across unrelated classes
+trait HasTimestamps {
+    public DateTimeImmutable $createdAt;
+    public ?DateTimeImmutable $updatedAt = null;
+
+    public function touch(): void {
+        $this->updatedAt = new DateTimeImmutable();
+    }
+}
+
+// Abstract class: shared structure with extension points
+abstract class Model implements Cacheable {
+    use HasTimestamps;
+
+    abstract protected function tableName(): string;
+
+    public function getCacheKey(): string {
+        return $this->tableName() . ':' . $this->id;
+    }
+
+    public function getCacheTTL(): int {
+        return 3600;
+    }
+}
+
+// Concrete: just fill in the blanks
+class User extends Model {
+    use SoftDeletes;  // Another trait — compose freely
+
+    protected function tableName(): string {
+        return 'users';
+    }
+}</code></pre>
+<p>The combination is powerful: interfaces ensure interoperability, abstract classes provide sensible defaults, and traits let you compose behavior horizontally without deep inheritance hierarchies. Modern PHP codebases are flat and composable, not deeply nested.</p>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Architecture</h3><div class="sig-body">PHP's three-tool OOP approach encourages composition over inheritance. You can define behavior contracts (interfaces), share default implementations (abstract classes), and mix in cross-cutting concerns (traits) — all without the complexity and fragility of multiple inheritance.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/24">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/26">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #26 ──────────── -->
+<div class="detail-view" id="happy-26" data-id="26" data-prev="25" data-next="27">
+<div class="nav-buttons">
+  <a href="#/happy/25">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/27">Next Happiness &raquo;</a>
+</div>
+<h2>Late Static Binding</h2>
+<p>Late static binding (<code>static::</code> vs <code>self::</code>) lets parent classes defer method resolution to the child class. It's the foundation of the fluent factory pattern used by every modern PHP framework.</p>
+<pre><code>class Model {
+    protected static string $table;
+
+    // self:: would always resolve to Model — wrong!
+    // static:: resolves to whatever class called the method
+    public static function find(int $id): static {
+        $table = static::$table;
+        $row = DB::query("SELECT * FROM {$table} WHERE id = ?", [$id]);
+        return static::hydrate($row);  // Returns User, not Model
+    }
+
+    public static function create(array $data): static {
+        // static:: ensures the child class is instantiated
+        $instance = new static();
+        foreach ($data as $key => $value) {
+            $instance->$key = $value;
+        }
+        $instance->save();
+        return $instance;
+    }
+}
+
+class User extends Model {
+    protected static string $table = 'users';
+}
+
+class Post extends Model {
+    protected static string $table = 'posts';
+}
+
+$user = User::find(1);    // Returns User instance, queries 'users' table
+$post = Post::create([    // Returns Post instance
+    'title' => 'Hello',
+]);</code></pre>
+<p>The <code>static</code> return type (PHP 8.0) completed this feature by letting you declare that a method returns an instance of the called class, not the declaring class. This is what makes fluent builder patterns type-safe.</p>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Polymorphism</h3><div class="sig-body">Late static binding is the mechanism that makes framework base classes work. Without it, factory methods, fluent builders, and the Active Record pattern would be impossible to implement with proper type safety. It's a quiet feature that powers some of PHP's most elegant patterns.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/25">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/27">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #27 ──────────── -->
+<div class="detail-view" id="happy-27" data-id="27" data-prev="26" data-next="28">
+<div class="nav-buttons">
+  <a href="#/happy/26">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/28">Next Happiness &raquo;</a>
+</div>
+<h2>Anonymous Classes</h2>
+<p>PHP 7.0 added anonymous classes — inline, disposable class definitions. They're perfect for one-off implementations, testing, and anywhere you'd create a class that's only used once.</p>
+<pre><code>// Perfect for tests — no need to create a file for a stub
+$logger = new class implements LoggerInterface {
+    public array $logs = [];
+
+    public function log($level, $message, array $context = []): void {
+        $this->logs[] = compact('level', 'message', 'context');
+    }
+    // ... other PSR-3 methods
+};
+
+$service = new MyService($logger);
+$service->doWork();
+$this->assertCount(3, $logger->logs);
+
+// Inline adapters
+function createCacheAdapter(array &$store): CacheInterface {
+    return new class($store) implements CacheInterface {
+        public function __construct(private array &$store) {}
+
+        public function get(string $key, mixed $default = null): mixed {
+            return $this->store[$key] ?? $default;
+        }
+
+        public function set(string $key, mixed $value, int $ttl = 0): bool {
+            $this->store[$key] = $value;
+            return true;
+        }
+    };
+}
+
+// They support everything normal classes do:
+// constructors, interfaces, traits, inheritance, properties
+$event = new class('click', ['x' => 100]) extends Event implements Serializable {
+    use HasMetadata;
+    public function __construct(public string $type, public array $data) {
+        parent::__construct();
+    }
+};</code></pre>
+<p>Anonymous classes reduce file proliferation. Instead of creating <code>StubLogger.php</code> for a single test, you define it inline where it's used. The class exists only in the scope where it's created — no namespace pollution, no autoloading overhead.</p>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Pragmatism</h3><div class="sig-body">Not every class deserves a file. Anonymous classes let you create focused, single-use implementations without the overhead of naming, filing, and autoloading a class you'll never reference again. They're especially powerful in tests, where stub proliferation is a real maintenance burden.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/26">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/28">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #28 ──────────── -->
+<div class="detail-view" id="happy-28" data-id="28" data-prev="27" data-next="29">
+<div class="nav-buttons">
+  <a href="#/happy/27">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/29">Next Happiness &raquo;</a>
+</div>
+<h2>Heredoc/Nowdoc Flexibility</h2>
+<p>PHP 7.3 made heredocs and nowdocs actually usable by allowing the closing marker to be indented, and letting heredocs be used in any expression context. No more breaking your code's indentation for multi-line strings.</p>
+<pre><code>// Before PHP 7.3: closing marker must be at column 0
+// This breaks indentation in methods, conditions, everywhere
+function render() {
+    $html = &lt;&lt;&lt;HTML
+&lt;div class="card"&gt;
+    &lt;h2&gt;{$title}&lt;/h2&gt;
+    &lt;p&gt;{$body}&lt;/p&gt;
+&lt;/div&gt;
+HTML;  // ← HAD to be here, column 0. Ugly.
+}
+
+// After PHP 7.3: indented closing marker, content is de-indented
+function render() {
+    $html = &lt;&lt;&lt;HTML
+        &lt;div class="card"&gt;
+            &lt;h2&gt;{$title}&lt;/h2&gt;
+            &lt;p&gt;{$body}&lt;/p&gt;
+        &lt;/div&gt;
+        HTML;  // ← indented with the code. Clean.
+}
+
+// Can now be used in function arguments directly
+$response = response(&lt;&lt;&lt;JSON
+    {
+        "status": "ok",
+        "data": {$payload}
+    }
+    JSON);
+
+// Nowdoc (no interpolation) works the same way
+$query = &lt;&lt;&lt;'SQL'
+    SELECT users.*, COUNT(orders.id) as order_count
+    FROM users
+    LEFT JOIN orders ON orders.user_id = users.id
+    GROUP BY users.id
+    SQL;</code></pre>
+<p>This seemingly small change had a huge impact on code readability. SQL queries, HTML templates, JSON fixtures, and multi-line strings can now live inside your code without destroying the visual structure.</p>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Readability</h3><div class="sig-body">Code formatting isn't cosmetic — it's a communication tool. When multi-line strings forced you to break indentation, they made the surrounding code harder to read. Flexible heredocs let your string literals live harmoniously within your code's visual structure.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/27">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/29">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #29 ──────────── -->
+<div class="detail-view" id="happy-29" data-id="29" data-prev="28" data-next="30">
+<div class="nav-buttons">
+  <a href="#/happy/28">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/30">Next Happiness &raquo;</a>
+</div>
+<h2>Trailing Commas Everywhere</h2>
+<p>PHP progressively allowed trailing commas in more places: arrays (always), function calls (7.3), parameter lists (8.0), and closure <code>use</code> lists (8.0). Clean diffs, easy reordering, no syntax errors when adding items.</p>
+<pre><code>// Arrays (always supported — PHP was ahead of JS here!)
+$config = [
+    'debug' => true,
+    'cache' => false,
+    'log_level' => 'info',   // ← trailing comma, always worked
+];
+
+// Function/method calls (PHP 7.3)
+$result = sprintf(
+    '%s has %d items worth $%.2f',
+    $name,
+    $count,
+    $total,  // ← no more removing this comma when adding a line below
+);
+
+// Function/method declarations (PHP 8.0)
+function createUser(
+    string $name,
+    string $email,
+    Role $role = Role::User,  // ← add new params without touching this line
+) {
+    // ...
+}
+
+// Closure use lists (PHP 8.0)
+$fn = function () use (
+    $config,
+    $logger,
+    $cache,  // ← consistent everywhere
+) {
+    // ...
+};</code></pre>
+<p>Trailing commas mean cleaner git diffs: adding a new item only shows one changed line, not two (the new line plus the comma added to the previous line). They also make reordering lines trivial — no comma juggling.</p>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Developer Experience</h3><div class="sig-body">Trailing commas are a small syntax feature with outsized impact on daily workflow. They eliminate an entire class of syntax errors, produce cleaner version control diffs, and make copy-pasting and reordering lines effortless. It's the kind of thoughtful quality-of-life improvement that shows PHP listens to its developers.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/28">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/30">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #30 ──────────── -->
+<div class="detail-view" id="happy-30" data-id="30" data-prev="29" data-next="1">
+<div class="nav-buttons">
+  <a href="#/happy/29">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/1">Next Happiness &raquo;</a>
+</div>
+<h2>Nullsafe Operator <code>?-&gt;</code></h2>
+<p>The nullsafe operator (PHP 8.0) short-circuits a method chain when any intermediate value is <code>null</code>. No more nested <code>if</code> statements or ternary chains just to safely traverse an object graph.</p>
+<pre><code>// Before: defensive null checking at every step
+$country = null;
+if ($user !== null) {
+    $address = $user->getAddress();
+    if ($address !== null) {
+        $city = $address->getCity();
+        if ($city !== null) {
+            $country = $city->getCountry();
+        }
+    }
+}
+
+// After: one clean expression
+$country = $user?->getAddress()?->getCity()?->getCountry();
+
+// Works with properties too
+$name = $order?->customer?->profile?->displayName ?? 'Guest';
+
+// Works with method calls and array access
+$firstTag = $post?->getTags()?->first()?->name;
+
+// Real-world: Eloquent relationships
+$managerEmail = $employee
+    ?->department
+    ?->manager
+    ?->email
+    ?? 'no-manager@company.com';</code></pre>
+<p>The nullsafe operator composes perfectly with the null coalescing operator (<code>??</code>). Use <code>?-&gt;</code> to safely traverse, then <code>??</code> to provide a default. It's the complete null-handling toolkit in two operators.</p>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Expressiveness</h3><div class="sig-body">Null handling is one of the most common sources of both bugs and boilerplate. The nullsafe operator reduces a pyramid of null checks to a single fluent expression, making the happy path and the null path equally readable. Combined with <code>??</code>, PHP now has best-in-class null handling.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/29">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/1">Next Happiness &raquo;</a>
+</div>
+</div>
+
+</div><!-- /content -->
+
+<div class="footer">
+  ha<em>PHP</em>iness &middot; inspired by <a href="http://phpsadness.com/">PHP Sadness</a> &middot; because PHP grew up
+</div>
+
+<script>
+(function () {
+  const indexView = document.getElementById('index-view');
+  const detailViews = document.querySelectorAll('.detail-view');
+
+  function hideAll() {
+    indexView.classList.add('hidden');
+    detailViews.forEach(v => v.classList.remove('active'));
+  }
+
+  function showIndex() {
+    hideAll();
+    indexView.classList.remove('hidden');
+    window.scrollTo(0, 0);
+    document.title = 'haPHPiness';
+  }
+
+  function showEntry(id) {
+    const el = document.getElementById('happy-' + id);
+    if (!el) { showIndex(); return; }
+    hideAll();
+    el.classList.add('active');
+    window.scrollTo(0, 0);
+    const h2 = el.querySelector('h2');
+    document.title = (h2 ? h2.textContent : 'Happiness #' + id) + ' — haPHPiness';
+  }
+
+  function route() {
+    const hash = location.hash || '#/';
+    const match = hash.match(/^#\/happy\/(\d+)$/);
+    if (match) {
+      showEntry(parseInt(match[1], 10));
+    } else {
+      showIndex();
+    }
+  }
+
+  window.addEventListener('hashchange', route);
+  window.showIndex = function () { location.hash = '#/'; };
+
+  // Initial route
+  route();
+})();
+</script>
+</body>
+</html>
