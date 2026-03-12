@@ -627,14 +627,116 @@ a:hover { color: var(--warm-amber); text-decoration: underline; }
   <span class="version-tag">8.4</span>
 </a>
 
+
+<!-- ── Warp Speed ── -->
+<h2 class="category-heading">Warp Speed</h2>
+
+<a class="entry-link" href="#/happy/46">
+  <span class="entry-number">#46</span>
+  <span class="entry-title">JIT compilation — PHP has a JIT compiler</span>
+  <span class="version-tag">8.0</span>
+</a>
+<a class="entry-link" href="#/happy/47">
+  <span class="entry-number">#47</span>
+  <span class="entry-title">OPcache — bytecode caching in the box</span>
+  <span class="version-tag">5.5+</span>
+</a>
+
+<!-- ── True to Form ── -->
+<h2 class="category-heading">True to Form</h2>
+
+<a class="entry-link" href="#/happy/48">
+  <span class="entry-number">#48</span>
+  <span class="entry-title"><code>never</code> return type — functions that never return</span>
+  <span class="version-tag">8.1</span>
+</a>
+<a class="entry-link" href="#/happy/49">
+  <span class="entry-number">#49</span>
+  <span class="entry-title"><code>array_is_list()</code> — finally answer "is this sequential?"</span>
+  <span class="version-tag">8.1</span>
+</a>
+
+<!-- ── Beyond PHP ── -->
+<h2 class="category-heading">Beyond PHP</h2>
+
+<a class="entry-link" href="#/happy/50">
+  <span class="entry-number">#50</span>
+  <span class="entry-title">FFI — call C libraries directly from PHP</span>
+  <span class="version-tag">7.4</span>
+</a>
+
+<!-- ── Chaos Under Control ── -->
+<h2 class="category-heading">Chaos Under Control</h2>
+
+<a class="entry-link" href="#/happy/51">
+  <span class="entry-number">#51</span>
+  <span class="entry-title"><code>Random\Randomizer</code> — a proper CSPRNG API</span>
+  <span class="version-tag">8.2</span>
+</a>
+<a class="entry-link" href="#/happy/52">
+  <span class="entry-number">#52</span>
+  <span class="entry-title">WeakMap — object keys that don't leak memory</span>
+  <span class="version-tag">8.0</span>
+</a>
+
+<!-- ── Pattern Matching ── -->
+<h2 class="category-heading">Pattern Matching</h2>
+
+<a class="entry-link" href="#/happy/53">
+  <span class="entry-number">#53</span>
+  <span class="entry-title">Named capture groups in <code>preg_match</code></span>
+</a>
+<a class="entry-link" href="#/happy/54">
+  <span class="entry-number">#54</span>
+  <span class="entry-title">Spaceship operator <code>&lt;=&gt;</code> — three-way comparison</span>
+  <span class="version-tag">7.0</span>
+</a>
+<a class="entry-link" href="#/happy/55">
+  <span class="entry-number">#55</span>
+  <span class="entry-title">Array destructuring with keys — pattern matching for arrays</span>
+</a>
+
+<!-- ── Behind the Curtain ── -->
+<h2 class="category-heading">Behind the Curtain</h2>
+
+<a class="entry-link" href="#/happy/56">
+  <span class="entry-number">#56</span>
+  <span class="entry-title">Stream wrappers &amp; <code>php://</code> — virtual file handles</span>
+</a>
+
+<!-- ── World Ready ── -->
+<h2 class="category-heading">World Ready</h2>
+
+<a class="entry-link" href="#/happy/57">
+  <span class="entry-number">#57</span>
+  <span class="entry-title"><code>intl</code> MessageFormatter — ICU-backed proper i18n</span>
+</a>
+
+<!-- ── Trust but Verify ── -->
+<h2 class="category-heading">Trust but Verify</h2>
+
+<a class="entry-link" href="#/happy/58">
+  <span class="entry-number">#58</span>
+  <span class="entry-title">PHPStan &amp; Psalm — static analysis as a first-class citizen</span>
+</a>
+
+<!-- ── Elegance in Brevity ── -->
+<h2 class="category-heading">Elegance in Brevity</h2>
+
+<a class="entry-link" href="#/happy/59">
+  <span class="entry-number">#59</span>
+  <span class="entry-title">Numeric literal separators — <code>1_000_000</code></span>
+  <span class="version-tag">7.4</span>
+</a>
+
 </div><!-- /index-view -->
 
 <!-- ════════════════════════════════════════ ENTRIES ════════════════════════════════════════ -->
 
 <!-- ──────────── #1 ──────────── -->
-<div class="detail-view" id="happy-1" data-id="1" data-prev="45" data-next="2">
+<div class="detail-view" id="happy-1" data-id="1" data-prev="59" data-next="2">
 <div class="nav-buttons">
-  <a href="#/happy/45">&laquo; Previous Happiness</a>
+  <a href="#/happy/59">&laquo; Previous Happiness</a>
   <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
   <a href="#/happy/2">Next Happiness &raquo;</a>
 </div>
@@ -649,7 +751,7 @@ htmlspecialchars($string, double_encode: false);</code></pre>
 <p>Combined with <a href="https://php.net/array_slice" target="_blank" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">array_slice</span></a> and other functions that have many optional parameters, named arguments turn frustrating API calls into readable, maintainable code.</p>
 <div class="significance"><h3><span class="sig-label">Significance: </span>Readability</h3><div class="sig-body">Code is read far more often than it is written. Named arguments make function calls self-documenting, reducing the cognitive load of understanding existing code and eliminating an entire class of positional bugs.</div></div>
 <div class="nav-buttons nav-bottom">
-  <a href="#/happy/45">&laquo; Previous Happiness</a>
+  <a href="#/happy/59">&laquo; Previous Happiness</a>
   <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
   <a href="#/happy/2">Next Happiness &raquo;</a>
 </div>
@@ -2519,11 +2621,11 @@ class Transforms {
 </div>
 
 <!-- ──────────── #45 ──────────── -->
-<div class="detail-view" id="happy-45" data-id="45" data-prev="44" data-next="1">
+<div class="detail-view" id="happy-45" data-id="45" data-prev="44" data-next="46">
 <div class="nav-buttons">
   <a href="#/happy/44">&laquo; Previous Happiness</a>
   <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
-  <a href="#/happy/1">Next Happiness &raquo;</a>
+  <a href="#/happy/46">Next Happiness &raquo;</a>
 </div>
 <h2>URI Extension — Proper URL Parsing at Last</h2>
 <p>PHP 8.5 introduces a built-in URI extension with immutable, standards-compliant URL objects. It supports both RFC 3986 and the WHATWG URL Standard — replacing the limited <a href="https://php.net/parse_url" target="_blank" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">parse_url</span></a> with something that actually handles real-world URLs correctly.</p>
@@ -2564,6 +2666,628 @@ try {
 <div class="significance"><h3><span class="sig-label">Significance: </span>Correctness</h3><div class="sig-body">URL handling is security-critical: redirect validation, SSRF prevention, and OAuth flows all depend on parsing URLs correctly. The new URI extension replaces a 30-year-old function with a standards-compliant, immutable API that makes correct URL handling the default.</div></div>
 <div class="nav-buttons nav-bottom">
   <a href="#/happy/44">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/46">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #46 ──────────── -->
+<div class="detail-view" id="happy-46" data-id="46" data-prev="45" data-next="47">
+<div class="nav-buttons">
+  <a href="#/happy/45">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/47">Next Happiness &raquo;</a>
+</div>
+<h2>JIT Compilation — PHP Has a JIT Compiler</h2>
+<p>Yes, really. PHP 8.0 ships a tracing JIT compiler. For numeric and CPU-bound code, it delivers 3–10× speedups over interpreted execution. This is the feature PHP critics never mention.</p>
+<pre><code>; php.ini — enable tracing JIT (the most aggressive mode)
+opcache.enable=1
+opcache.jit_buffer_size=100M
+opcache.jit=tracing
+
+; Alternatively, function-level JIT for a lighter touch
+opcache.jit=function</code></pre>
+<p>The JIT works in two modes. <em>Function JIT</em> compiles entire functions ahead-of-time. <em>Tracing JIT</em> profiles hot paths at runtime and compiles only the loops and branches that actually run — the same strategy used by V8 and LuaJIT. For web request workloads, OPcache alone gives most of the gains. Where JIT shines is pure computation: image processing, machine learning inference, mathematical simulations, and game servers written in PHP.</p>
+<pre><code>// Benchmark: sum of squares, 10 million iterations
+// Without JIT:  ~1.8 seconds
+// With JIT:     ~0.22 seconds  (~8× faster)
+
+$sum = 0.0;
+for ($i = 0; $i &lt; 10_000_000; $i++) {
+    $sum += $i * $i;
+}
+echo $sum; // 3.3333333283267E+20</code></pre>
+<p>The JIT is built on top of OPcache and shares its infrastructure. It doesn't change the semantics of PHP at all — code that runs correctly without JIT runs identically with it.</p>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Performance</h3><div class="sig-body">PHP is no longer "fast enough for web." With JIT, PHP is a credible language for CPU-bound workloads that used to require a compiled language. This changes what PHP can be used for, not just how fast existing code runs.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/45">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/47">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #47 ──────────── -->
+<div class="detail-view" id="happy-47" data-id="47" data-prev="46" data-next="48">
+<div class="nav-buttons">
+  <a href="#/happy/46">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/48">Next Happiness &raquo;</a>
+</div>
+<h2>OPcache — Bytecode Caching in the Box</h2>
+<p>PHP compiles source code to bytecode on every request — unless OPcache is active. Bundled since PHP 5.5 and enabled by default in most distributions, OPcache stores compiled bytecode in shared memory so subsequent requests skip parsing and compilation entirely.</p>
+<pre><code>; php.ini — production-ready OPcache settings
+opcache.enable=1
+opcache.memory_consumption=256
+opcache.interned_strings_buffer=16
+opcache.max_accelerated_files=20000
+opcache.validate_timestamps=0   ; disable in production, reload to pick up changes
+opcache.save_comments=1         ; keep docblocks (needed by some frameworks)
+opcache.revalidate_freq=0</code></pre>
+<p>No Redis. No Memcached. No build pipeline. OPcache is pure shared memory — the fastest possible cache. Setting <code>validate_timestamps=0</code> in production means PHP never checks the filesystem for changes, which eliminates the most common I/O bottleneck in high-traffic applications.</p>
+<pre><code>// Check cache status at runtime
+$status = opcache_get_status();
+echo 'Cached scripts: ' . $status['opcache_statistics']['num_cached_scripts'];
+echo 'Hit rate: '       . round($status['opcache_statistics']['opcache_hit_rate'], 2) . '%';
+
+// Invalidate a single file after a deploy
+opcache_invalidate('/var/www/app/src/Controller/HomeController.php', force: true);
+
+// Or reset everything
+opcache_reset();</code></pre>
+<p>Combined with JIT, OPcache transforms PHP from an interpreted language into something much closer to a compiled runtime — without changing a single line of application code.</p>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Zero-Config Performance</h3><div class="sig-body">OPcache is the single highest-impact PHP configuration change, yet it requires no code changes and no extra infrastructure. Most PHP applications 2–5× their throughput by simply ensuring OPcache is enabled with sane settings.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/46">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/48">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #48 ──────────── -->
+<div class="detail-view" id="happy-48" data-id="48" data-prev="47" data-next="49">
+<div class="nav-buttons">
+  <a href="#/happy/47">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/49">Next Happiness &raquo;</a>
+</div>
+<h2><code>never</code> Return Type — Functions That Never Return</h2>
+<p>PHP 8.1 added the <code>never</code> return type for functions that unconditionally throw an exception or call <code>exit()</code>. It's a small addition with outsized benefits for static analysis and control flow clarity.</p>
+<pre><code>function redirect(string $url): never
+{
+    header('Location: ' . $url);
+    exit();
+}
+
+function abort(int $code, string $message): never
+{
+    throw new HttpException($code, $message);
+}
+
+// Static analysers understand the control flow
+function findOrFail(int $id): User
+{
+    $user = User::find($id);
+    if ($user === null) {
+        abort(404, 'User not found');  // analyser knows: never returns
+    }
+    return $user;  // analyser knows: $user is User here, not User|null
+}</code></pre>
+<p>Before <code>never</code>, static analysers had no way to know that <code>abort()</code> or <code>redirect()</code> would halt execution. They'd warn about missing <code>return</code> statements, or fail to narrow types after an early exit. With <code>never</code>, the entire call graph is understood: dead code after these calls is detected, and type narrowing works across function boundaries.</p>
+<pre><code>// PHPStan / Psalm understand this is unreachable:
+function process(string|null $value): string
+{
+    if ($value === null) {
+        abort(400, 'Required');  // never
+    }
+    return strtoupper($value);  // $value is string here — no null check needed
+}</code></pre>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Control Flow Clarity</h3><div class="sig-body"><code>never</code> makes implicit contracts explicit. Helper functions that always throw or redirect were always present in PHP codebases — now they carry their contract in the type signature, where static analysers and future readers can rely on it.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/47">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/49">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #49 ──────────── -->
+<div class="detail-view" id="happy-49" data-id="49" data-prev="48" data-next="50">
+<div class="nav-buttons">
+  <a href="#/happy/48">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/50">Next Happiness &raquo;</a>
+</div>
+<h2><code>array_is_list()</code> — Finally Answer "Is This Sequential?"</h2>
+<p>PHP has one array type that serves as both indexed arrays and associative maps. The question "is this a sequential list?" has been a recurring puzzle for decades. PHP 8.1 answered it definitively.</p>
+<pre><code>// An array is a "list" if keys are 0, 1, 2, ... in order
+array_is_list([]);                        // true  — empty array
+array_is_list(['a', 'b', 'c']);           // true  — sequential
+array_is_list([0 => 'a', 1 => 'b']);      // true  — same thing
+
+array_is_list(['a' => 1, 'b' => 2]);      // false — associative
+array_is_list([1 => 'a', 0 => 'b']);      // false — wrong order
+array_is_list([0 => 'a', 2 => 'c']);      // false — gap in keys</code></pre>
+<p>Before this, developers resorted to various imperfect heuristics: checking if <code>array_keys($arr) === range(0, count($arr) - 1)</code>, or comparing <code>json_encode</code> outputs, or writing custom functions that iterated the entire array. All of them were slow, surprising, or both.</p>
+<pre><code>// Real-world use: serialise correctly based on structure
+function toJson(array $data): string
+{
+    // array_is_list tells us whether to encode as [] or {}
+    return json_encode($data, JSON_THROW_ON_ERROR);
+    // json_encode already does this internally — now you can too
+}
+
+// Useful for input validation
+function validateItems(array $items): void
+{
+    if (!array_is_list($items)) {
+        throw new \InvalidArgumentException('Expected a list, got a map');
+    }
+}</code></pre>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Pragmatism</h3><div class="sig-body">The dual-nature of PHP arrays is a source of endless subtle bugs in serialization, API responses, and data manipulation. <code>array_is_list()</code> is the escape hatch: a single, fast, unambiguous check that settles the question at the language level.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/48">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/50">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #50 ──────────── -->
+<div class="detail-view" id="happy-50" data-id="50" data-prev="49" data-next="51">
+<div class="nav-buttons">
+  <a href="#/happy/49">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/51">Next Happiness &raquo;</a>
+</div>
+<h2>FFI — Call C Libraries Directly from PHP</h2>
+<p>PHP 7.4 introduced the Foreign Function Interface, letting you load shared libraries and call C functions directly — with no extension to compile, no PECL, and no separate process. This is the feature that reliably shocks people who dismissed PHP.</p>
+<pre><code>// Load the C math library and call cos() directly
+$ffi = FFI::cdef(
+    'double cos(double x);',  // C declaration
+    'libm.so.6'               // shared library (Linux); 'libm.dylib' on macOS
+);
+
+echo $ffi-&gt;cos(M_PI);  // -1.0 — called at C speed</code></pre>
+<p>FFI can work with C structs, pointers, arrays, and callbacks. You can load any shared library installed on the system — <code>libsodium</code>, <code>libgd</code>, OpenCV, even custom `.so` files you compiled yourself.</p>
+<pre><code>// Define and use a C struct
+$ffi = FFI::cdef('
+    typedef struct {
+        int x;
+        int y;
+    } Point;
+
+    typedef struct {
+        Point origin;
+        int width;
+        int height;
+    } Rect;
+');
+
+$rect = $ffi-&gt;new('Rect');
+$rect-&gt;origin-&gt;x = 10;
+$rect-&gt;origin-&gt;y = 20;
+$rect-&gt;width  = 100;
+$rect-&gt;height = 50;
+
+echo "{$rect-&gt;origin-&gt;x}, {$rect-&gt;origin-&gt;y}";  // 10, 20</code></pre>
+<p>For performance-critical inner loops, you can preload FFI definitions at startup via <code>ffi.preload</code> in <code>php.ini</code>, making the binding cost negligible. Projects like <a href="https://reactphp.org/" target="_blank" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">ReactPHP</span></a> and PHP-ML use FFI for exactly this.</p>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Systems Access</h3><div class="sig-body">FFI erases the boundary between PHP and the native world. Image processing, cryptography, hardware interfaces, and high-performance numerics are all accessible without leaving PHP. It turns PHP into a scripting layer for the entire C ecosystem.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/49">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/51">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #51 ──────────── -->
+<div class="detail-view" id="happy-51" data-id="51" data-prev="50" data-next="52">
+<div class="nav-buttons">
+  <a href="#/happy/50">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/52">Next Happiness &raquo;</a>
+</div>
+<h2><code>Random\Randomizer</code> — A Proper CSPRNG API</h2>
+<p>PHP 8.2 replaced the scattered <code>rand()</code>, <code>mt_rand()</code>, and <code>random_int()</code> functions with a unified, object-oriented randomness API. The key innovation: swappable engines.</p>
+<pre><code>use Random\Engine\Secure;
+use Random\Engine\Mt19937;
+use Random\Engine\Xoshiro256StarStar;
+use Random\Randomizer;
+
+// Cryptographically secure — for tokens, passwords, keys
+$secure = new Randomizer(new Secure());
+$token = $secure-&gt;getBytes(32);             // 32 random bytes
+$hex   = bin2hex($token);                   // 64-char hex token
+
+// Seeded determinism — for reproducible tests or procedural generation
+$seeded = new Randomizer(new Mt19937(12345));
+echo $seeded-&gt;getInt(1, 100);  // always the same for seed 12345
+
+// Fast non-secure — for simulations and games
+$fast = new Randomizer(new Xoshiro256StarStar(seed: 42));
+$shuffled = $fast-&gt;shuffleArray(['a', 'b', 'c', 'd', 'e']);
+$slice     = $fast-&gt;pickArrayKeys(['a', 'b', 'c', 'd'], 2);</code></pre>
+<p>The <code>Randomizer</code> also handles ranges, string shuffling, and picking elements without repetition — all delegating to the engine you choose. This makes the right choice (CSPRNG for security, seeded for reproducibility) an explicit, visible decision rather than a consequence of which function you happened to call.</p>
+<pre><code>// Generate a secure random password
+$chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%';
+$rng   = new Randomizer(new Secure());
+$password = $rng-&gt;getBytesFromString($chars, 16);
+
+// Shuffle a string securely
+$shuffled = $rng-&gt;shuffleBytes('Hello, World!');</code></pre>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Security by Design</h3><div class="sig-body">The old PHP randomness functions were a minefield — <code>rand()</code> was predictable, <code>mt_rand()</code> was seeded, and finding the secure option required knowing to look for <code>random_int()</code>. <code>Randomizer</code> makes the security properties of your choice visible at the call site.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/50">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/52">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #52 ──────────── -->
+<div class="detail-view" id="happy-52" data-id="52" data-prev="51" data-next="53">
+<div class="nav-buttons">
+  <a href="#/happy/51">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/53">Next Happiness &raquo;</a>
+</div>
+<h2>WeakMap — Object Keys That Don't Leak Memory</h2>
+<p>PHP 8.0 introduced <code>WeakMap</code>, a map where the keys are objects but holding a key doesn't prevent that object from being garbage collected. It's the perfect structure for per-object caches that would otherwise cause memory leaks.</p>
+<pre><code>$cache = new WeakMap();
+
+class QueryBuilder
+{
+    public function build(): string { /* ... */ return 'SELECT ...'; }
+}
+
+$qb = new QueryBuilder();
+
+// Associate computed data with the object
+$cache[$qb] = $qb-&gt;build();
+
+echo $cache[$qb];  // "SELECT ..."
+echo count($cache); // 1
+
+// When the object goes out of scope, the WeakMap entry is automatically removed
+unset($qb);
+
+echo count($cache); // 0 — cleaned up automatically, no memory leak</code></pre>
+<p>Compare this to a plain <code>SplObjectStorage</code> or a regular array keyed by <code>spl_object_id()</code>: both keep the object alive as long as the cache exists. With <code>WeakMap</code>, the cache is truly a side-channel — it holds data <em>about</em> objects without claiming ownership of them.</p>
+<pre><code>// Real-world: memoize expensive per-object computations
+class MetadataRegistry
+{
+    private WeakMap $cache;
+
+    public function __construct()
+    {
+        $this-&gt;cache = new WeakMap();
+    }
+
+    public function getMetadata(object $obj): array
+    {
+        if (!isset($this-&gt;cache[$obj])) {
+            $this-&gt;cache[$obj] = $this-&gt;computeExpensiveMetadata($obj);
+        }
+        return $this-&gt;cache[$obj];
+    }
+}</code></pre>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Memory Safety</h3><div class="sig-body">Caches that hold strong references to objects are a common source of memory leaks in long-running PHP processes (queues, servers, CLI commands). WeakMap makes object-keyed caches correct by default — no manual cleanup, no lifecycle management required.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/51">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/53">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #53 ──────────── -->
+<div class="detail-view" id="happy-53" data-id="53" data-prev="52" data-next="54">
+<div class="nav-buttons">
+  <a href="#/happy/52">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/54">Next Happiness &raquo;</a>
+</div>
+<h2>Named Capture Groups in <code>preg_match</code></h2>
+<p>PHP's <code>preg_match</code> supports PCRE named capture groups: <code>(?P&lt;name&gt;...)</code>. Instead of juggling numeric match indices, your captures become a named map.</p>
+<pre><code>// Parse an ISO 8601 date without counting brackets
+$pattern = '/^(?P&lt;year&gt;\d{4})-(?P&lt;month&gt;\d{2})-(?P&lt;day&gt;\d{2})$/';
+
+preg_match($pattern, '2024-03-15', $matches);
+
+echo $matches['year'];   // "2024"
+echo $matches['month'];  // "03"
+echo $matches['day'];    // "15"
+
+// Numeric indices still work too — your choice
+echo $matches[1];  // "2024"</code></pre>
+<p>Named groups shine in complex patterns where positional counting becomes error-prone:</p>
+<pre><code>// Parse a log line
+$log = '[2024-03-15 14:32:01] production.ERROR: Connection refused {"host":"db1"}';
+
+preg_match(
+    '/^\[(?P&lt;date&gt;[^\]]+)\]\s+(?P&lt;channel&gt;\w+)\.(?P&lt;level&gt;\w+):\s+(?P&lt;message&gt;[^{]+)/',
+    $log,
+    $m
+);
+
+echo $m['date'];     // "2024-03-15 14:32:01"
+echo $m['channel'];  // "production"
+echo $m['level'];    // "ERROR"
+echo trim($m['message']); // "Connection refused"</code></pre>
+<p>Named groups also work with <code>preg_replace_callback</code>, <code>preg_match_all</code>, and <code>preg_replace</code> using <code>${name}</code> syntax in replacement strings.</p>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Maintainability</h3><div class="sig-body">Numbered capture groups are an implementation detail that leaks into your calling code. Named groups make regex patterns self-documenting — the name describes what the group captures, and your code reads the intent rather than <code>$m[3]</code>.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/52">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/54">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #54 ──────────── -->
+<div class="detail-view" id="happy-54" data-id="54" data-prev="53" data-next="55">
+<div class="nav-buttons">
+  <a href="#/happy/53">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/55">Next Happiness &raquo;</a>
+</div>
+<h2>Spaceship Operator <code>&lt;=&gt;</code> — Three-Way Comparison</h2>
+<p>PHP 7.0 introduced <code>&lt;=&gt;</code>: it returns <code>-1</code>, <code>0</code>, or <code>1</code> depending on whether the left side is less than, equal to, or greater than the right. This is exactly what <code>usort</code> comparators need.</p>
+<pre><code>// Before: manual if/else dance
+usort($users, function ($a, $b) {
+    if ($a-&gt;age === $b-&gt;age) return 0;
+    return $a-&gt;age &lt; $b-&gt;age ? -1 : 1;
+});
+
+// After: one expression
+usort($users, fn($a, $b) =&gt; $a-&gt;age &lt;=&gt; $b-&gt;age);</code></pre>
+<p>Works on strings, integers, floats, and arrays. For multi-field sorting, chain comparisons with the <code>||</code> operator — when the first comparison is <code>0</code> (equal), fall through to the next:</p>
+<pre><code>// Sort by last name, then first name, then age
+usort($people, fn($a, $b) =&gt;
+    $a-&gt;lastName  &lt;=&gt; $b-&gt;lastName  ?:
+    $a-&gt;firstName &lt;=&gt; $b-&gt;firstName ?:
+    $a-&gt;age       &lt;=&gt; $b-&gt;age
+);
+
+// Sort products: in-stock first, then by price ascending
+usort($products, fn($a, $b) =&gt;
+    $b-&gt;inStock &lt;=&gt; $a-&gt;inStock ?: $a-&gt;price &lt;=&gt; $b-&gt;price
+);</code></pre>
+<p>The spaceship also works with PHP's built-in comparison semantics, so <code>'10' &lt;=&gt; '9'</code> returns <code>1</code> (numeric string comparison) and <code>[1, 2] &lt;=&gt; [1, 1]</code> compares element-by-element.</p>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Ergonomics</h3><div class="sig-body">The <code>usort</code> comparator pattern is one of the most-written pieces of PHP boilerplate. The spaceship operator collapses it to a single expression, and the <code>?:</code> chaining pattern for multi-key sorts reads almost like a specification.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/53">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/55">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #55 ──────────── -->
+<div class="detail-view" id="happy-55" data-id="55" data-prev="54" data-next="56">
+<div class="nav-buttons">
+  <a href="#/happy/54">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/56">Next Happiness &raquo;</a>
+</div>
+<h2>Array Destructuring with Keys — Pattern Matching for Arrays</h2>
+<p>PHP's short array syntax supports key-based destructuring: pull specific values out of an associative array by name, discarding the rest. It reads like pattern matching and eliminates a class of "which index is that?" bugs.</p>
+<pre><code>// Extract specific keys from an associative array
+$person = ['name' => 'Alice', 'age' => 30, 'city' => 'London'];
+
+['name' => $name, 'age' => $age] = $person;
+
+echo $name;  // "Alice"
+echo $age;   // 30
+// 'city' is ignored — only extract what you need</code></pre>
+<p>This shines in <code>foreach</code> loops over result sets, where each row is an associative array:</p>
+<pre><code>$rows = [
+    ['id' => 1, 'email' => 'alice@example.com', 'role' => 'admin'],
+    ['id' => 2, 'email' => 'bob@example.com',   'role' => 'user'],
+    ['id' => 3, 'email' => 'carol@example.com', 'role' => 'user'],
+];
+
+foreach ($rows as ['id' => $id, 'email' => $email]) {
+    echo "$id: $email\n";
+    // 'role' is irrelevant here — just ignore it
+}</code></pre>
+<p>You can also use the <code>list()</code> form with keys, and nesting works for deeper structures:</p>
+<pre><code>// Nested destructuring
+$config = [
+    'database' => ['host' => 'localhost', 'port' => 5432],
+    'cache'    => ['driver' => 'redis'],
+];
+
+['database' => ['host' => $host, 'port' => $port]] = $config;
+echo "$host:$port";  // "localhost:5432"</code></pre>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Expressiveness</h3><div class="sig-body">Destructuring with keys bridges the gap between PHP's associative arrays and pattern matching. Instead of <code>$row['email']</code> repeated five times in a loop body, you bind once and read a clean name throughout — and the intent is visible at the top of the block.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/54">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/56">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #56 ──────────── -->
+<div class="detail-view" id="happy-56" data-id="56" data-prev="55" data-next="57">
+<div class="nav-buttons">
+  <a href="#/happy/55">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/57">Next Happiness &raquo;</a>
+</div>
+<h2>Stream Wrappers &amp; <code>php://</code> — Virtual File Handles</h2>
+<p>PHP's stream system lets you treat memory, network connections, compression filters, and custom protocols as ordinary file handles. The built-in <code>php://</code> wrappers are especially useful.</p>
+<pre><code>// php://memory — a file handle backed by RAM, not disk
+$handle = fopen('php://memory', 'r+');
+fwrite($handle, "line one\n");
+fwrite($handle, "line two\n");
+
+rewind($handle);
+echo stream_get_contents($handle);  // "line one\nline two\n"
+fclose($handle);
+
+// Works with all standard file functions:
+rewind($handle);
+while (($line = fgets($handle)) !== false) {
+    echo trim($line);
+}</code></pre>
+<p><code>php://temp</code> works like <code>php://memory</code> but transparently spills to a temporary file if the data exceeds a threshold (default 2 MB) — the right default for processing uploads or large responses:</p>
+<pre><code>$handle = fopen('php://temp/maxmemory:5242880', 'r+');  // 5 MB threshold
+// Use it like any file handle; PHP handles the memory/disk decision</code></pre>
+<p>Other built-in wrappers: <code>php://stdin</code>, <code>php://stdout</code>, <code>php://stderr</code> for CLI pipes; <code>compress.zlib://file.gz</code> to read gzipped files transparently; <code>data://</code> for inline data URIs. You can also register your own stream wrapper with <code>stream_wrapper_register()</code> to implement custom protocols.</p>
+<pre><code>// Use php://memory to test I/O code without touching the filesystem
+function writeCsv(iterable $rows, $handle): void
+{
+    foreach ($rows as $row) {
+        fputcsv($handle, $row);
+    }
+}
+
+// In tests — no temp files, no cleanup, runs in microseconds
+$out = fopen('php://memory', 'r+');
+writeCsv([['a', 'b'], ['c', 'd']], $out);
+rewind($out);
+$result = stream_get_contents($out);
+assert($result === "a,b\nc,d\n");</code></pre>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Testability</h3><div class="sig-body"><code>php://memory</code> is the cleanest way to unit-test I/O code in PHP. Any function that accepts a file handle can be tested without touching the disk, without mock objects, and without temporary files to clean up. It's duck-typing for streams.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/55">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/57">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #57 ──────────── -->
+<div class="detail-view" id="happy-57" data-id="57" data-prev="56" data-next="58">
+<div class="nav-buttons">
+  <a href="#/happy/56">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/58">Next Happiness &raquo;</a>
+</div>
+<h2><code>intl</code> MessageFormatter — ICU-Backed Proper i18n</h2>
+<p>PHP bundles the ICU library via the <code>intl</code> extension. That means real internationalisation: pluralization rules for all languages, gender agreements, locale-aware number and date formatting — the things every web app needs and usually gets wrong.</p>
+<pre><code>use MessageFormatter;
+
+// Pluralization that actually works for every language
+$fmt = new MessageFormatter('en_US',
+    '{count, plural, one{# item} other{# items}}'
+);
+
+echo $fmt-&gt;format(['count' => 1]);   // "1 item"
+echo $fmt-&gt;format(['count' => 5]);   // "5 items"
+echo $fmt-&gt;format(['count' => 0]);   // "0 items"
+
+// Russian has four plural forms — ICU handles them automatically
+$fmt_ru = new MessageFormatter('ru_RU',
+    '{count, plural, one{# товар} few{# товара} many{# товаров} other{# товара}}'
+);
+echo $fmt_ru-&gt;format(['count' => 1]);   // "1 товар"
+echo $fmt_ru-&gt;format(['count' => 3]);   // "3 товара"
+echo $fmt_ru-&gt;format(['count' => 11]);  // "11 товаров"</code></pre>
+<p>The same extension provides locale-aware number, currency, and date formatting through <code>NumberFormatter</code> and <code>IntlDateFormatter</code>:</p>
+<pre><code>// Format numbers correctly for the locale
+$nf = new NumberFormatter('de_DE', NumberFormatter::DECIMAL);
+echo $nf-&gt;format(1234567.89);  // "1.234.567,89" — German conventions
+
+$cf = new NumberFormatter('en_US', NumberFormatter::CURRENCY);
+echo $cf-&gt;formatCurrency(9.99, 'USD');  // "$9.99"
+echo $cf-&gt;formatCurrency(9.99, 'EUR');  // "€9.99"
+
+// Collation — sort strings correctly for the locale
+$coll = new Collator('fr_FR');
+$words = ['éclair', 'apple', 'été', 'banane'];
+$coll-&gt;sort($words);
+// Sorted according to French alphabetical rules, not ASCII byte order</code></pre>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Correctness at Scale</h3><div class="sig-body">Hardcoded plural rules ("1 item, N items") break for Arabic (six plural forms), Polish (four), and many others. ICU's CLDR data covers 700+ locales. Using <code>intl</code> means your app handles pluralization and formatting correctly in languages you don't know, without writing a single locale-specific branch.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/56">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/58">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #58 ──────────── -->
+<div class="detail-view" id="happy-58" data-id="58" data-prev="57" data-next="59">
+<div class="nav-buttons">
+  <a href="#/happy/57">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/59">Next Happiness &raquo;</a>
+</div>
+<h2>PHPStan &amp; Psalm — Static Analysis as a First-Class Citizen</h2>
+<p>Run PHPStan at its strictest level on a modern PHP codebase and you get TypeScript-grade type safety — with zero runtime overhead and no transpile step. This is one of the most important things PHP developers don't know they have.</p>
+<pre><code># Install
+composer require --dev phpstan/phpstan
+
+# Run at max strictness (level 9)
+vendor/bin/phpstan analyse src --level=9</code></pre>
+<p>At level 9, PHPStan catches bugs that would otherwise only surface at runtime:</p>
+<pre><code>// PHPStan catches this at analysis time, not in production:
+function processUser(?User $user): string
+{
+    return strtoupper($user-&gt;name);
+    //                ^^^^^^^^^^^^
+    // Error: Cannot access property $name on null.
+    // Add a null check or change the type to User.
+}
+
+// After fix — PHPStan is satisfied:
+function processUser(?User $user): string
+{
+    if ($user === null) {
+        return 'Guest';
+    }
+    return strtoupper($user-&gt;name);
+}</code></pre>
+<p>At higher levels, PHPStan enforces return types, detects dead code, validates array shapes, and understands generics via PHPDoc. Psalm (the alternative from Vimeo) goes even further with its type inference engine and taint analysis for security vulnerabilities.</p>
+<pre><code># phpstan.neon — project configuration
+parameters:
+    level: 9
+    paths:
+        - src
+    strictRules:
+        disallowedBacktick: true
+        disallowedConstructs:
+            - 'empty'  # empty() masks bugs; be explicit</code></pre>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Confidence Without Ceremony</h3><div class="sig-body">Static analysis turns PHP's optional type system into a mandatory one — without changing the language. A codebase with PHPStan at level 9 has fewer runtime surprises than many statically-typed languages, because the analyser understands nullability, generics, and control flow in ways that simple type declarations can't express.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/57">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/59">Next Happiness &raquo;</a>
+</div>
+</div>
+
+<!-- ──────────── #59 ──────────── -->
+<div class="detail-view" id="happy-59" data-id="59" data-prev="58" data-next="1">
+<div class="nav-buttons">
+  <a href="#/happy/58">&laquo; Previous Happiness</a>
+  <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
+  <a href="#/happy/1">Next Happiness &raquo;</a>
+</div>
+<h2>Numeric Literal Separators — <code>1_000_000</code></h2>
+<p>PHP 7.4 lets you insert underscores anywhere in numeric literals. The compiler ignores them; your eyes don't have to count digits.</p>
+<pre><code>// Before: count the zeros
+$population     = 8000000000;
+$diskSize       = 1099511627776;
+$maxUpload      = 10485760;
+
+// After: immediately readable
+$population     = 8_000_000_000;       // 8 billion
+$diskSize       = 1_099_511_627_776;   // 1 TiB in bytes
+$maxUpload      = 10_485_760;          // 10 MiB</code></pre>
+<p>Works in every numeric context — integers, floats, hex, octal, binary, and scientific notation:</p>
+<pre><code>// Hex colour / bitmask constants become self-documenting
+const PERMISSION_READ    = 0b0000_0001;
+const PERMISSION_WRITE   = 0b0000_0010;
+const PERMISSION_EXECUTE = 0b0000_0100;
+const PERMISSION_ALL     = 0b0000_0111;
+
+// RGB hex values
+$red    = 0xFF_00_00;
+$green  = 0x00_FF_00;
+$blue   = 0x00_00_FF;
+$white  = 0xFF_FF_FF;
+
+// Financial precision
+$price      = 1_299.99;
+$taxRate    = 0.07_5;       // 7.5%
+$threshold  = 1_000_000.00; // one million</code></pre>
+<p>Underscores can go between any two digits, so you can group by your domain's conventions: thousands in decimal, bytes in binary, nibbles in hex. The runtime value is identical — this is purely a readability aid.</p>
+<div class="significance"><h3><span class="sig-label">Significance: </span>Readability</h3><div class="sig-body">Misreading a number's magnitude is a real bug category. Off-by-a-power-of-ten errors in timeouts, file size limits, and financial calculations have real consequences. Numeric separators make the magnitude visible at a glance, in the same way that formatting a number for display would.</div></div>
+<div class="nav-buttons nav-bottom">
+  <a href="#/happy/58">&laquo; Previous Happiness</a>
   <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
   <a href="#/happy/1">Next Happiness &raquo;</a>
 </div>
