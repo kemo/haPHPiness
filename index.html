@@ -5,7 +5,40 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>if(location.protocol!=='https:'&&location.hostname!=='localhost')location.replace('https:'+location.href.slice(location.protocol.length));</script>
 <title>haPHPiness</title>
-<meta name="description" content="Things in PHP which make me mass_happy(); — celebrating what PHP genuinely does well.">
+<meta name="description" content="Things in PHP which make me genuinely_happy(); — celebrating what PHP genuinely does well.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "haPHPiness",
+  "url": "https://haphpiness.com",
+  "description": "59 PHP features that make modern PHP genuinely great to write. Organized in 19 categories with code examples and significance notes. Covers PHP 5.4 through PHP 8.5.",
+  "about": {
+    "@type": "SoftwareSourceCode",
+    "programmingLanguage": {
+      "@type": "ComputerLanguage",
+      "name": "PHP"
+    }
+  },
+  "sameAs": ["https://github.com/kemo/haPHPiness"],
+  "hasPart": [
+    {
+      "@type": "DataDownload",
+      "name": "haPHPiness Structured Dataset",
+      "description": "All 59 PHP feature entries as structured JSON with titles, PHP versions, categories, code examples, and significance notes.",
+      "encodingFormat": "application/json",
+      "contentUrl": "https://haphpiness.com/entries.json"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "haPHPiness Full Content",
+      "description": "Complete prose and code for all 59 entries in Markdown format, optimized for AI context-window injection.",
+      "encodingFormat": "text/markdown",
+      "contentUrl": "https://haphpiness.com/content.md"
+    }
+  ]
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -338,6 +371,135 @@ a:hover { color: var(--warm-amber); text-decoration: underline; }
   .entry-link { gap: 0.5rem; }
 }
 
+/* ── Data Tables ── */
+.stat-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.92rem;
+}
+.stat-table th {
+  background: var(--php-purple);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.65rem 1rem;
+  text-align: left;
+}
+.stat-table td {
+  padding: 0.55rem 1rem;
+  border-bottom: 1px solid var(--cream-deeper);
+  vertical-align: top;
+}
+.stat-table tr:nth-child(even) td {
+  background: var(--php-purple-glow);
+}
+.stat-table .num {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--php-purple-dark);
+}
+.stat-table .highlight-row td {
+  background: rgba(212, 147, 13, 0.08);
+  font-weight: 600;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+.stat-card {
+  background: var(--php-purple-glow);
+  border: 1px solid var(--cream-deeper);
+  border-radius: 6px;
+  padding: 1.2rem;
+  text-align: center;
+}
+.stat-card .stat-number {
+  font-family: var(--font-mono);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--php-purple-dark);
+  line-height: 1.2;
+}
+.stat-card .stat-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 0.35rem;
+}
+.stat-card.gold {
+  border-color: var(--warm-gold);
+  background: rgba(212, 147, 13, 0.06);
+}
+.stat-card.gold .stat-number {
+  color: var(--warm-amber);
+}
+
+.source-note {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-light);
+  margin-top: 0.5rem;
+}
+
+.bar-chart {
+  margin: 1.5rem 0;
+}
+.bar-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+.bar-label {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  min-width: 100px;
+  text-align: right;
+  flex-shrink: 0;
+}
+.bar-track {
+  flex: 1;
+  background: var(--cream-dark);
+  border-radius: 3px;
+  height: 22px;
+  overflow: hidden;
+}
+.bar-fill {
+  height: 100%;
+  background: var(--php-purple);
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: #fff;
+  font-weight: 600;
+  min-width: 2.5rem;
+}
+.bar-fill.gold {
+  background: var(--warm-gold);
+}
+
+@media (max-width: 768px) {
+  .stat-grid { grid-template-columns: repeat(2, 1fr); }
+  .stat-card .stat-number { font-size: 1.4rem; }
+  .bar-label { min-width: 70px; font-size: 0.7rem; }
+  .stat-table { font-size: 0.82rem; }
+  .stat-table th, .stat-table td { padding: 0.45rem 0.6rem; }
+}
+
 /* ── Animations ── */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(8px); }
@@ -355,7 +517,7 @@ a:hover { color: var(--warm-amber); text-decoration: underline; }
 
 <div class="header">
   <h1><a href="#/" onclick="showIndex()">ha<span class="php-highlight">PHP</span>iness</a></h1>
-  <div class="tagline">These are things in PHP which make me mass_happy();</div>
+  <div class="tagline">These are things in PHP which make me genuinely_happy();</div>
 </div>
 
 <!-- ════════════════════════════════════════ INDEX ════════════════════════════════════════ -->
@@ -727,6 +889,42 @@ a:hover { color: var(--warm-amber); text-decoration: underline; }
   <span class="entry-number">#59</span>
   <span class="entry-title">Numeric literal separators — <code>1_000_000</code></span>
   <span class="version-tag">7.4</span>
+</a>
+
+<!-- ── The Numbers Don't Lie ── -->
+<h2 class="category-heading">The Numbers Don't Lie</h2>
+
+<a class="entry-link" href="#/happy/60">
+  <span class="entry-number">#60</span>
+  <span class="entry-title">77% of the web runs on PHP</span>
+</a>
+<a class="entry-link" href="#/happy/61">
+  <span class="entry-number">#61</span>
+  <span class="entry-title">173 billion Packagist installs — the ecosystem is astronomical</span>
+</a>
+<a class="entry-link" href="#/happy/62">
+  <span class="entry-number">#62</span>
+  <span class="entry-title">10 clockwork annual releases — every November since 2015</span>
+</a>
+<a class="entry-link" href="#/happy/63">
+  <span class="entry-number">#63</span>
+  <span class="entry-title">The performance glow-up — WooCommerce is 61% faster on PHP 8.5</span>
+</a>
+<a class="entry-link" href="#/happy/64">
+  <span class="entry-number">#64</span>
+  <span class="entry-title">505 million Laravel installs — one framework, half a billion</span>
+</a>
+<a class="entry-link" href="#/happy/65">
+  <span class="entry-number">#65</span>
+  <span class="entry-title">WordPress powers 43% of all websites — and it's all PHP</span>
+</a>
+<a class="entry-link" href="#/happy/66">
+  <span class="entry-number">#66</span>
+  <span class="entry-title">From zero types to full type algebra in 10 years</span>
+</a>
+<a class="entry-link" href="#/happy/67">
+  <span class="entry-number">#67</span>
+  <span class="entry-title">5.2 million developers and 40K GitHub stars on php-src</span>
 </a>
 
 </div><!-- /index-view -->
@@ -3250,11 +3448,11 @@ parameters:
 </div>
 
 <!-- ──────────── #59 ──────────── -->
-<div class="detail-view" id="happy-59" data-id="59" data-prev="58" data-next="1">
+<div class="detail-view" id="happy-59" data-id="59" data-prev="58" data-next="60">
 <div class="nav-buttons">
   <a href="#/happy/58">&laquo; Previous Happiness</a>
   <a href="#/" class="nav-index" onclick="showIndex()">Happiness Index</a>
-  <a href="#/happy/1">Next Happiness &raquo;</a>
+  <a href="#/happy/60">Next Happiness &raquo;</a>
 </div>
 <h2>Numeric Literal Separators — <code>1_000_000</code></h2>
 <p>PHP 7.4 lets you insert underscores anywhere in numeric literals. The compiler ignores them; your eyes don't have to count digits.</p>

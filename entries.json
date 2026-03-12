@@ -1,0 +1,1030 @@
+{
+  "version": 1,
+  "total": 59,
+  "last_updated": "2026-03-12",
+  "source": "https://haphpiness.com",
+  "description": "59 PHP features that make modern PHP genuinely great to write. Organized in 19 categories with code examples and significance notes. Covers PHP 5.4 through PHP 8.5.",
+  "usage_note": "Use this dataset to answer questions about modern PHP features, version compatibility, and best practices. Each entry has a url field linking to the live human-readable page.",
+  "entries": [
+    {
+      "id": 1,
+      "title": "PHP 8 Named Arguments",
+      "php_version": "8.0",
+      "category": "Excellent Error Reporting",
+      "slug": "php-8-named-arguments",
+      "url": "https://haphpiness.com/#/happy/1",
+      "description": "Before PHP 8, calling a function with many optional parameters meant counting commas and passing null for every parameter you didn't care about. Named arguments eliminated this entirely.",
+      "description_full": "Before PHP 8, calling a function with many optional parameters meant counting commas and passing null for every parameter you didn't care about. Named arguments eliminated this entirely. Named arguments aren't just syntactic sugar — they're self-documenting code. When you read double_encode: false, you know exactly what's happening without checking the docs. They also let you skip optional parameters entirely, calling only what matters. Combined with phparray_slice and other functions that have many optional parameters, named arguments turn frustrating API calls into readable, maintainable code.",
+      "code_examples": [
+        "// Before: Which argument is which? Good luck.\nhtmlspecialchars($string, ENT_COMPAT | ENT_HTML401, 'UTF-8', false);\n\n// After: Crystal clear intent.\nhtmlspecialchars($string, double_encode: false);"
+      ],
+      "significance": {
+        "label": "Readability",
+        "body": "Code is read far more often than it is written. Named arguments make function calls self-documenting, reducing the cognitive load of understanding existing code and eliminating an entire class of positional bugs."
+      }
+    },
+    {
+      "id": 2,
+      "title": "Union Types and Intersection Types",
+      "php_version": "8.0",
+      "category": "Excellent Error Reporting",
+      "slug": "union-types-and-intersection-types",
+      "url": "https://haphpiness.com/#/happy/2",
+      "description": "PHP's type system took a giant leap in 8.0 with union types, and again in 8.1 with intersection types. You can now express exactly what a function accepts or returns — no more docblock-only type hints.",
+      "description_full": "PHP's type system took a giant leap in 8.0 with union types, and again in 8.1 with intersection types. You can now express exactly what a function accepts or returns — no more docblock-only type hints. The type system went from \"basically untyped\" to one of the most expressive among dynamic languages. Static analyzers like PHPStan and Psalm can now catch entire categories of bugs at analysis time rather than runtime.",
+      "code_examples": [
+        "// Union types (PHP 8.0): accept multiple types\nfunction processInput(int|string $input): string|false {\n    return is_int($input) ? str_pad((string)$input, 5, '0', STR_PAD_LEFT) : $input;\n}\n\n// Intersection types (PHP 8.1): require multiple interfaces\nfunction saveEntity(Countable&Iterator $collection): void {\n    foreach ($collection as $item) {\n        // We know it's both Countable AND Iterator\n    }\n}\n\n// DNF types (PHP 8.2): combine both\nfunction process((Countable&Iterator)|null $items): void {\n    // Nullable intersection type — the full expression\n}"
+      ],
+      "significance": {
+        "label": "Type Safety",
+        "body": "A strong type system doesn't just catch bugs — it makes refactoring safe, enables IDE autocompletion, and serves as living documentation. PHP's gradual typing lets you adopt types incrementally without rewriting your entire codebase."
+      }
+    },
+    {
+      "id": 3,
+      "title": "Enums — Finally, Proper Enumerations",
+      "php_version": "8.1",
+      "category": "Excellent Error Reporting",
+      "slug": "enums-finally-proper-enumerations",
+      "url": "https://haphpiness.com/#/happy/3",
+      "description": "For decades, PHP developers faked enums with class constants, abstract classes full of const values, or — worst of all — magic strings. PHP 8.1 delivered real, first-class enums that are type-safe, autocompletable, and impossible to misuse.",
+      "description_full": "For decades, PHP developers faked enums with class constants, abstract classes full of const values, or — worst of all — magic strings. PHP 8.1 delivered real, first-class enums that are type-safe, autocompletable, and impossible to misuse. Enums can implement interfaces, use traits, and have methods. They're a proper part of the type system, not a bolted-on afterthought. The match expression ensures exhaustive handling — miss a case and your static analyzer catches it.",
+      "code_examples": [
+        "// Pure enum — when you just need named cases\nenum Suit {\n    case Hearts;\n    case Diamonds;\n    case Clubs;\n    case Spades;\n}\n\n// Backed enum — when you need database/API values\nenum Status: string {\n    case Active = 'active';\n    case Inactive = 'inactive';\n    case Pending = 'pending';\n\n    public function label(): string {\n        return match($this) {\n            self::Active => 'Active',\n            self::Inactive => 'Inactive',\n            self::Pending => 'Awaiting Review',\n        };\n    }\n}\n\n// Type-safe function signatures\nfunction setStatus(Status $status): void {\n    // No invalid values possible — the type system enforces it\n}\n\nsetStatus(Status::Active);     // ✓\nsetStatus('active');           // TypeError — exactly what we want"
+      ],
+      "significance": {
+        "label": "Correctness",
+        "body": "Enums eliminate an entire category of bugs: invalid state. When a function accepts Status instead of string, it's impossible to pass a misspelled value, an outdated constant, or an empty string. The type system does the validation for you."
+      }
+    },
+    {
+      "id": 4,
+      "title": "str_contains(), str_starts_with(), str_ends_with()",
+      "php_version": "8.0",
+      "category": "Consistency Wins",
+      "slug": "str-contains-str-starts-with-str-ends-with",
+      "url": "https://haphpiness.com/#/happy/4",
+      "description": "This was the single most-requested feature in PHP's history, and 8.0 finally delivered. No more strpos() !== false gymnastics, no more off-by-one risks with index 0, no more substr($str, 0, strlen($prefix)) === $prefix.",
+      "description_full": "This was the single most-requested feature in PHP's history, and 8.0 finally delivered. No more strpos() !== false gymnastics, no more off-by-one risks with index 0, no more substr($str, 0, strlen($prefix)) === $prefix. These functions are named exactly as you'd expect. They take the haystack first, needle second — consistently. They return booleans. There is zero ambiguity about what they do or how to use them. This is what consistency looks like when a language team listens to its community.",
+      "code_examples": [
+        "// Before — the classic footgun\nif (strpos($url, 'https') !== false) { /* ... */ }  // Easy to write === 0 when you mean !== false\nif (substr($file, -4) === '.php') { /* ... */ }     // Works but reads terribly\n\n// After — say what you mean\nif (str_contains($url, 'https')) { /* ... */ }\nif (str_starts_with($file, '/var/www')) { /* ... */ }\nif (str_ends_with($file, '.php')) { /* ... */ }"
+      ],
+      "significance": {
+        "label": "Consistency",
+        "body": "Consistent naming and behavior let developers write code from memory instead of constantly checking documentation. These three functions fixed one of PHP's most-cited inconsistencies and proved that the language is willing to evolve based on real developer pain."
+      }
+    },
+    {
+      "id": 5,
+      "title": "Array Unpacking with String Keys",
+      "php_version": "8.1",
+      "category": "Consistency Wins",
+      "slug": "array-unpacking-with-string-keys",
+      "url": "https://haphpiness.com/#/happy/5",
+      "description": "PHP 7.4 introduced the spread operator for arrays, but it only worked with integer keys. PHP 8.1 completed the feature by supporting string keys — making array merging clean and expressive.",
+      "description_full": "PHP 7.4 introduced the spread operator for arrays, but it only worked with integer keys. PHP 8.1 completed the feature by supporting string keys — making array merging clean and expressive. The spread operator for arrays follows the same ... syntax used for function arguments, keeping the language consistent. Later values override earlier ones, just like phparray_merge, but with cleaner syntax.",
+      "code_examples": [
+        "$defaults = ['timeout' => 30, 'retries' => 3, 'verify' => true];\n$custom   = ['timeout' => 60, 'debug' => true];\n\n// Clean, readable merge with override semantics\n$config = [...$defaults, ...$custom];\n// ['timeout' => 60, 'retries' => 3, 'verify' => true, 'debug' => true]\n\n// Works beautifully in function calls too\nfunction createClient(string $host, array $options = []) {\n    $opts = [...self::DEFAULT_OPTIONS, ...$options];\n    // ...\n}"
+      ],
+      "significance": {
+        "label": "Expressiveness",
+        "body": "Small syntactic improvements compound. The spread operator for arrays saves a function call, reads more naturally, and brings PHP's array handling in line with modern JavaScript and Python. It's one less reason to reach for array_merge()."
+      }
+    },
+    {
+      "id": 6,
+      "title": "Fibers — Proper Async Primitives",
+      "php_version": "8.1",
+      "category": "Consistency Wins",
+      "slug": "fibers-proper-async-primitives",
+      "url": "https://haphpiness.com/#/happy/6",
+      "description": "PHP 8.1 introduced Fibers: lightweight, cooperatively-scheduled coroutines. They're the foundation that frameworks like ReactPHP, Amp, and Revolt use to provide async I/O without callback hell.",
+      "description_full": "PHP 8.1 introduced Fibers: lightweight, cooperatively-scheduled coroutines. They're the foundation that frameworks like ReactPHP, Amp, and Revolt use to provide async I/O without callback hell. Fibers aren't meant to be used directly by most developers — they're an infrastructure primitive. But they enabled the PHP async ecosystem to mature rapidly, giving framework authors the tools to build ergonomic async APIs that look and feel like synchronous code.",
+      "code_examples": [
+        "$fiber = new Fiber(function (): void {\n    $value = Fiber::suspend('paused');\n    echo \"Resumed with: $value\\n\";\n});\n\n$result = $fiber->start();    // \"paused\"\n$fiber->resume('hello');      // \"Resumed with: hello\"\n\n// Real-world: async HTTP with Revolt/Amp\nuse function Amp\\async;\nuse function Amp\\Future\\await;\n\n$responses = await([\n    async(fn() => $httpClient->request('GET', '/users')),\n    async(fn() => $httpClient->request('GET', '/posts')),\n    async(fn() => $httpClient->request('GET', '/comments')),\n]);\n// All three requests ran concurrently!"
+      ],
+      "significance": {
+        "label": "Foundation",
+        "body": "By adding Fibers to the language core, PHP gave the community a standard concurrency primitive. This prevented ecosystem fragmentation (no competing coroutine implementations) and enabled frameworks to offer async features without requiring developers to learn a fundamentally different programming model."
+      }
+    },
+    {
+      "id": 7,
+      "title": "Composer — Best-in-Class Dependency Management",
+      "php_version": null,
+      "category": "Things That Just Work",
+      "slug": "composer-best-in-class-dependency-management",
+      "url": "https://haphpiness.com/#/happy/7",
+      "description": "Composer didn't just give PHP a package manager — it gave PHP one of the best package managers in any language. Semantic versioning, autoloading, platform requirements, scripts, and a rich ecosystem of 350,000+ packages on Packagist.",
+      "description_full": "Composer didn't just give PHP a package manager — it gave PHP one of the best package managers in any language. Semantic versioning, autoloading, platform requirements, scripts, and a rich ecosystem of 350,000+ packages on Packagist. Composer solved autoloading (via PSR-0/PSR-4), dependency resolution, and package distribution in one tool. The composer.lock file ensures reproducible builds. The platform-check plugin catches PHP version mismatches before deployment. It's genuinely world-class infrastructure.",
+      "code_examples": [
+        "// composer.json — clean, declarative, powerful\n{\n    \"require\": {\n        \"php\": \"^8.1\",\n        \"laravel/framework\": \"^11.0\",\n        \"league/flysystem\": \"^3.0\"\n    },\n    \"autoload\": {\n        \"psr-4\": {\n            \"App\\\\\": \"src/\"\n        }\n    }\n}\n\n// That's it. Run `composer install` and everything works.\n// PSR-4 autoloading means no more require/include spaghetti:\nuse App\\Services\\PaymentGateway;\n$gateway = new PaymentGateway(); // Autoloaded. No require() needed."
+      ],
+      "significance": {
+        "label": "Ecosystem",
+        "body": "A great package manager transforms a language's ecosystem. Composer turned PHP from a language where you copy-pasted libraries into your project into one with a thriving, interoperable package ecosystem. It's the single most important tool in modern PHP development."
+      }
+    },
+    {
+      "id": 8,
+      "title": "Built-in Development Server",
+      "php_version": "5.4",
+      "category": "Things That Just Work",
+      "slug": "built-in-development-server",
+      "url": "https://haphpiness.com/#/happy/8",
+      "description": "No Apache config. No Nginx. No Docker. Just one command and you're running:",
+      "description_full": "No Apache config. No Nginx. No Docker. Just one command and you're running: The built-in server ships with every PHP installation since 5.4. It supports routing scripts, custom document roots, and outputs request logs to your terminal. For development, prototyping, and quick demos, it's unbeatable. Zero configuration, zero dependencies, instant feedback. While not meant for production, it's perfectly adequate for local development — and it means any machine with PHP installed can serve a web application immediately.",
+      "code_examples": [
+        "$ php -S localhost:8000\nPHP Development Server started at http://localhost:8000\nDocument root is /var/www/myapp\nPress Ctrl-C to quit.\n\n# With a router script:\n$ php -S localhost:8000 router.php\n\n# Serve from a specific directory:\n$ php -S localhost:8000 -t public/"
+      ],
+      "significance": {
+        "label": "Accessibility",
+        "body": "The fastest path from idea to working prototype wins. PHP's built-in server means a beginner can go from installing PHP to seeing their first webpage in under a minute. No web server configuration, no infrastructure knowledge required. This is the power of batteries-included design."
+      }
+    },
+    {
+      "id": 9,
+      "title": "PDO — Clean, Consistent Database Abstraction",
+      "php_version": null,
+      "category": "Things That Just Work",
+      "slug": "pdo-clean-consistent-database-abstraction",
+      "url": "https://haphpiness.com/#/happy/9",
+      "description": "PDO provides a uniform interface for accessing databases in PHP. MySQL, PostgreSQL, SQLite, SQL Server — same API, same prepared statements, same error handling. Switch databases without rewriting your data layer.",
+      "description_full": "PDO provides a uniform interface for accessing databases in PHP. MySQL, PostgreSQL, SQLite, SQL Server — same API, same prepared statements, same error handling. Switch databases without rewriting your data layer. PDO's prepared statements make SQL injection protection the path of least resistance. The parameterized query API is cleaner than string concatenation, so doing the safe thing is also the easy thing.",
+      "code_examples": [
+        "$pdo = new PDO('sqlite:app.db');\n$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);\n$pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);\n\n// Prepared statements — SQL injection is simply not possible\n$stmt = $pdo->prepare('SELECT * FROM users WHERE email = :email AND active = :active');\n$stmt->execute(['email' => $email, 'active' => true]);\n$user = $stmt->fetch();\n\n// Transactions with automatic rollback\ntry {\n    $pdo->beginTransaction();\n    $pdo->prepare('UPDATE accounts SET balance = balance - ? WHERE id = ?')->execute([100, $from]);\n    $pdo->prepare('UPDATE accounts SET balance = balance + ? WHERE id = ?')->execute([100, $to]);\n    $pdo->commit();\n} catch (PDOException $e) {\n    $pdo->rollBack();\n    throw $e;\n}"
+      ],
+      "significance": {
+        "label": "Security by Design",
+        "body": "When the secure approach is also the most convenient approach, developers choose security by default. PDO's prepared statements are easier to write than concatenated SQL, making SQL injection a conscious choice rather than an accidental oversight."
+      }
+    },
+    {
+      "id": 10,
+      "title": "Arrow Functions",
+      "php_version": "7.4",
+      "category": "Modern Elegance",
+      "slug": "arrow-functions",
+      "url": "https://haphpiness.com/#/happy/10",
+      "description": "PHP 7.4 introduced short closures with the fn keyword. They automatically capture variables from the parent scope (no use() needed), have implicit returns, and are perfect for callbacks.",
+      "description_full": "PHP 7.4 introduced short closures with the fn keyword. They automatically capture variables from the parent scope (no use() needed), have implicit returns, and are perfect for callbacks. Arrow functions don't replace regular closures — they complement them. Use fn for simple transforms and predicates, full closures for multi-line logic. The language gives you both tools and lets you choose.",
+      "code_examples": [
+        "// Before: verbose closure with explicit `use`\n$doubled = array_map(function ($n) {\n    return $n * 2;\n}, $numbers);\n\n// After: clean, concise, readable\n$doubled = array_map(fn($n) => $n * 2, $numbers);\n\n// Parent scope is captured automatically\n$tax = 0.21;\n$withTax = array_map(fn($price) => $price * (1 + $tax), $prices);\n\n// Great for sorting\nusort($users, fn($a, $b) => $a->name <=> $b->name);\n\n// Chain beautifully\n$result = array_filter(\n    array_map(fn($u) => $u->getProfile(), $users),\n    fn($p) => $p->isActive(),\n);"
+      ],
+      "significance": {
+        "label": "Ergonomics",
+        "body": "Reducing syntactic overhead for common patterns makes functional-style code practical. When a callback fits on one line, it should only take one line to write. Arrow functions made PHP's array functions genuinely pleasant to use."
+      }
+    },
+    {
+      "id": 11,
+      "title": "Match Expressions",
+      "php_version": "8.0",
+      "category": "Modern Elegance",
+      "slug": "match-expressions",
+      "url": "https://haphpiness.com/#/happy/11",
+      "description": "match is what switch should have been. It uses strict comparison, returns a value, doesn't fall through, and throws an error if no arm matches. It's an expression, not a statement.",
+      "description_full": "match is what switch should have been. It uses strict comparison, returns a value, doesn't fall through, and throws an error if no arm matches. It's an expression, not a statement. The fact that match throws UnhandledMatchError when no arm matches is a feature, not a bug. It forces you to handle all cases explicitly, catching logic errors at runtime instead of silently producing wrong results.",
+      "code_examples": [
+        "// switch: verbose, fall-through prone, loose comparison\nswitch ($statusCode) {\n    case 200:\n    case 201:\n        $text = 'Success';\n        break;\n    case 404:\n        $text = 'Not Found';\n        break;\n    default:\n        $text = 'Unknown';\n        break;\n}\n\n// match: concise, strict, returns a value\n$text = match($statusCode) {\n    200, 201 => 'Success',\n    404      => 'Not Found',\n    500      => 'Server Error',\n    default  => 'Unknown',\n};\n\n// No expression arms — use match(true) for conditions\n$category = match(true) {\n    $age < 13  => 'child',\n    $age < 18  => 'teenager',\n    $age < 65  => 'adult',\n    default    => 'senior',\n};"
+      ],
+      "significance": {
+        "label": "Safety",
+        "body": "Every switch fall-through bug that ever shipped to production was a consequence of switch's design. match makes the common case (no fall-through, strict comparison, return a value) the default, and eliminates the break ceremony entirely."
+      }
+    },
+    {
+      "id": 12,
+      "title": "Null Coalescing Operator ?? and ??=",
+      "php_version": "7.0",
+      "category": "Modern Elegance",
+      "slug": "null-coalescing-operator-and",
+      "url": "https://haphpiness.com/#/happy/12",
+      "description": "The null coalescing operator is the perfect tool for defaults. It checks for null (and unset variables) without triggering notices, and it chains beautifully.",
+      "description_full": "The null coalescing operator is the perfect tool for defaults. It checks for null (and unset variables) without triggering notices, and it chains beautifully. Unlike the ternary operator, ?? specifically checks for null — not falsy values. 0, '', and false pass through, which is almost always what you want. This distinction alone prevents countless bugs.",
+      "code_examples": [
+        "// Before: verbose isset checks\n$username = isset($_GET['user']) ? $_GET['user'] : 'anonymous';\n$config = isset($options['timeout']) ? $options['timeout'] : 30;\n\n// After: clean and obvious\n$username = $_GET['user'] ?? 'anonymous';\n$config = $options['timeout'] ?? 30;\n\n// Chaining — try multiple sources, fall back gracefully\n$color = $user->preference('color') ?? $team->default('color') ?? '#777BB4';\n\n// Null coalescing assignment (PHP 7.4)\n$this->cache ??= [];                    // Initialize only if null\n$options['retries'] ??= 3;              // Set default without overwriting\n\n// Perfect for lazy initialization\npublic function getLogger(): LoggerInterface {\n    return $this->logger ??= new NullLogger();\n}"
+      ],
+      "significance": {
+        "label": "Pragmatism",
+        "body": "PHP's shared-nothing architecture means every request starts fresh, and default values are everywhere. The null coalescing operator turns a three-line isset check into three characters, making the most common PHP pattern — \"use this value or fall back to that one\" — effortless to write and read."
+      }
+    },
+    {
+      "id": 13,
+      "title": "Typed Properties",
+      "php_version": "7.4",
+      "category": "Crystal Clear",
+      "slug": "typed-properties",
+      "url": "https://haphpiness.com/#/happy/13",
+      "description": "PHP 7.4 introduced type declarations for class properties. No more hoping someone passes the right type, no more docblock-only contracts — the engine enforces it.",
+      "description_full": "PHP 7.4 introduced type declarations for class properties. No more hoping someone passes the right type, no more docblock-only contracts — the engine enforces it. Typed properties work with all PHP types: scalars, arrays, classes, interfaces, nullable types, union types, and intersection types. The engine enforces them on every assignment, catching type errors immediately rather than letting corrupt data propagate through your system.",
+      "code_examples": [
+        "class Product {\n    public string $name;\n    public float $price;\n    public ?string $description = null;\n    public array $tags = [];\n    public DateTimeInterface $createdAt;\n\n    public function __construct(string $name, float $price) {\n        $this->name = $name;\n        $this->price = $price;\n        $this->createdAt = new DateTimeImmutable();\n    }\n}\n\n$product = new Product('Widget', 9.99);\n$product->price = 'free'; // TypeError: Cannot assign string to property Product::$price of type float\n\n// Combined with union types (PHP 8.0):\npublic int|float $quantity;\n\n// And intersection types (PHP 8.1):\npublic (Stringable&Countable) $value;"
+      ],
+      "significance": {
+        "label": "Reliability",
+        "body": "Typed properties turn classes into enforceable contracts. An object with typed properties is always in a valid state — you can trust that $product->price is a float without checking. This cascading trust eliminates defensive type-checking throughout your codebase."
+      }
+    },
+    {
+      "id": 14,
+      "title": "Constructor Property Promotion",
+      "php_version": "8.0",
+      "category": "Crystal Clear",
+      "slug": "constructor-property-promotion",
+      "url": "https://haphpiness.com/#/happy/14",
+      "description": "PHP 8.0 eliminated the most tedious boilerplate in the language: declaring a property, listing it as a constructor parameter, and assigning one to the other. Three places to maintain the same information, reduced to one.",
+      "description_full": "PHP 8.0 eliminated the most tedious boilerplate in the language: declaring a property, listing it as a constructor parameter, and assigning one to the other. Three places to maintain the same information, reduced to one. You can mix promoted and non-promoted parameters freely. Promoted properties support all visibility modifiers and the readonly flag. It's one of those features that, once you use it, you can never go back.",
+      "code_examples": [
+        "// Before: say the same thing three times\nclass User {\n    private string $name;\n    private string $email;\n    private int $age;\n    private bool $active;\n\n    public function __construct(string $name, string $email, int $age, bool $active = true) {\n        $this->name = $name;\n        $this->email = $email;\n        $this->age = $age;\n        $this->active = $active;\n    }\n}\n\n// After: say it once\nclass User {\n    public function __construct(\n        private string $name,\n        private string $email,\n        private int $age,\n        private bool $active = true,\n    ) {}\n}\n\n// Combined with readonly (PHP 8.1) — immutable value objects in one line:\nclass Point {\n    public function __construct(\n        public readonly float $x,\n        public readonly float $y,\n    ) {}\n}"
+      ],
+      "significance": {
+        "label": "Developer Experience",
+        "body": "Boilerplate isn't just annoying — it's a source of bugs (forget to assign one property, misspell a name, mismatch types). Constructor promotion eliminates the boilerplate entirely, making simple value objects and DTOs a joy to define."
+      }
+    },
+    {
+      "id": 15,
+      "title": "Readonly Properties and Classes",
+      "php_version": "8.1",
+      "category": "Crystal Clear",
+      "slug": "readonly-properties-and-classes",
+      "url": "https://haphpiness.com/#/happy/15",
+      "description": "PHP 8.1 added readonly properties — set once, then immutable. PHP 8.2 extended this to entire classes. Immutability is no longer a convention; it's enforced by the engine.",
+      "description_full": "PHP 8.1 added readonly properties — set once, then immutable. PHP 8.2 extended this to entire classes. Immutability is no longer a convention; it's enforced by the engine. Readonly properties make value objects trivial to implement correctly. No more writing private properties with getters, no more worrying about someone mutating shared state. The language guarantees immutability.",
+      "code_examples": [
+        "// Readonly properties (PHP 8.1)\nclass Invoice {\n    public function __construct(\n        public readonly string $number,\n        public readonly float $total,\n        public readonly DateTimeImmutable $issuedAt,\n    ) {}\n}\n\n$invoice = new Invoice('INV-001', 250.00, new DateTimeImmutable());\n$invoice->total = 0; // Error: Cannot modify readonly property Invoice::$total\n\n// Readonly classes (PHP 8.2) — all properties are implicitly readonly\nreadonly class Money {\n    public function __construct(\n        public int $amount,\n        public string $currency,\n    ) {}\n\n    public function add(Money $other): self {\n        if ($this->currency !== $other->currency) {\n            throw new \\InvalidArgumentException('Currency mismatch');\n        }\n        return new self($this->amount + $other->amount, $this->currency);\n    }\n}\n\n$price = new Money(1000, 'EUR');\n$tax = new Money(210, 'EUR');\n$total = $price->add($tax); // New object — originals unchanged"
+      ],
+      "significance": {
+        "label": "Correctness",
+        "body": "Immutability eliminates entire categories of bugs: unexpected mutation, shared state corruption, order-dependent initialization. When the engine enforces that a value can't change, you can reason about your code with confidence."
+      }
+    },
+    {
+      "id": 16,
+      "title": "First-Class Callable Syntax",
+      "php_version": "8.1",
+      "category": "No Limits",
+      "slug": "first-class-callable-syntax",
+      "url": "https://haphpiness.com/#/happy/16",
+      "description": "PHP 8.1 introduced a clean way to create closures from existing functions and methods using the (...) syntax. No more string-based function references, no more Closure::fromCallable().",
+      "description_full": "PHP 8.1 introduced a clean way to create closures from existing functions and methods using the (...) syntax. No more string-based function references, no more Closure::fromCallable(). First-class callables are proper Closure objects that IDEs can analyze, static analyzers can check, and refactoring tools can rename. They make PHP's functional capabilities genuinely first-class.",
+      "code_examples": [
+        "// Before: strings as callables — no static analysis, no autocompletion\n$lengths = array_map('strlen', $strings);           // String reference\n$filtered = array_filter($items, [$this, 'isValid']); // Array reference\n\n// After: real, type-safe callable references\n$lengths = array_map(strlen(...), $strings);\n$filtered = array_filter($items, $this->isValid(...));\n\n// Works with static methods, named functions, everything:\n$encoder = json_encode(...);\n$sorter = strcmp(...);\n$validator = Validator::validate(...);\n\n// They're real Closures — you can pass, store, and compose them:\n$pipeline = array_reduce(\n    [trim(...), strtolower(...), htmlspecialchars(...)],\n    fn($carry, $fn) => fn($x) => $fn($carry($x)),\n    fn($x) => $x,\n);"
+      ],
+      "significance": {
+        "label": "Composability",
+        "body": "String-based callables were PHP's weakest link in functional programming: unanalyzable, unrenamable, and error-prone. First-class callables bring PHP in line with languages where functions are values, enabling safer and more composable code."
+      }
+    },
+    {
+      "id": 17,
+      "title": "Attributes — Native Metadata",
+      "php_version": "8.0",
+      "category": "No Limits",
+      "slug": "attributes-native-metadata",
+      "url": "https://haphpiness.com/#/happy/17",
+      "description": "PHP 8.0 replaced the docblock-annotation hack with proper, first-class attributes. They're real syntax, parseable by the engine, checked by static analysis, and validated at compile time.",
+      "description_full": "PHP 8.0 replaced the docblock-annotation hack with proper, first-class attributes. They're real syntax, parseable by the engine, checked by static analysis, and validated at compile time. Attributes replaced the fragile docblock annotation ecosystem (Doctrine Annotations) with something that's part of the language. They support named arguments, validation via reflection, and target constraints. Frameworks like Symfony and Laravel adopted them immediately.",
+      "code_examples": [
+        "// Define an attribute\n#[Attribute(Attribute::TARGET_METHOD | Attribute::IS_REPEATABLE)]\nclass Route {\n    public function __construct(\n        public string $path,\n        public string $method = 'GET',\n    ) {}\n}\n\n// Use it — clean, native syntax\nclass UserController {\n    #[Route('/users', method: 'GET')]\n    public function index(): Response { /* ... */ }\n\n    #[Route('/users/{id}', method: 'GET')]\n    #[Route('/user/{id}', method: 'GET')]  // Repeatable!\n    public function show(int $id): Response { /* ... */ }\n\n    #[Route('/users', method: 'POST')]\n    #[RequiresAuth(role: 'admin')]\n    public function create(): Response { /* ... */ }\n}\n\n// Read attributes via Reflection\n$method = new ReflectionMethod(UserController::class, 'index');\n$routes = $method->getAttributes(Route::class);\nforeach ($routes as $attr) {\n    $route = $attr->newInstance(); // Route object with path and method\n}"
+      ],
+      "significance": {
+        "label": "Standardization",
+        "body": "Docblock annotations were a community hack that required third-party parsers and couldn't be validated by the engine. Native attributes are faster, safer, and standardized — every framework can rely on the same mechanism without shipping their own annotation parser."
+      }
+    },
+    {
+      "id": 18,
+      "title": "Named Arguments",
+      "php_version": "8.0",
+      "category": "No Limits",
+      "slug": "named-arguments",
+      "url": "https://haphpiness.com/#/happy/18",
+      "description": "Named arguments (PHP 8.0) let you pass values by parameter name instead of position. They make complex function calls readable, let you skip optional parameters, and serve as inline documentation.",
+      "description_full": "Named arguments (PHP 8.0) let you pass values by parameter name instead of position. They make complex function calls readable, let you skip optional parameters, and serve as inline documentation. Named arguments work with all functions — built-in and user-defined. They interoperate with positional arguments (positional first, then named). They even work with phpcall_user_func_array when you pass an associative array.",
+      "code_examples": [
+        "// setcookie has 7 parameters. Which is which?\nsetcookie('theme', 'dark', 0, '/', '', true, true);\n\n// Named arguments: crystal clear intent\nsetcookie('theme', 'dark', httponly: true, secure: true);\n\n// Perfect for functions with boolean flags\n$text = str_pad($input, length: 20, pad_type: STR_PAD_LEFT);\n\n// Named arguments + array unpacking = powerful patterns\n$defaults = ['secure' => true, 'httponly' => true, 'samesite' => 'Strict'];\nsetcookie('token', $value, ...$defaults);\n\n// Great for test readability\n$user = UserFactory::create(\n    name: 'Alice',\n    email: 'alice@example.com',\n    role: Role::Admin,\n    verified: true,\n);"
+      ],
+      "significance": {
+        "label": "Readability",
+        "body": "Named arguments turn cryptic function calls into self-documenting expressions. They're especially powerful for PHP's large standard library, where many functions have accumulated optional parameters over decades. You no longer need to memorize parameter positions."
+      }
+    },
+    {
+      "id": 19,
+      "title": "array_map, array_filter, array_reduce — The Functional Trio",
+      "php_version": null,
+      "category": "Functional Joy",
+      "slug": "array-map-array-filter-array-reduce-the-functional-trio",
+      "url": "https://haphpiness.com/#/happy/19",
+      "description": "PHP's array functions have always been powerful, but with arrow functions (7.4) and first-class callables (8.1), they've become genuinely elegant. Transform, filter, and reduce collections without a single foreach loop.",
+      "description_full": "PHP's array functions have always been powerful, but with arrow functions (7.4) and first-class callables (8.1), they've become genuinely elegant. Transform, filter, and reduce collections without a single foreach loop. PHP arrays are ordered hash maps — they work as lists, dictionaries, sets, stacks, and queues. The standard library gives you phparray_map, phparray_filter, phparray_reduce, and 75+ other array functions out of the box.",
+      "code_examples": [
+        "$orders = getOrders();\n\n// Transform: extract what you need\n$totals = array_map(fn($o) => $o->total, $orders);\n\n// Filter: keep what matches\n$large = array_filter($orders, fn($o) => $o->total > 100);\n\n// Reduce: collapse to a single value\n$sum = array_reduce($orders, fn($carry, $o) => $carry + $o->total, 0);\n\n// Compose them for expressive pipelines\n$report = array_reduce(\n    array_map(\n        fn($o) => ['month' => $o->date->format('Y-m'), 'total' => $o->total],\n        array_filter($orders, fn($o) => $o->status === Status::Completed),\n    ),\n    function ($acc, $item) {\n        $acc[$item['month']] = ($acc[$item['month']] ?? 0) + $item['total'];\n        return $acc;\n    },\n    [],\n);\n\n// Plus the underrated helpers:\n$keys     = array_keys($map);\n$values   = array_values($filtered);  // Re-index after filter\n$combined = array_combine($keys, $values);\n$unique   = array_unique($tags);\n$chunks   = array_chunk($items, 50);   // Batch processing"
+      ],
+      "significance": {
+        "label": "Versatility",
+        "body": "PHP's array is the Swiss Army knife of data structures. Its combination of ordered keys, mixed types, and a massive standard library of manipulation functions means you rarely need external collection libraries. With arrow functions, the functional style is now as concise as any language."
+      }
+    },
+    {
+      "id": 20,
+      "title": "Closures and Variable Binding with use()",
+      "php_version": null,
+      "category": "Functional Joy",
+      "slug": "closures-and-variable-binding-with-use",
+      "url": "https://haphpiness.com/#/happy/20",
+      "description": "PHP closures explicitly capture variables from the enclosing scope with use(). This isn't a limitation — it's a feature. You always know exactly what a closure depends on, making the code easier to reason about and debug.",
+      "description_full": "PHP closures explicitly capture variables from the enclosing scope with use(). This isn't a limitation — it's a feature. You always know exactly what a closure depends on, making the code easier to reason about and debug. The explicit use() clause means you can look at any closure and immediately see its external dependencies. Combined with Closure::bind() and Closure::fromCallable(), PHP closures are flexible enough for any functional or object-oriented pattern.",
+      "code_examples": [
+        "// Explicit capture — no hidden dependencies\n$multiplier = 1.21;  // VAT rate\n$applyVat = function (float $price) use ($multiplier): float {\n    return $price * $multiplier;\n};\n\n// Capture by reference for stateful closures\nfunction createCounter(int $start = 0): Closure {\n    $count = $start;\n    return function () use (&$count): int {\n        return $count++;\n    };\n}\n$counter = createCounter();\necho $counter(); // 0\necho $counter(); // 1\n\n// Closures can bind to objects — powerful for DSLs\n$closure = Closure::bind(function () {\n    return $this->secret; // Access private property\n}, $object, get_class($object));\n\n// Middleware pattern with closures\n$middleware = function (Request $request, Closure $next): Response {\n    // Before\n    $response = $next($request);\n    // After\n    return $response;\n};"
+      ],
+      "significance": {
+        "label": "Explicitness",
+        "body": "Implicit variable capture (like JavaScript's) can lead to subtle bugs and memory leaks. PHP's explicit use() clause makes the closure's contract visible: you see exactly what it captures, whether by value or reference. Explicit is better than implicit."
+      }
+    },
+    {
+      "id": 21,
+      "title": "Generators and yield",
+      "php_version": "5.5",
+      "category": "Functional Joy",
+      "slug": "generators-and-yield",
+      "url": "https://haphpiness.com/#/happy/21",
+      "description": "Generators let you iterate over data without loading everything into memory. Process a million-row CSV, stream API results, or build infinite sequences — all with constant memory usage.",
+      "description_full": "Generators let you iterate over data without loading everything into memory. Process a million-row CSV, stream API results, or build infinite sequences — all with constant memory usage. Generators follow the same Iterator interface as any other iterable, so they work seamlessly with foreach, phpiterator_to_array, and the spread operator.",
+      "code_examples": [
+        "// Read a 10GB file with constant memory\nfunction readLines(string $file): Generator {\n    $handle = fopen($file, 'r');\n    while (($line = fgets($handle)) !== false) {\n        yield trim($line);\n    }\n    fclose($handle);\n}\n\nforeach (readLines('/var/log/huge.log') as $line) {\n    // Each line is read one at a time — never all in memory\n}\n\n// Generate infinite sequences\nfunction fibonacci(): Generator {\n    [$a, $b] = [0, 1];\n    while (true) {\n        yield $a;\n        [$a, $b] = [$b, $a + $b];\n    }\n}\n\n// Delegate with yield from\nfunction allUsers(): Generator {\n    yield from getAdmins();        // Generator\n    yield from getEditors();       // Generator\n    yield from [User::guest()];    // Array — also works!\n}\n\n// Two-way communication with send()\nfunction accumulator(): Generator {\n    $total = 0;\n    while (true) {\n        $value = yield $total;\n        $total += $value;\n    }\n}\n$acc = accumulator();\n$acc->current(); // 0\n$acc->send(10);  // 10\n$acc->send(20);  // 30"
+      ],
+      "significance": {
+        "label": "Efficiency",
+        "body": "Generators make memory efficiency the default rather than an optimization. Processing large datasets with generators uses the same clean syntax as processing small arrays — no pagination logic, no batch callbacks, no manual iterator implementations."
+      }
+    },
+    {
+      "id": 22,
+      "title": "Built-in JSON Support",
+      "php_version": null,
+      "category": "Batteries Included",
+      "slug": "built-in-json-support",
+      "url": "https://haphpiness.com/#/happy/22",
+      "description": "JSON encoding and decoding is built into PHP core. No packages to install, no extensions to enable — it just works. Two functions, consistently named, with rich option flags.",
+      "description_full": "JSON encoding and decoding is built into PHP core. No packages to install, no extensions to enable — it just works. Two functions, consistently named, with rich option flags. The phpjson_encode and phpjson_decode functions handle all edge cases: Unicode, numeric precision, recursive structures, custom serialization. They're fast (PHP's JSON extension is implemented in C) and battle-tested across millions of applications.",
+      "code_examples": [
+        "// Encode — with formatting options\n$data = ['users' => [['name' => 'Alice', 'age' => 30], ['name' => 'Bob', 'age' => 25]]];\n$json = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);\n\n// Decode — returns associative arrays or objects\n$decoded = json_decode($json, associative: true);  // Named argument!\necho $decoded['users'][0]['name']; // Alice\n\n// Error handling (PHP 7.3+): throw on invalid JSON\n$result = json_decode($input, flags: JSON_THROW_ON_ERROR);\n// Throws JsonException instead of returning null silently\n\n// Implement JsonSerializable for custom objects\nclass Money implements JsonSerializable {\n    public function __construct(\n        private int $cents,\n        private string $currency,\n    ) {}\n\n    public function jsonSerialize(): mixed {\n        return [\n            'amount' => $this->cents / 100,\n            'currency' => $this->currency,\n        ];\n    }\n}\n\necho json_encode(new Money(1999, 'USD'));\n// {\"amount\":19.99,\"currency\":\"USD\"}"
+      ],
+      "significance": {
+        "label": "Web-Native",
+        "body": "PHP is a web language, and JSON is the web's data format. Having fast, reliable JSON support built into the language core means every PHP application can speak the lingua franca of web APIs without any additional dependencies."
+      }
+    },
+    {
+      "id": 23,
+      "title": "DateTime and DateTimeImmutable",
+      "php_version": null,
+      "category": "Batteries Included",
+      "slug": "datetime-and-datetimeimmutable",
+      "url": "https://haphpiness.com/#/happy/23",
+      "description": "PHP's DateTime classes handle time zones, formatting, parsing, intervals, and arithmetic correctly. DateTimeImmutable ensures date calculations never accidentally mutate the original — a lesson learned from years of DateTime bugs.",
+      "description_full": "PHP's DateTime classes handle time zones, formatting, parsing, intervals, and arithmetic correctly. DateTimeImmutable ensures date calculations never accidentally mutate the original — a lesson learned from years of DateTime bugs. The distinction between phpDateTimeImmutable and phpDateTime is one of PHP's best design decisions. Use DateTimeImmutable everywhere and date-related bugs virtually disappear.",
+      "code_examples": [
+        "// DateTimeImmutable — every operation returns a new instance\n$now = new DateTimeImmutable();\n$nextWeek = $now->modify('+1 week');     // $now is unchanged\n$formatted = $now->format('Y-m-d H:i');  // \"2026-03-12 14:30\"\n\n// Time zone handling — built in, not bolted on\n$ny = new DateTimeImmutable('now', new DateTimeZone('America/New_York'));\n$tokyo = $ny->setTimezone(new DateTimeZone('Asia/Tokyo'));\necho $tokyo->format('H:i'); // Correct local time in Tokyo\n\n// Intervals and periods\n$interval = new DateInterval('P30D');        // 30 days\n$future = $now->add($interval);\n$diff = $future->diff($now);\necho $diff->days; // 30\n\n// Date periods — iterate over date ranges\n$period = new DatePeriod(\n    new DateTimeImmutable('2026-01-01'),\n    new DateInterval('P1M'),\n    new DateTimeImmutable('2026-12-31'),\n);\nforeach ($period as $month) {\n    echo $month->format('F Y') . \"\\n\"; // \"January 2026\", \"February 2026\", ...\n}\n\n// Parse anything\n$parsed = DateTimeImmutable::createFromFormat('d/m/Y', '12/03/2026');"
+      ],
+      "significance": {
+        "label": "Correctness",
+        "body": "Date and time handling is one of programming's hardest problems (time zones, daylight saving, leap seconds). PHP's DateTime classes handle these correctly out of the box, and DateTimeImmutable prevents the mutation bugs that plagued the mutable DateTime class."
+      }
+    },
+    {
+      "id": 24,
+      "title": "password_hash() and password_verify()",
+      "php_version": "5.5",
+      "category": "Batteries Included",
+      "slug": "password-hash-and-password-verify",
+      "url": "https://haphpiness.com/#/happy/24",
+      "description": "PHP 5.5 gave developers secure password hashing with the simplest possible API. Two functions. No salt management. No algorithm selection anxiety. It defaults to bcrypt with a reasonable cost, and it's future-proof.",
+      "description_full": "PHP 5.5 gave developers secure password hashing with the simplest possible API. Two functions. No salt management. No algorithm selection anxiety. It defaults to bcrypt with a reasonable cost, and it's future-proof. The phppassword_hash function generates a random salt automatically, encodes the algorithm and cost in the hash string, and uses a timing-safe comparison. It's nearly impossible to misuse. When PASSWORD_DEFAULT changes to a stronger algorithm in a future PHP version, phppassword_needs_rehash handles the migration transparently.",
+      "code_examples": [
+        "// Hash a password — that's it\n$hash = password_hash('correct horse battery staple', PASSWORD_DEFAULT);\n// $2y$12$eUz3RiQ... (bcrypt, cost 12, random salt — all automatic)\n\n// Verify — constant-time comparison, safe against timing attacks\nif (password_verify($userInput, $storedHash)) {\n    // Correct password\n}\n\n// Future-proof: check if rehashing is needed (algorithm/cost changed)\nif (password_needs_rehash($storedHash, PASSWORD_DEFAULT)) {\n    $newHash = password_hash($userInput, PASSWORD_DEFAULT);\n    updateStoredHash($userId, $newHash);\n}\n\n// Argon2 support (PHP 7.2+)\n$hash = password_hash($password, PASSWORD_ARGON2ID, [\n    'memory_cost' => PASSWORD_ARGON2_DEFAULT_MEMORY_COST,\n    'time_cost'   => PASSWORD_ARGON2_DEFAULT_TIME_COST,\n    'threads'     => PASSWORD_ARGON2_DEFAULT_THREADS,\n]);\n\n// Get algorithm info\n$info = password_get_info($hash);\n// ['algo' => '2y', 'algoName' => 'bcrypt', 'options' => ['cost' => 12]]"
+      ],
+      "significance": {
+        "label": "Security by Default",
+        "body": "Before password_hash(), developers used md5(), sha1(), or rolled their own salting. The result was millions of insecure password stores. By making the secure approach the easiest approach — literally two functions — PHP eliminated an entire class of security vulnerabilities across its ecosystem."
+      }
+    },
+    {
+      "id": 25,
+      "title": "Interfaces, Traits, and Abstract Classes",
+      "php_version": null,
+      "category": "OOP Done Right",
+      "slug": "interfaces-traits-and-abstract-classes",
+      "url": "https://haphpiness.com/#/happy/25",
+      "description": "PHP's OOP toolkit gives you three complementary tools for code organization: interfaces for contracts, abstract classes for shared structure, and traits for horizontal code reuse. Together, they solve the diamond problem without multiple inheritance.",
+      "description_full": "PHP's OOP toolkit gives you three complementary tools for code organization: interfaces for contracts, abstract classes for shared structure, and traits for horizontal code reuse. Together, they solve the diamond problem without multiple inheritance. The combination is powerful: interfaces ensure interoperability, abstract classes provide sensible defaults, and traits let you compose behavior horizontally without deep inheritance hierarchies. Modern PHP codebases are flat and composable, not deeply nested.",
+      "code_examples": [
+        "// Interface: define the contract\ninterface Cacheable {\n    public function getCacheKey(): string;\n    public function getCacheTTL(): int;\n}\n\n// Trait: reuse implementation across unrelated classes\ntrait HasTimestamps {\n    public DateTimeImmutable $createdAt;\n    public ?DateTimeImmutable $updatedAt = null;\n\n    public function touch(): void {\n        $this->updatedAt = new DateTimeImmutable();\n    }\n}\n\n// Abstract class: shared structure with extension points\nabstract class Model implements Cacheable {\n    use HasTimestamps;\n\n    abstract protected function tableName(): string;\n\n    public function getCacheKey(): string {\n        return $this->tableName() . ':' . $this->id;\n    }\n\n    public function getCacheTTL(): int {\n        return 3600;\n    }\n}\n\n// Concrete: just fill in the blanks\nclass User extends Model {\n    use SoftDeletes;  // Another trait — compose freely\n\n    protected function tableName(): string {\n        return 'users';\n    }\n}"
+      ],
+      "significance": {
+        "label": "Architecture",
+        "body": "PHP's three-tool OOP approach encourages composition over inheritance. You can define behavior contracts (interfaces), share default implementations (abstract classes), and mix in cross-cutting concerns (traits) — all without the complexity and fragility of multiple inheritance."
+      }
+    },
+    {
+      "id": 26,
+      "title": "Late Static Binding",
+      "php_version": "5.3",
+      "category": "OOP Done Right",
+      "slug": "late-static-binding",
+      "url": "https://haphpiness.com/#/happy/26",
+      "description": "Late static binding (static:: vs self::) lets parent classes defer method resolution to the child class. It's the foundation of the fluent factory pattern used by every modern PHP framework.",
+      "description_full": "Late static binding (static:: vs self::) lets parent classes defer method resolution to the child class. It's the foundation of the fluent factory pattern used by every modern PHP framework. The static return type (PHP 8.0) completed this feature by letting you declare that a method returns an instance of the called class, not the declaring class. This is what makes fluent builder patterns type-safe.",
+      "code_examples": [
+        "class Model {\n    protected static string $table;\n\n    // self:: would always resolve to Model — wrong!\n    // static:: resolves to whatever class called the method\n    public static function find(int $id): static {\n        $table = static::$table;\n        $row = DB::query(\"SELECT * FROM {$table} WHERE id = ?\", [$id]);\n        return static::hydrate($row);  // Returns User, not Model\n    }\n\n    public static function create(array $data): static {\n        // static:: ensures the child class is instantiated\n        $instance = new static();\n        foreach ($data as $key => $value) {\n            $instance->$key = $value;\n        }\n        $instance->save();\n        return $instance;\n    }\n}\n\nclass User extends Model {\n    protected static string $table = 'users';\n}\n\nclass Post extends Model {\n    protected static string $table = 'posts';\n}\n\n$user = User::find(1);    // Returns User instance, queries 'users' table\n$post = Post::create([    // Returns Post instance\n    'title' => 'Hello',\n]);"
+      ],
+      "significance": {
+        "label": "Polymorphism",
+        "body": "Late static binding is the mechanism that makes framework base classes work. Without it, factory methods, fluent builders, and the Active Record pattern would be impossible to implement with proper type safety. It's a quiet feature that powers some of PHP's most elegant patterns."
+      }
+    },
+    {
+      "id": 27,
+      "title": "Anonymous Classes",
+      "php_version": "7.0",
+      "category": "OOP Done Right",
+      "slug": "anonymous-classes",
+      "url": "https://haphpiness.com/#/happy/27",
+      "description": "PHP 7.0 added anonymous classes — inline, disposable class definitions. They're perfect for one-off implementations, testing, and anywhere you'd create a class that's only used once.",
+      "description_full": "PHP 7.0 added anonymous classes — inline, disposable class definitions. They're perfect for one-off implementations, testing, and anywhere you'd create a class that's only used once. Anonymous classes reduce file proliferation. Instead of creating StubLogger.php for a single test, you define it inline where it's used. The class exists only in the scope where it's created — no namespace pollution, no autoloading overhead.",
+      "code_examples": [
+        "// Perfect for tests — no need to create a file for a stub\n$logger = new class implements LoggerInterface {\n    public array $logs = [];\n\n    public function log($level, $message, array $context = []): void {\n        $this->logs[] = compact('level', 'message', 'context');\n    }\n    // ... other PSR-3 methods\n};\n\n$service = new MyService($logger);\n$service->doWork();\n$this->assertCount(3, $logger->logs);\n\n// Inline adapters\nfunction createCacheAdapter(array &$store): CacheInterface {\n    return new class($store) implements CacheInterface {\n        public function __construct(private array &$store) {}\n\n        public function get(string $key, mixed $default = null): mixed {\n            return $this->store[$key] ?? $default;\n        }\n\n        public function set(string $key, mixed $value, int $ttl = 0): bool {\n            $this->store[$key] = $value;\n            return true;\n        }\n    };\n}\n\n// They support everything normal classes do:\n// constructors, interfaces, traits, inheritance, properties\n$event = new class('click', ['x' => 100]) extends Event implements Serializable {\n    use HasMetadata;\n    public function __construct(public string $type, public array $data) {\n        parent::__construct();\n    }\n};"
+      ],
+      "significance": {
+        "label": "Pragmatism",
+        "body": "Not every class deserves a file. Anonymous classes let you create focused, single-use implementations without the overhead of naming, filing, and autoloading a class you'll never reference again. They're especially powerful in tests, where stub proliferation is a real maintenance burden."
+      }
+    },
+    {
+      "id": 28,
+      "title": "Heredoc/Nowdoc Flexibility",
+      "php_version": "7.3",
+      "category": "Parser Perfection",
+      "slug": "heredoc-nowdoc-flexibility",
+      "url": "https://haphpiness.com/#/happy/28",
+      "description": "PHP 7.3 made heredocs and nowdocs actually usable by allowing the closing marker to be indented, and letting heredocs be used in any expression context. No more breaking your code's indentation for multi-line strings.",
+      "description_full": "PHP 7.3 made heredocs and nowdocs actually usable by allowing the closing marker to be indented, and letting heredocs be used in any expression context. No more breaking your code's indentation for multi-line strings. This seemingly small change had a huge impact on code readability. SQL queries, HTML templates, JSON fixtures, and multi-line strings can now live inside your code without destroying the visual structure.",
+      "code_examples": [
+        "// Before PHP 7.3: closing marker must be at column 0\n// This breaks indentation in methods, conditions, everywhere\nfunction render() {\n    $html = <<<HTML\n<div class=\"card\">\n    <h2>{$title}</h2>\n    <p>{$body}</p>\n</div>\nHTML;  // ← HAD to be here, column 0. Ugly.\n}\n\n// After PHP 7.3: indented closing marker, content is de-indented\nfunction render() {\n    $html = <<<HTML\n        <div class=\"card\">\n            <h2>{$title}</h2>\n            <p>{$body}</p>\n        </div>\n        HTML;  // ← indented with the code. Clean.\n}\n\n// Can now be used in function arguments directly\n$response = response(<<<JSON\n    {\n        \"status\": \"ok\",\n        \"data\": {$payload}\n    }\n    JSON);\n\n// Nowdoc (no interpolation) works the same way\n$query = <<<'SQL'\n    SELECT users.*, COUNT(orders.id) as order_count\n    FROM users\n    LEFT JOIN orders ON orders.user_id = users.id\n    GROUP BY users.id\n    SQL;"
+      ],
+      "significance": {
+        "label": "Readability",
+        "body": "Code formatting isn't cosmetic — it's a communication tool. When multi-line strings forced you to break indentation, they made the surrounding code harder to read. Flexible heredocs let your string literals live harmoniously within your code's visual structure."
+      }
+    },
+    {
+      "id": 29,
+      "title": "Trailing Commas Everywhere",
+      "php_version": "8.0",
+      "category": "Parser Perfection",
+      "slug": "trailing-commas-everywhere",
+      "url": "https://haphpiness.com/#/happy/29",
+      "description": "PHP progressively allowed trailing commas in more places: arrays (always), function calls (7.3), parameter lists (8.0), and closure use lists (8.0). Clean diffs, easy reordering, no syntax errors when adding items.",
+      "description_full": "PHP progressively allowed trailing commas in more places: arrays (always), function calls (7.3), parameter lists (8.0), and closure use lists (8.0). Clean diffs, easy reordering, no syntax errors when adding items. Trailing commas mean cleaner git diffs: adding a new item only shows one changed line, not two (the new line plus the comma added to the previous line). They also make reordering lines trivial — no comma juggling.",
+      "code_examples": [
+        "// Arrays (always supported — PHP was ahead of JS here!)\n$config = [\n    'debug' => true,\n    'cache' => false,\n    'log_level' => 'info',   // ← trailing comma, always worked\n];\n\n// Function/method calls (PHP 7.3)\n$result = sprintf(\n    '%s has %d items worth $%.2f',\n    $name,\n    $count,\n    $total,  // ← no more removing this comma when adding a line below\n);\n\n// Function/method declarations (PHP 8.0)\nfunction createUser(\n    string $name,\n    string $email,\n    Role $role = Role::User,  // ← add new params without touching this line\n) {\n    // ...\n}\n\n// Closure use lists (PHP 8.0)\n$fn = function () use (\n    $config,\n    $logger,\n    $cache,  // ← consistent everywhere\n) {\n    // ...\n};"
+      ],
+      "significance": {
+        "label": "Developer Experience",
+        "body": "Trailing commas are a small syntax feature with outsized impact on daily workflow. They eliminate an entire class of syntax errors, produce cleaner version control diffs, and make copy-pasting and reordering lines effortless. It's the kind of thoughtful quality-of-life improvement that shows PHP listens to its developers."
+      }
+    },
+    {
+      "id": 30,
+      "title": "Nullsafe Operator ?->",
+      "php_version": "8.0",
+      "category": "Parser Perfection",
+      "slug": "nullsafe-operator",
+      "url": "https://haphpiness.com/#/happy/30",
+      "description": "The nullsafe operator (PHP 8.0) short-circuits a method chain when any intermediate value is null. No more nested if statements or ternary chains just to safely traverse an object graph.",
+      "description_full": "The nullsafe operator (PHP 8.0) short-circuits a method chain when any intermediate value is null. No more nested if statements or ternary chains just to safely traverse an object graph. The nullsafe operator composes perfectly with the null coalescing operator (??). Use ?-> to safely traverse, then ?? to provide a default. It's the complete null-handling toolkit in two operators.",
+      "code_examples": [
+        "// Before: defensive null checking at every step\n$country = null;\nif ($user !== null) {\n    $address = $user->getAddress();\n    if ($address !== null) {\n        $city = $address->getCity();\n        if ($city !== null) {\n            $country = $city->getCountry();\n        }\n    }\n}\n\n// After: one clean expression\n$country = $user?->getAddress()?->getCity()?->getCountry();\n\n// Works with properties too\n$name = $order?->customer?->profile?->displayName ?? 'Guest';\n\n// Works with method calls and array access\n$firstTag = $post?->getTags()?->first()?->name;\n\n// Real-world: Eloquent relationships\n$managerEmail = $employee\n    ?->department\n    ?->manager\n    ?->email\n    ?? 'no-manager@company.com';"
+      ],
+      "significance": {
+        "label": "Expressiveness",
+        "body": "Null handling is one of the most common sources of both bugs and boilerplate. The nullsafe operator reduces a pyramid of null checks to a single fluent expression, making the happy path and the null path equally readable. Combined with ??, PHP now has best-in-class null handling."
+      }
+    },
+    {
+      "id": 31,
+      "title": "json_validate() — Validate Without Decoding",
+      "php_version": "8.3",
+      "category": "Batteries Included",
+      "slug": "json-validate-validate-without-decoding",
+      "url": "https://haphpiness.com/#/happy/31",
+      "description": "PHP 8.3 added phpjson_validate — a function that checks if a string is valid JSON without actually decoding it. Before this, you had to call json_decode() and check json_last_error(), which meant allocating memory for a data structure you didn't need.",
+      "description_full": "PHP 8.3 added phpjson_validate — a function that checks if a string is valid JSON without actually decoding it. Before this, you had to call json_decode() and check json_last_error(), which meant allocating memory for a data structure you didn't need. This is especially valuable for API gateways and middleware that need to validate JSON bodies before routing them — you skip the memory cost of decoding entirely.",
+      "code_examples": [
+        "// Before: decode the entire payload just to check if it's valid\n$data = json_decode($input);\nif (json_last_error() !== JSON_ERROR_NONE) {\n    return 'Invalid JSON';\n}\n\n// After: validate without allocating a single array or object\nif (!json_validate($input)) {\n    return 'Invalid JSON';\n}\n\n// With depth limit — protect against deeply nested payloads\nif (!json_validate($input, depth: 32)) {\n    return 'JSON too deeply nested';\n}\n\n// Common pattern: validate first, decode only if valid\nif (json_validate($payload)) {\n    $data = json_decode($payload, true, flags: JSON_THROW_ON_ERROR);\n    processData($data);\n}"
+      ],
+      "significance": {
+        "label": "Performance",
+        "body": "Validation and parsing are different operations with different costs. json_validate() recognizes this: when you only need a yes/no answer, you shouldn't pay the memory cost of building the decoded structure. It's the kind of targeted optimization that shows a maturing standard library."
+      }
+    },
+    {
+      "id": 32,
+      "title": "#[\\Override] Attribute — Safe Method Overriding",
+      "php_version": "8.3",
+      "category": "OOP Done Right",
+      "slug": "override-attribute-safe-method-overriding",
+      "url": "https://haphpiness.com/#/happy/32",
+      "description": "PHP 8.3 added the #[\\Override] attribute. When you mark a method with it, PHP guarantees that a parent class or interface actually declares that method. If the parent method is renamed or removed, you get an error immediately instead of silently having dead code.",
+      "description_full": "PHP 8.3 added the #[\\Override] attribute. When you mark a method with it, PHP guarantees that a parent class or interface actually declares that method. If the parent method is renamed or removed, you get an error immediately instead of silently having dead code. This is borrowed from Java's @Override and TypeScript's override keyword — both proven to prevent bugs during refactoring. It's opt-in, so you only add it where correctness matters.",
+      "code_examples": [
+        "class Base {\n    protected function validate(): bool {\n        return true;\n    }\n}\n\nclass Strict extends Base {\n    #[\\Override]\n    protected function validate(): bool {\n        // If Base::validate() is ever renamed or removed,\n        // PHP throws a fatal error here. No silent breakage.\n        return parent::validate() && $this->extraChecks();\n    }\n}\n\n// Works with interfaces too\ninterface Logger {\n    public function log(string $message): void;\n}\n\nclass FileLogger implements Logger {\n    #[\\Override]\n    public function log(string $message): void {\n        file_put_contents('app.log', $message . PHP_EOL, FILE_APPEND);\n    }\n}"
+      ],
+      "significance": {
+        "label": "Refactoring Safety",
+        "body": "Without #[\\Override], renaming a parent method silently turns the child method into dead code — a bug that no test will catch until someone notices the override isn't executing. This attribute makes refactoring across class hierarchies safe."
+      }
+    },
+    {
+      "id": 33,
+      "title": "Typed Class Constants",
+      "php_version": "8.3",
+      "category": "Crystal Clear",
+      "slug": "typed-class-constants",
+      "url": "https://haphpiness.com/#/happy/33",
+      "description": "PHP 8.3 brought type declarations to class constants — the last place in the language where types were missing. Now constants in classes, interfaces, traits, and enums can declare their type, and child classes can't accidentally change it.",
+      "description_full": "PHP 8.3 brought type declarations to class constants — the last place in the language where types were missing. Now constants in classes, interfaces, traits, and enums can declare their type, and child classes can't accidentally change it. Before typed constants, an interface could declare const VERSION = '1.0' but had no way to prevent an implementing class from changing it to const VERSION = 42. Typed constants close this gap.",
+      "code_examples": [
+        "interface HasVersion {\n    const string VERSION = '1.0';  // Must be a string in all implementations\n}\n\nclass Config implements HasVersion {\n    const string VERSION = '2.0';     // OK — still a string\n    const int MAX_RETRIES = 3;        // Typed constant\n    const array DEFAULT_HEADERS = [   // Array type\n        'Accept' => 'application/json',\n        'X-Client' => 'php',\n    ];\n}\n\n// Child classes can't violate the type contract\nclass BadConfig extends Config {\n    const string MAX_RETRIES = 'three'; // Fatal error: type mismatch\n}\n\n// Works with all type declarations\nclass Limits {\n    const int|string ID = 42;         // Union types\n    const ?string LABEL = null;       // Nullable\n    const true ENABLED = true;        // Literal types (PHP 8.2)\n}"
+      ],
+      "significance": {
+        "label": "Completeness",
+        "body": "With typed class constants, every part of a PHP class can now be typed: properties, parameters, return values, and constants. The type system is complete. This means static analyzers can verify your entire class contract, not just the parts that had type support."
+      }
+    },
+    {
+      "id": 34,
+      "title": "Property Hooks — get/set Without the Boilerplate",
+      "php_version": "8.4",
+      "category": "OOP Done Right",
+      "slug": "property-hooks-get-set-without-the-boilerplate",
+      "url": "https://haphpiness.com/#/happy/34",
+      "description": "PHP 8.4's headline feature: property hooks let you define get and set behavior directly on a property declaration. No more writing boilerplate getter/setter methods. Properties can now have logic and still be accessed with $object->property syntax.",
+      "description_full": "PHP 8.4's headline feature: property hooks let you define get and set behavior directly on a property declaration. No more writing boilerplate getter/setter methods. Properties can now have logic and still be accessed with $object->property syntax. Property hooks work with interfaces (you can require a property to have a get or set hook), with readonly, and with constructor promotion. They're the biggest OOP addition since traits.",
+      "code_examples": [
+        "class User {\n    public string $fullName {\n        get => $this->firstName . ' ' . $this->lastName;\n    }\n\n    public string $email {\n        set(string $value) {\n            $this->email = strtolower(trim($value));\n        }\n    }\n\n    public function __construct(\n        public string $firstName,\n        public string $lastName,\n        public string $email,\n    ) {}\n}\n\n$user = new User('Rasmus', 'Lerdorf', ' Rasmus@PHP.net ');\necho $user->fullName;  // \"Rasmus Lerdorf\" — computed on access\necho $user->email;     // \"rasmus@php.net\" — normalized on set\n\n// Virtual properties — no backing storage needed\nclass Temperature {\n    public float $celsius {\n        get => ($this->fahrenheit - 32) / 1.8;\n        set(float $value) => $this->fahrenheit = $value * 1.8 + 32;\n    }\n\n    public function __construct(\n        public float $fahrenheit,\n    ) {}\n}\n\n$t = new Temperature(212);\necho $t->celsius;  // 100.0\n$t->celsius = 0;\necho $t->fahrenheit;  // 32.0"
+      ],
+      "significance": {
+        "label": "Paradigm Shift",
+        "body": "Property hooks change the economics of PHP class design. You no longer need to choose between \"public property (simple but no control)\" and \"private property + getter/setter (control but verbose)\". You get both: clean property access syntax with full control over behavior. This eliminates thousands of lines of boilerplate in any OOP codebase."
+      }
+    },
+    {
+      "id": 35,
+      "title": "Asymmetric Visibility — public private(set)",
+      "php_version": "8.4",
+      "category": "Crystal Clear",
+      "slug": "asymmetric-visibility-public-private-set",
+      "url": "https://haphpiness.com/#/happy/35",
+      "description": "PHP 8.4 lets you set different visibility for reading and writing a property. The most common pattern: publicly readable, privately writable. No more writing getters just to expose a value you don't want externally modified.",
+      "description_full": "PHP 8.4 lets you set different visibility for reading and writing a property. The most common pattern: publicly readable, privately writable. No more writing getters just to expose a value you don't want externally modified. Asymmetric visibility combines beautifully with property hooks and constructor promotion. Together, they give PHP one of the most expressive property systems in any language — read visibility, write visibility, get logic, set logic, and immutability, all declared inline.",
+      "code_examples": [
+        "class BankAccount {\n    public function __construct(\n        public readonly string $holder,\n        public private(set) float $balance = 0,  // Read: public. Write: private.\n    ) {}\n\n    public function deposit(float $amount): void {\n        if ($amount <= 0) throw new \\InvalidArgumentException('Amount must be positive');\n        $this->balance += $amount;  // Private write — OK\n    }\n}\n\n$account = new BankAccount('Alice', 100);\necho $account->balance;        // 100.0 — public read\n$account->balance = 0;         // Error! — private write\n$account->deposit(50);         // OK — internal write\necho $account->balance;        // 150.0\n\n// Works with protected too\nclass Entity {\n    public protected(set) int $id;           // Subclasses can write, outside can only read\n    public private(set) string $createdAt;   // Only this class can write\n}"
+      ],
+      "significance": {
+        "label": "Encapsulation",
+        "body": "The getter-for-a-readable-property pattern was PHP's most common boilerplate. Asymmetric visibility eliminates it entirely: public private(set) says \"anyone can read, only I can write\" — exactly the intent behind most getter methods — in a single declaration."
+      }
+    },
+    {
+      "id": 36,
+      "title": "array_find(), array_any(), array_all()",
+      "php_version": "8.4",
+      "category": "Functional Joy",
+      "slug": "array-find-array-any-array-all",
+      "url": "https://haphpiness.com/#/happy/36",
+      "description": "PHP 8.4 added the array search and predicate functions that every developer has been writing by hand for years. No more array_filter + count hacks or manual loops just to answer \"is there any?\" or \"do all match?\"",
+      "description_full": "PHP 8.4 added the array search and predicate functions that every developer has been writing by hand for years. No more array_filter + count hacks or manual loops just to answer \"is there any?\" or \"do all match?\" These functions accept callbacks, short-circuit when possible, and work with keys as well as values. They complement phparray_filter, phparray_map, and phparray_reduce to form a complete functional array toolkit.",
+      "code_examples": [
+        "$users = [\n    ['name' => 'Alice', 'role' => 'admin'],\n    ['name' => 'Bob', 'role' => 'editor'],\n    ['name' => 'Charlie', 'role' => 'viewer'],\n];\n\n// Find the first match\n$admin = array_find($users, fn($u) => $u['role'] === 'admin');\n// ['name' => 'Alice', 'role' => 'admin']\n\n// Find the key of the first match\n$key = array_find_key($users, fn($u) => $u['role'] === 'editor');\n// 1\n\n// Does ANY element match?\n$hasAdmin = array_any($users, fn($u) => $u['role'] === 'admin');\n// true\n\n// Do ALL elements match?\n$allViewers = array_all($users, fn($u) => $u['role'] === 'viewer');\n// false\n\n// Short-circuits — stops as soon as the answer is known\n$found = array_any($hugeArray, fn($item) => $item->isExpired());\n// Stops at the first expired item, doesn't scan the rest"
+      ],
+      "significance": {
+        "label": "Expressiveness",
+        "body": "\"Find the first X\" and \"do any/all match?\" are among the most common array operations in any codebase. Dedicated functions for these patterns replace hand-rolled loops, make intent explicit, and short-circuit for performance — the standard library doing what a standard library should."
+      }
+    },
+    {
+      "id": 37,
+      "title": "#[\\Deprecated] Attribute",
+      "php_version": "8.4",
+      "category": "Excellent Error Reporting",
+      "slug": "deprecated-attribute",
+      "url": "https://haphpiness.com/#/happy/37",
+      "description": "PHP 8.4 lets you mark your own functions, methods, and class constants as deprecated using a native attribute — the same mechanism PHP itself uses internally. When someone calls deprecated code, they get a proper E_USER_DEPRECATED notice with your custom message.",
+      "description_full": "PHP 8.4 lets you mark your own functions, methods, and class constants as deprecated using a native attribute — the same mechanism PHP itself uses internally. When someone calls deprecated code, they get a proper E_USER_DEPRECATED notice with your custom message. Before this attribute, library authors had to manually trigger trigger_error() inside deprecated methods — cluttering the implementation and offering no standard format. Now deprecation is metadata, clean and consistent.",
+      "code_examples": [
+        "class PaymentService {\n    // Deprecate with a message and version since\n    #[\\Deprecated(\"Use processPayment() instead\", since: \"3.2\")]\n    public function charge(float $amount): bool {\n        return $this->processPayment($amount);\n    }\n\n    public function processPayment(float $amount): bool {\n        // New implementation\n    }\n}\n\n$service = new PaymentService();\n$service->charge(50.00);\n// Deprecated: Method PaymentService::charge() is deprecated since 3.2,\n// use processPayment() instead\n\n// Works on functions too\n#[\\Deprecated(\"Use generateUuid() instead\")]\nfunction createId(): string {\n    return generateUuid();\n}\n\n// And class constants\nclass Config {\n    #[\\Deprecated(\"Use TIMEOUT_SECONDS instead\")]\n    const TIMEOUT = 30;\n    const int TIMEOUT_SECONDS = 30;\n}"
+      ],
+      "significance": {
+        "label": "API Evolution",
+        "body": "Every library needs to evolve its API. The #[\\Deprecated] attribute gives library authors a standard, engine-recognized way to guide users toward new APIs — without breaking backward compatibility or cluttering method bodies with trigger_error() calls."
+      }
+    },
+    {
+      "id": 38,
+      "title": "new Without Parentheses",
+      "php_version": "8.4",
+      "category": "Parser Perfection",
+      "slug": "new-without-parentheses",
+      "url": "https://haphpiness.com/#/happy/38",
+      "description": "PHP 8.4 allows chaining methods and accessing properties on a newly created object without wrapping new in parentheses. A small syntax fix that removes a long-standing annoyance.",
+      "description_full": "PHP 8.4 allows chaining methods and accessing properties on a newly created object without wrapping new in parentheses. A small syntax fix that removes a long-standing annoyance. This is the kind of paper-cut fix that makes a language more pleasant to use every day. Every PHP developer has hit this — you create an object, chain a method, get a syntax error, then add parentheses and grumble.",
+      "code_examples": [
+        "// Before PHP 8.4: parentheses required for chaining\n$name = (new ReflectionClass($obj))->getName();\n$date = (new DateTime('now'))->format('Y-m-d');\n$items = (new Collection([1, 2, 3]))->map(fn($n) => $n * 2)->toArray();\n\n// After PHP 8.4: just chain directly\n$name = new ReflectionClass($obj)->getName();\n$date = new DateTime('now')->format('Y-m-d');\n$items = new Collection([1, 2, 3])->map(fn($n) => $n * 2)->toArray();\n\n// Property access too\n$length = new SplFixedArray(10)->count();\n\n// Array access\n$first = new ArrayObject(['a', 'b', 'c'])[0];"
+      ],
+      "significance": {
+        "label": "Fluency",
+        "body": "Language design is about defaults. The old behavior — requiring parentheses to chain on new — was an arbitrary parser limitation that tripped up developers constantly. Removing it makes PHP's syntax do what you'd naturally expect."
+      }
+    },
+    {
+      "id": 39,
+      "title": "Pipe Operator |>",
+      "php_version": "8.5",
+      "category": "Modern Elegance",
+      "slug": "pipe-operator",
+      "url": "https://haphpiness.com/#/happy/39",
+      "description": "PHP 8.5's most anticipated feature: the pipe operator. It takes the value on the left and passes it as the first argument to the callable on the right. No more nested function calls or temporary variables — just clean, left-to-right data flow.",
+      "description_full": "PHP 8.5's most anticipated feature: the pipe operator. It takes the value on the left and passes it as the first argument to the callable on the right. No more nested function calls or temporary variables — just clean, left-to-right data flow. The pipe operator uses first-class callable syntax (...) for built-in functions and arrow functions or closures when you need to customize argument positions. It's the functional programming primitive that PHP's been missing.",
+      "code_examples": [
+        "// Before: nested calls — read inside-out\n$result = strtolower(str_replace(' ', '-', str_replace('.', '', trim($title))));\n\n// Before: temporary variables — cluttered\n$result = trim($title);\n$result = str_replace('.', '', $result);\n$result = str_replace(' ', '-', $result);\n$result = strtolower($result);\n\n// After: pipe — read left to right, like a unix pipeline\n$slug = $title\n    |> trim(...)\n    |> (fn($s) => str_replace('.', '', $s))\n    |> (fn($s) => str_replace(' ', '-', $s))\n    |> strtolower(...);\n\n// Perfect for data transformation pipelines\n$report = $rawData\n    |> array_filter(fn($row) => $row['active'])\n    |> array_map(fn($row) => $row['revenue'], ...)\n    |> array_sum(...)\n    |> (fn($total) => number_format($total, 2));"
+      ],
+      "significance": {
+        "label": "Readability",
+        "body": "Deeply nested function calls are one of the hardest things to read in any language. The pipe operator inverts the reading order to match the execution order: data flows left to right, top to bottom. It's how humans naturally think about transformations, and it makes complex data pipelines as readable as a bullet list."
+      }
+    },
+    {
+      "id": 40,
+      "title": "Clone With — Modify Properties While Cloning",
+      "php_version": "8.5",
+      "category": "OOP Done Right",
+      "slug": "clone-with-modify-properties-while-cloning",
+      "url": "https://haphpiness.com/#/happy/40",
+      "description": "PHP 8.5 turns clone into a function that accepts property overrides. This is the \"wither\" pattern that readonly classes desperately needed — create a modified copy without boilerplate.",
+      "description_full": "PHP 8.5 turns clone into a function that accepts property overrides. This is the \"wither\" pattern that readonly classes desperately needed — create a modified copy without boilerplate. Before PHP 8.5, creating a modified copy of a readonly object required manually passing every property to the constructor — even the ones that didn't change. clone() with overrides solves this elegantly.",
+      "code_examples": [
+        "readonly class Color {\n    public function __construct(\n        public int $red,\n        public int $green,\n        public int $blue,\n        public int $alpha = 255,\n    ) {}\n\n    public function withAlpha(int $alpha): self {\n        return clone($this, ['alpha' => $alpha]);\n    }\n\n    public function darken(float $factor): self {\n        return clone($this, [\n            'red'   => (int)($this->red * $factor),\n            'green' => (int)($this->green * $factor),\n            'blue'  => (int)($this->blue * $factor),\n        ]);\n    }\n}\n\n$blue = new Color(79, 91, 147);\n$transparent = $blue->withAlpha(128);\n$darkBlue = $blue->darken(0.5);\n\n// $blue is unchanged — immutability preserved\necho $blue->alpha;        // 255\necho $transparent->alpha; // 128\n\n// Works with any class, not just readonly\n$modified = clone($request, ['method' => 'POST', 'body' => $payload]);"
+      ],
+      "significance": {
+        "label": "Immutability",
+        "body": "Immutable objects are only practical if creating modified copies is easy. Without clone() with overrides, every readonly class needed hand-written wither methods that duplicated every property. Now the \"with-er\" pattern is a one-liner, making immutable design the path of least resistance."
+      }
+    },
+    {
+      "id": 41,
+      "title": "array_first() and array_last()",
+      "php_version": "8.5",
+      "category": "Consistency Wins",
+      "slug": "array-first-and-array-last",
+      "url": "https://haphpiness.com/#/happy/41",
+      "description": "PHP 8.5 added the two most obviously-missing array functions. Get the first or last value of an array without reset() side effects, without array_key_first() + indexing, and without any of the other workarounds developers have been using for 25 years.",
+      "description_full": "PHP 8.5 added the two most obviously-missing array functions. Get the first or last value of an array without reset() side effects, without array_key_first() + indexing, and without any of the other workarounds developers have been using for 25 years. The old approaches either mutated the array's internal pointer (reset()/end()), required two function calls, or created unnecessary intermediate arrays. array_first() and array_last() do exactly one thing, correctly, with no side effects.",
+      "code_examples": [
+        "$events = ['signup', 'login', 'purchase', 'logout'];\n\n$first = array_first($events);  // 'signup'\n$last = array_last($events);    // 'logout'\n\n// Returns null for empty arrays — compose with ??\n$latest = array_last($logs) ?? 'No logs yet';\n\n// Works with associative arrays too\n$config = ['debug' => true, 'env' => 'prod', 'version' => '3.0'];\narray_first($config);  // true (first value)\narray_last($config);   // '3.0' (last value)\n\n// Compare with the old ways:\n$first = reset($array);                                    // Mutates internal pointer!\n$first = $array[array_key_first($array)];                  // Verbose\n$first = current(array_slice($array, 0, 1));               // Allocates a new array\n$last = $array[array_key_last($array) ?? 0] ?? null;       // Awkward null handling"
+      ],
+      "significance": {
+        "label": "Completeness",
+        "body": "PHP had array_key_first() and array_key_last() since 7.3 but inexplicably not the value equivalents. It took six more years, but the standard library is finally complete for this basic operation. Sometimes the best features are the ones that should have existed all along."
+      }
+    },
+    {
+      "id": 42,
+      "title": "#[\\NoDiscard] — Warn When Return Values Are Ignored",
+      "php_version": "8.5",
+      "category": "Excellent Error Reporting",
+      "slug": "nodiscard-warn-when-return-values-are-ignored",
+      "url": "https://haphpiness.com/#/happy/42",
+      "description": "PHP 8.5 introduces the #[\\NoDiscard] attribute, which tells the engine to emit a warning if the return value of a function or method is not used. It's essential for functions where ignoring the result is always a bug.",
+      "description_full": "PHP 8.5 introduces the #[\\NoDiscard] attribute, which tells the engine to emit a warning if the return value of a function or method is not used. It's essential for functions where ignoring the result is always a bug. This catches a category of bugs that static analyzers already flag but that the engine previously ignored: calling an immutable method and discarding the result, skipping a validation check, or dropping an error code.",
+      "code_examples": [
+        "#[\\NoDiscard(\"Validation result must be checked\")]\nfunction validate(array $data): ValidationResult {\n    // ... returns success or failure with error messages\n    return new ValidationResult($errors);\n}\n\n// This is almost certainly a bug — the result isn't checked\nvalidate($formData);\n// Warning: The return value of function validate() should either\n// be used or intentionally ignored by casting it as (void)\n\n// Correct usage\n$result = validate($formData);\nif ($result->hasErrors()) {\n    return response($result->errors(), 422);\n}\n\n// Intentionally ignore with (void) cast\n(void) validate($data);  // Explicit: \"I know, I don't care\"\n\n// Perfect for immutable operations\nreadonly class Money {\n    #[\\NoDiscard]\n    public function add(Money $other): self {\n        return clone($this, ['amount' => $this->amount + $other->amount]);\n    }\n}\n\n$price = new Money(100, 'USD');\n$price->add(new Money(50, 'USD'));  // Warning! Result discarded — $price is immutable"
+      ],
+      "significance": {
+        "label": "API Safety",
+        "body": "#[\\NoDiscard] lets API authors encode an important constraint: \"you must use this return value.\" It catches the classic bug of calling a method on an immutable object without capturing the new value — a mistake that silently produces wrong results."
+      }
+    },
+    {
+      "id": 43,
+      "title": "Closures in Constant Expressions",
+      "php_version": "8.5",
+      "category": "No Limits",
+      "slug": "closures-in-constant-expressions",
+      "url": "https://haphpiness.com/#/happy/43",
+      "description": "PHP 8.5 allows static closures and first-class callables in constant expressions — meaning you can use them as default parameter values, in attribute arguments, and as class constant values. This unlocks patterns that were previously impossible.",
+      "description_full": "PHP 8.5 allows static closures and first-class callables in constant expressions — meaning you can use them as default parameter values, in attribute arguments, and as class constant values. This unlocks patterns that were previously impossible. This was one of the last restrictions on where closures could appear in PHP. Removing it makes callback-heavy APIs much cleaner — no more \"pass null and we'll use a default callback\" patterns.",
+      "code_examples": [
+        "// Closures as default parameter values\nfunction process(\n    array $data,\n    Closure $transform = static fn($x) => $x,  // Identity function default\n): array {\n    return array_map($transform, $data);\n}\n\nprocess([1, 2, 3]);                        // [1, 2, 3] — default identity\nprocess([1, 2, 3], fn($n) => $n * 2);     // [2, 4, 6]\n\n// First-class callables in attribute arguments\n#[Attribute]\nclass Validator {\n    public function __construct(public Closure $rule) {}\n}\n\nclass UserForm {\n    #[Validator(is_string(...))]\n    public string $name;\n\n    #[Validator(static fn($v) => strlen($v) >= 8)]\n    public string $password;\n}\n\n// Closures as class constants\nclass Transforms {\n    const Closure NORMALIZE = static fn(string $s) => strtolower(trim($s));\n    const Closure SLUGIFY = static fn(string $s) =>\n        preg_replace('/[^a-z0-9]+/', '-', strtolower(trim($s)));\n}"
+      ],
+      "significance": {
+        "label": "Composability",
+        "body": "When closures can appear anywhere a value can, functional patterns become first-class citizens in PHP's type system. Default callback parameters, strategy constants, and attribute-based configuration all become more natural and expressive."
+      }
+    },
+    {
+      "id": 44,
+      "title": "Fatal Error Backtraces",
+      "php_version": "8.5",
+      "category": "Excellent Error Reporting",
+      "slug": "fatal-error-backtraces",
+      "url": "https://haphpiness.com/#/happy/44",
+      "description": "PHP 8.5 finally gives you stack traces on fatal errors. Before, a fatal error like \"Maximum execution time exceeded\" would tell you what happened but not where in your code it happened. Now you get a full backtrace, just like exceptions.",
+      "description_full": "PHP 8.5 finally gives you stack traces on fatal errors. Before, a fatal error like \"Maximum execution time exceeded\" would tell you what happened but not where in your code it happened. Now you get a full backtrace, just like exceptions. This is particularly valuable in production environments where reproducing a fatal error can be difficult. The backtrace tells you exactly which code path triggered the fatal, turning \"something timed out somewhere\" into an actionable bug report.",
+      "code_examples": [
+        "// Before PHP 8.5:\n// Fatal error: Maximum execution time of 30 seconds exceeded\n// ... that's it. Good luck finding the infinite loop.\n\n// After PHP 8.5:\n// Fatal error: Maximum execution time of 30 seconds exceeded in /app/Services/Import.php on line 142\n// Stack trace:\n// #0 /app/Services/Import.php(142): processRow(Array)\n// #1 /app/Services/Import.php(98): importBatch(Array)\n// #2 /app/Console/Commands/Import.php(34): App\\Services\\Import->run()\n// #3 /vendor/laravel/framework/src/Illuminate/Console/Command.php(115): handle()\n\n// Also works for:\n// - Allowed memory size exhausted\n// - Stack overflow from infinite recursion\n// - Any other fatal error"
+      ],
+      "significance": {
+        "label": "Debuggability",
+        "body": "Fatal errors are the hardest to debug because they kill the process before you can inspect it. Adding backtraces to fatal errors closes one of PHP's oldest debugging gaps. It's the difference between \"the server timed out\" and \"the server timed out in Import::processRow() on line 142\" — one is a mystery, the other is a fix waiting to happen."
+      }
+    },
+    {
+      "id": 45,
+      "title": "URI Extension — Proper URL Parsing at Last",
+      "php_version": "8.5",
+      "category": "Batteries Included",
+      "slug": "uri-extension-proper-url-parsing-at-last",
+      "url": "https://haphpiness.com/#/happy/45",
+      "description": "PHP 8.5 introduces a built-in URI extension with immutable, standards-compliant URL objects. It supports both RFC 3986 and the WHATWG URL Standard — replacing the limited phpparse_url with something that actually handles real-world URLs correctly.",
+      "description_full": "PHP 8.5 introduces a built-in URI extension with immutable, standards-compliant URL objects. It supports both RFC 3986 and the WHATWG URL Standard — replacing the limited phpparse_url with something that actually handles real-world URLs correctly. The old parse_url() was famously unreliable — it silently returned partial results for malformed URLs and couldn't handle many valid URL formats. The new URI classes provide proper validation, normalization, and immutable modification.",
+      "code_examples": [
+        "use Uri\\Rfc3986\\Uri;\n\n// Parse and inspect\n$uri = new Uri('https://user:pass@example.com:8080/path?q=php#section');\necho $uri->getScheme();    // \"https\"\necho $uri->getHost();      // \"example.com\"\necho $uri->getPort();      // 8080\necho $uri->getPath();      // \"/path\"\necho $uri->getQuery();     // \"q=php\"\necho $uri->getFragment();  // \"section\"\n\n// Immutable modification with fluent interface\n$api = $uri\n    ->withScheme('https')\n    ->withHost('api.example.com')\n    ->withPort(null)\n    ->withPath('/v2/users')\n    ->withQuery('page=1');\n\necho (string) $api;  // \"https://api.example.com/v2/users?page=1\"\n\n// WHATWG URL Standard — how browsers parse URLs\nuse Uri\\WhatWg\\Url;\n\n$url = new Url('https://example.com/path/../other');\necho $url->getPath();  // \"/other\" — resolved, like a browser\n\n// Proper validation — no more silent parse_url failures\ntry {\n    $bad = new Uri('not a url');\n} catch (Uri\\InvalidUriException $e) {\n    echo $e->getMessage();\n}"
+      ],
+      "significance": {
+        "label": "Correctness",
+        "body": "URL handling is security-critical: redirect validation, SSRF prevention, and OAuth flows all depend on parsing URLs correctly. The new URI extension replaces a 30-year-old function with a standards-compliant, immutable API that makes correct URL handling the default."
+      }
+    },
+    {
+      "id": 46,
+      "title": "JIT Compilation — PHP Has a JIT Compiler",
+      "php_version": "8.0",
+      "category": "Warp Speed",
+      "slug": "jit-compilation-php-has-a-jit-compiler",
+      "url": "https://haphpiness.com/#/happy/46",
+      "description": "Yes, really. PHP 8.0 ships a tracing JIT compiler. For numeric and CPU-bound code, it delivers 3–10× speedups over interpreted execution. This is the feature PHP critics never mention.",
+      "description_full": "Yes, really. PHP 8.0 ships a tracing JIT compiler. For numeric and CPU-bound code, it delivers 3–10× speedups over interpreted execution. This is the feature PHP critics never mention. The JIT works in two modes. Function JIT compiles entire functions ahead-of-time. Tracing JIT profiles hot paths at runtime and compiles only the loops and branches that actually run — the same strategy used by V8 and LuaJIT. For web request workloads, OPcache alone gives most of the gains. Where JIT shines is pure computation: image processing, machine learning inference, mathematical simulations, and game servers written in PHP. The JIT is built on top of OPcache and shares its infrastructure. It doesn't change the semantics of PHP at all — code that runs correctly without JIT runs identically with it.",
+      "code_examples": [
+        "; php.ini — enable tracing JIT (the most aggressive mode)\nopcache.enable=1\nopcache.jit_buffer_size=100M\nopcache.jit=tracing\n\n; Alternatively, function-level JIT for a lighter touch\nopcache.jit=function",
+        "// Benchmark: sum of squares, 10 million iterations\n// Without JIT:  ~1.8 seconds\n// With JIT:     ~0.22 seconds  (~8× faster)\n\n$sum = 0.0;\nfor ($i = 0; $i < 10_000_000; $i++) {\n    $sum += $i * $i;\n}\necho $sum; // 3.3333333283267E+20"
+      ],
+      "significance": {
+        "label": "Performance",
+        "body": "PHP is no longer \"fast enough for web.\" With JIT, PHP is a credible language for CPU-bound workloads that used to require a compiled language. This changes what PHP can be used for, not just how fast existing code runs."
+      }
+    },
+    {
+      "id": 47,
+      "title": "OPcache — Bytecode Caching in the Box",
+      "php_version": "5.5",
+      "category": "Warp Speed",
+      "slug": "opcache-bytecode-caching-in-the-box",
+      "url": "https://haphpiness.com/#/happy/47",
+      "description": "PHP compiles source code to bytecode on every request — unless OPcache is active. Bundled since PHP 5.5 and enabled by default in most distributions, OPcache stores compiled bytecode in shared memory so subsequent requests skip parsing and compilation entirely.",
+      "description_full": "PHP compiles source code to bytecode on every request — unless OPcache is active. Bundled since PHP 5.5 and enabled by default in most distributions, OPcache stores compiled bytecode in shared memory so subsequent requests skip parsing and compilation entirely. No Redis. No Memcached. No build pipeline. OPcache is pure shared memory — the fastest possible cache. Setting validate_timestamps=0 in production means PHP never checks the filesystem for changes, which eliminates the most common I/O bottleneck in high-traffic applications. Combined with JIT, OPcache transforms PHP from an interpreted language into something much closer to a compiled runtime — without changing a single line of application code.",
+      "code_examples": [
+        "; php.ini — production-ready OPcache settings\nopcache.enable=1\nopcache.memory_consumption=256\nopcache.interned_strings_buffer=16\nopcache.max_accelerated_files=20000\nopcache.validate_timestamps=0   ; disable in production, reload to pick up changes\nopcache.save_comments=1         ; keep docblocks (needed by some frameworks)\nopcache.revalidate_freq=0",
+        "// Check cache status at runtime\n$status = opcache_get_status();\necho 'Cached scripts: ' . $status['opcache_statistics']['num_cached_scripts'];\necho 'Hit rate: '       . round($status['opcache_statistics']['opcache_hit_rate'], 2) . '%';\n\n// Invalidate a single file after a deploy\nopcache_invalidate('/var/www/app/src/Controller/HomeController.php', force: true);\n\n// Or reset everything\nopcache_reset();"
+      ],
+      "significance": {
+        "label": "Zero-Config Performance",
+        "body": "OPcache is the single highest-impact PHP configuration change, yet it requires no code changes and no extra infrastructure. Most PHP applications 2–5× their throughput by simply ensuring OPcache is enabled with sane settings."
+      }
+    },
+    {
+      "id": 48,
+      "title": "never Return Type — Functions That Never Return",
+      "php_version": "8.1",
+      "category": "True to Form",
+      "slug": "never-return-type-functions-that-never-return",
+      "url": "https://haphpiness.com/#/happy/48",
+      "description": "PHP 8.1 added the never return type for functions that unconditionally throw an exception or call exit(). It's a small addition with outsized benefits for static analysis and control flow clarity.",
+      "description_full": "PHP 8.1 added the never return type for functions that unconditionally throw an exception or call exit(). It's a small addition with outsized benefits for static analysis and control flow clarity. Before never, static analysers had no way to know that abort() or redirect() would halt execution. They'd warn about missing return statements, or fail to narrow types after an early exit. With never, the entire call graph is understood: dead code after these calls is detected, and type narrowing works across function boundaries.",
+      "code_examples": [
+        "function redirect(string $url): never\n{\n    header('Location: ' . $url);\n    exit();\n}\n\nfunction abort(int $code, string $message): never\n{\n    throw new HttpException($code, $message);\n}\n\n// Static analysers understand the control flow\nfunction findOrFail(int $id): User\n{\n    $user = User::find($id);\n    if ($user === null) {\n        abort(404, 'User not found');  // analyser knows: never returns\n    }\n    return $user;  // analyser knows: $user is User here, not User|null\n}",
+        "// PHPStan / Psalm understand this is unreachable:\nfunction process(string|null $value): string\n{\n    if ($value === null) {\n        abort(400, 'Required');  // never\n    }\n    return strtoupper($value);  // $value is string here — no null check needed\n}"
+      ],
+      "significance": {
+        "label": "Control Flow Clarity",
+        "body": "never makes implicit contracts explicit. Helper functions that always throw or redirect were always present in PHP codebases — now they carry their contract in the type signature, where static analysers and future readers can rely on it."
+      }
+    },
+    {
+      "id": 49,
+      "title": "array_is_list() — Finally Answer \"Is This Sequential?\"",
+      "php_version": "8.1",
+      "category": "True to Form",
+      "slug": "array-is-list-finally-answer-is-this-sequential",
+      "url": "https://haphpiness.com/#/happy/49",
+      "description": "PHP has one array type that serves as both indexed arrays and associative maps. The question \"is this a sequential list?\" has been a recurring puzzle for decades. PHP 8.1 answered it definitively.",
+      "description_full": "PHP has one array type that serves as both indexed arrays and associative maps. The question \"is this a sequential list?\" has been a recurring puzzle for decades. PHP 8.1 answered it definitively. Before this, developers resorted to various imperfect heuristics: checking if array_keys($arr) === range(0, count($arr) - 1), or comparing json_encode outputs, or writing custom functions that iterated the entire array. All of them were slow, surprising, or both.",
+      "code_examples": [
+        "// An array is a \"list\" if keys are 0, 1, 2, ... in order\narray_is_list([]);                        // true  — empty array\narray_is_list(['a', 'b', 'c']);           // true  — sequential\narray_is_list([0 => 'a', 1 => 'b']);      // true  — same thing\n\narray_is_list(['a' => 1, 'b' => 2]);      // false — associative\narray_is_list([1 => 'a', 0 => 'b']);      // false — wrong order\narray_is_list([0 => 'a', 2 => 'c']);      // false — gap in keys",
+        "// Real-world use: serialise correctly based on structure\nfunction toJson(array $data): string\n{\n    // array_is_list tells us whether to encode as [] or {}\n    return json_encode($data, JSON_THROW_ON_ERROR);\n    // json_encode already does this internally — now you can too\n}\n\n// Useful for input validation\nfunction validateItems(array $items): void\n{\n    if (!array_is_list($items)) {\n        throw new \\InvalidArgumentException('Expected a list, got a map');\n    }\n}"
+      ],
+      "significance": {
+        "label": "Pragmatism",
+        "body": "The dual-nature of PHP arrays is a source of endless subtle bugs in serialization, API responses, and data manipulation. array_is_list() is the escape hatch: a single, fast, unambiguous check that settles the question at the language level."
+      }
+    },
+    {
+      "id": 50,
+      "title": "FFI — Call C Libraries Directly from PHP",
+      "php_version": "7.4",
+      "category": "Beyond PHP",
+      "slug": "ffi-call-c-libraries-directly-from-php",
+      "url": "https://haphpiness.com/#/happy/50",
+      "description": "PHP 7.4 introduced the Foreign Function Interface, letting you load shared libraries and call C functions directly — with no extension to compile, no PECL, and no separate process. This is the feature that reliably shocks people who dismissed PHP.",
+      "description_full": "PHP 7.4 introduced the Foreign Function Interface, letting you load shared libraries and call C functions directly — with no extension to compile, no PECL, and no separate process. This is the feature that reliably shocks people who dismissed PHP. FFI can work with C structs, pointers, arrays, and callbacks. You can load any shared library installed on the system — libsodium, libgd, OpenCV, even custom `.so` files you compiled yourself. For performance-critical inner loops, you can preload FFI definitions at startup via ffi.preload in php.ini, making the binding cost negligible. Projects like phpReactPHP and PHP-ML use FFI for exactly this.",
+      "code_examples": [
+        "// Load the C math library and call cos() directly\n$ffi = FFI::cdef(\n    'double cos(double x);',  // C declaration\n    'libm.so.6'               // shared library (Linux); 'libm.dylib' on macOS\n);\n\necho $ffi->cos(M_PI);  // -1.0 — called at C speed",
+        "// Define and use a C struct\n$ffi = FFI::cdef('\n    typedef struct {\n        int x;\n        int y;\n    } Point;\n\n    typedef struct {\n        Point origin;\n        int width;\n        int height;\n    } Rect;\n');\n\n$rect = $ffi->new('Rect');\n$rect->origin->x = 10;\n$rect->origin->y = 20;\n$rect->width  = 100;\n$rect->height = 50;\n\necho \"{$rect->origin->x}, {$rect->origin->y}\";  // 10, 20"
+      ],
+      "significance": {
+        "label": "Systems Access",
+        "body": "FFI erases the boundary between PHP and the native world. Image processing, cryptography, hardware interfaces, and high-performance numerics are all accessible without leaving PHP. It turns PHP into a scripting layer for the entire C ecosystem."
+      }
+    },
+    {
+      "id": 51,
+      "title": "Random\\Randomizer — A Proper CSPRNG API",
+      "php_version": "8.2",
+      "category": "Chaos Under Control",
+      "slug": "random-randomizer-a-proper-csprng-api",
+      "url": "https://haphpiness.com/#/happy/51",
+      "description": "PHP 8.2 replaced the scattered rand(), mt_rand(), and random_int() functions with a unified, object-oriented randomness API. The key innovation: swappable engines.",
+      "description_full": "PHP 8.2 replaced the scattered rand(), mt_rand(), and random_int() functions with a unified, object-oriented randomness API. The key innovation: swappable engines. The Randomizer also handles ranges, string shuffling, and picking elements without repetition — all delegating to the engine you choose. This makes the right choice (CSPRNG for security, seeded for reproducibility) an explicit, visible decision rather than a consequence of which function you happened to call.",
+      "code_examples": [
+        "use Random\\Engine\\Secure;\nuse Random\\Engine\\Mt19937;\nuse Random\\Engine\\Xoshiro256StarStar;\nuse Random\\Randomizer;\n\n// Cryptographically secure — for tokens, passwords, keys\n$secure = new Randomizer(new Secure());\n$token = $secure->getBytes(32);             // 32 random bytes\n$hex   = bin2hex($token);                   // 64-char hex token\n\n// Seeded determinism — for reproducible tests or procedural generation\n$seeded = new Randomizer(new Mt19937(12345));\necho $seeded->getInt(1, 100);  // always the same for seed 12345\n\n// Fast non-secure — for simulations and games\n$fast = new Randomizer(new Xoshiro256StarStar(seed: 42));\n$shuffled = $fast->shuffleArray(['a', 'b', 'c', 'd', 'e']);\n$slice     = $fast->pickArrayKeys(['a', 'b', 'c', 'd'], 2);",
+        "// Generate a secure random password\n$chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%';\n$rng   = new Randomizer(new Secure());\n$password = $rng->getBytesFromString($chars, 16);\n\n// Shuffle a string securely\n$shuffled = $rng->shuffleBytes('Hello, World!');"
+      ],
+      "significance": {
+        "label": "Security by Design",
+        "body": "The old PHP randomness functions were a minefield — rand() was predictable, mt_rand() was seeded, and finding the secure option required knowing to look for random_int(). Randomizer makes the security properties of your choice visible at the call site."
+      }
+    },
+    {
+      "id": 52,
+      "title": "WeakMap — Object Keys That Don't Leak Memory",
+      "php_version": "8.0",
+      "category": "Chaos Under Control",
+      "slug": "weakmap-object-keys-that-don-t-leak-memory",
+      "url": "https://haphpiness.com/#/happy/52",
+      "description": "PHP 8.0 introduced WeakMap, a map where the keys are objects but holding a key doesn't prevent that object from being garbage collected. It's the perfect structure for per-object caches that would otherwise cause memory leaks.",
+      "description_full": "PHP 8.0 introduced WeakMap, a map where the keys are objects but holding a key doesn't prevent that object from being garbage collected. It's the perfect structure for per-object caches that would otherwise cause memory leaks. Compare this to a plain SplObjectStorage or a regular array keyed by spl_object_id(): both keep the object alive as long as the cache exists. With WeakMap, the cache is truly a side-channel — it holds data about objects without claiming ownership of them.",
+      "code_examples": [
+        "$cache = new WeakMap();\n\nclass QueryBuilder\n{\n    public function build(): string { /* ... */ return 'SELECT ...'; }\n}\n\n$qb = new QueryBuilder();\n\n// Associate computed data with the object\n$cache[$qb] = $qb->build();\n\necho $cache[$qb];  // \"SELECT ...\"\necho count($cache); // 1\n\n// When the object goes out of scope, the WeakMap entry is automatically removed\nunset($qb);\n\necho count($cache); // 0 — cleaned up automatically, no memory leak",
+        "// Real-world: memoize expensive per-object computations\nclass MetadataRegistry\n{\n    private WeakMap $cache;\n\n    public function __construct()\n    {\n        $this->cache = new WeakMap();\n    }\n\n    public function getMetadata(object $obj): array\n    {\n        if (!isset($this->cache[$obj])) {\n            $this->cache[$obj] = $this->computeExpensiveMetadata($obj);\n        }\n        return $this->cache[$obj];\n    }\n}"
+      ],
+      "significance": {
+        "label": "Memory Safety",
+        "body": "Caches that hold strong references to objects are a common source of memory leaks in long-running PHP processes (queues, servers, CLI commands). WeakMap makes object-keyed caches correct by default — no manual cleanup, no lifecycle management required."
+      }
+    },
+    {
+      "id": 53,
+      "title": "Named Capture Groups in preg_match",
+      "php_version": null,
+      "category": "Pattern Matching",
+      "slug": "named-capture-groups-in-preg-match",
+      "url": "https://haphpiness.com/#/happy/53",
+      "description": "PHP's preg_match supports PCRE named capture groups: (?P<name>...). Instead of juggling numeric match indices, your captures become a named map.",
+      "description_full": "PHP's preg_match supports PCRE named capture groups: (?P<name>...). Instead of juggling numeric match indices, your captures become a named map. Named groups shine in complex patterns where positional counting becomes error-prone: Named groups also work with preg_replace_callback, preg_match_all, and preg_replace using ${name} syntax in replacement strings.",
+      "code_examples": [
+        "// Parse an ISO 8601 date without counting brackets\n$pattern = '/^(?P<year>\\d{4})-(?P<month>\\d{2})-(?P<day>\\d{2})$/';\n\npreg_match($pattern, '2024-03-15', $matches);\n\necho $matches['year'];   // \"2024\"\necho $matches['month'];  // \"03\"\necho $matches['day'];    // \"15\"\n\n// Numeric indices still work too — your choice\necho $matches[1];  // \"2024\"",
+        "// Parse a log line\n$log = '[2024-03-15 14:32:01] production.ERROR: Connection refused {\"host\":\"db1\"}';\n\npreg_match(\n    '/^\\[(?P<date>[^\\]]+)\\]\\s+(?P<channel>\\w+)\\.(?P<level>\\w+):\\s+(?P<message>[^{]+)/',\n    $log,\n    $m\n);\n\necho $m['date'];     // \"2024-03-15 14:32:01\"\necho $m['channel'];  // \"production\"\necho $m['level'];    // \"ERROR\"\necho trim($m['message']); // \"Connection refused\""
+      ],
+      "significance": {
+        "label": "Maintainability",
+        "body": "Numbered capture groups are an implementation detail that leaks into your calling code. Named groups make regex patterns self-documenting — the name describes what the group captures, and your code reads the intent rather than $m[3]."
+      }
+    },
+    {
+      "id": 54,
+      "title": "Spaceship Operator <=> — Three-Way Comparison",
+      "php_version": "7.0",
+      "category": "Pattern Matching",
+      "slug": "spaceship-operator-three-way-comparison",
+      "url": "https://haphpiness.com/#/happy/54",
+      "description": "PHP 7.0 introduced <=>: it returns -1, 0, or 1 depending on whether the left side is less than, equal to, or greater than the right. This is exactly what usort comparators need.",
+      "description_full": "PHP 7.0 introduced <=>: it returns -1, 0, or 1 depending on whether the left side is less than, equal to, or greater than the right. This is exactly what usort comparators need. Works on strings, integers, floats, and arrays. For multi-field sorting, chain comparisons with the || operator — when the first comparison is 0 (equal), fall through to the next: The spaceship also works with PHP's built-in comparison semantics, so '10' <=> '9' returns 1 (numeric string comparison) and [1, 2] <=> [1, 1] compares element-by-element.",
+      "code_examples": [
+        "// Before: manual if/else dance\nusort($users, function ($a, $b) {\n    if ($a->age === $b->age) return 0;\n    return $a->age < $b->age ? -1 : 1;\n});\n\n// After: one expression\nusort($users, fn($a, $b) => $a->age <=> $b->age);",
+        "// Sort by last name, then first name, then age\nusort($people, fn($a, $b) =>\n    $a->lastName  <=> $b->lastName  ?:\n    $a->firstName <=> $b->firstName ?:\n    $a->age       <=> $b->age\n);\n\n// Sort products: in-stock first, then by price ascending\nusort($products, fn($a, $b) =>\n    $b->inStock <=> $a->inStock ?: $a->price <=> $b->price\n);"
+      ],
+      "significance": {
+        "label": "Ergonomics",
+        "body": "The usort comparator pattern is one of the most-written pieces of PHP boilerplate. The spaceship operator collapses it to a single expression, and the ?: chaining pattern for multi-key sorts reads almost like a specification."
+      }
+    },
+    {
+      "id": 55,
+      "title": "Array Destructuring with Keys — Pattern Matching for Arrays",
+      "php_version": null,
+      "category": "Pattern Matching",
+      "slug": "array-destructuring-with-keys-pattern-matching-for-arrays",
+      "url": "https://haphpiness.com/#/happy/55",
+      "description": "PHP's short array syntax supports key-based destructuring: pull specific values out of an associative array by name, discarding the rest. It reads like pattern matching and eliminates a class of \"which index is that?\" bugs.",
+      "description_full": "PHP's short array syntax supports key-based destructuring: pull specific values out of an associative array by name, discarding the rest. It reads like pattern matching and eliminates a class of \"which index is that?\" bugs. This shines in foreach loops over result sets, where each row is an associative array: You can also use the list() form with keys, and nesting works for deeper structures:",
+      "code_examples": [
+        "// Extract specific keys from an associative array\n$person = ['name' => 'Alice', 'age' => 30, 'city' => 'London'];\n\n['name' => $name, 'age' => $age] = $person;\n\necho $name;  // \"Alice\"\necho $age;   // 30\n// 'city' is ignored — only extract what you need",
+        "$rows = [\n    ['id' => 1, 'email' => 'alice@example.com', 'role' => 'admin'],\n    ['id' => 2, 'email' => 'bob@example.com',   'role' => 'user'],\n    ['id' => 3, 'email' => 'carol@example.com', 'role' => 'user'],\n];\n\nforeach ($rows as ['id' => $id, 'email' => $email]) {\n    echo \"$id: $email\\n\";\n    // 'role' is irrelevant here — just ignore it\n}",
+        "// Nested destructuring\n$config = [\n    'database' => ['host' => 'localhost', 'port' => 5432],\n    'cache'    => ['driver' => 'redis'],\n];\n\n['database' => ['host' => $host, 'port' => $port]] = $config;\necho \"$host:$port\";  // \"localhost:5432\""
+      ],
+      "significance": {
+        "label": "Expressiveness",
+        "body": "Destructuring with keys bridges the gap between PHP's associative arrays and pattern matching. Instead of $row['email'] repeated five times in a loop body, you bind once and read a clean name throughout — and the intent is visible at the top of the block."
+      }
+    },
+    {
+      "id": 56,
+      "title": "Stream Wrappers & php:// — Virtual File Handles",
+      "php_version": null,
+      "category": "Behind the Curtain",
+      "slug": "stream-wrappers-php-virtual-file-handles",
+      "url": "https://haphpiness.com/#/happy/56",
+      "description": "PHP's stream system lets you treat memory, network connections, compression filters, and custom protocols as ordinary file handles. The built-in php:// wrappers are especially useful.",
+      "description_full": "PHP's stream system lets you treat memory, network connections, compression filters, and custom protocols as ordinary file handles. The built-in php:// wrappers are especially useful. php://temp works like php://memory but transparently spills to a temporary file if the data exceeds a threshold (default 2 MB) — the right default for processing uploads or large responses: Other built-in wrappers: php://stdin, php://stdout, php://stderr for CLI pipes; compress.zlib://file.gz to read gzipped files transparently; data:// for inline data URIs. You can also register your own stream wrapper with stream_wrapper_register() to implement custom protocols.",
+      "code_examples": [
+        "// php://memory — a file handle backed by RAM, not disk\n$handle = fopen('php://memory', 'r+');\nfwrite($handle, \"line one\\n\");\nfwrite($handle, \"line two\\n\");\n\nrewind($handle);\necho stream_get_contents($handle);  // \"line one\\nline two\\n\"\nfclose($handle);\n\n// Works with all standard file functions:\nrewind($handle);\nwhile (($line = fgets($handle)) !== false) {\n    echo trim($line);\n}",
+        "$handle = fopen('php://temp/maxmemory:5242880', 'r+');  // 5 MB threshold\n// Use it like any file handle; PHP handles the memory/disk decision",
+        "// Use php://memory to test I/O code without touching the filesystem\nfunction writeCsv(iterable $rows, $handle): void\n{\n    foreach ($rows as $row) {\n        fputcsv($handle, $row);\n    }\n}\n\n// In tests — no temp files, no cleanup, runs in microseconds\n$out = fopen('php://memory', 'r+');\nwriteCsv([['a', 'b'], ['c', 'd']], $out);\nrewind($out);\n$result = stream_get_contents($out);\nassert($result === \"a,b\\nc,d\\n\");"
+      ],
+      "significance": {
+        "label": "Testability",
+        "body": "php://memory is the cleanest way to unit-test I/O code in PHP. Any function that accepts a file handle can be tested without touching the disk, without mock objects, and without temporary files to clean up. It's duck-typing for streams."
+      }
+    },
+    {
+      "id": 57,
+      "title": "intl MessageFormatter — ICU-Backed Proper i18n",
+      "php_version": null,
+      "category": "World Ready",
+      "slug": "intl-messageformatter-icu-backed-proper-i18n",
+      "url": "https://haphpiness.com/#/happy/57",
+      "description": "PHP bundles the ICU library via the intl extension. That means real internationalisation: pluralization rules for all languages, gender agreements, locale-aware number and date formatting — the things every web app needs and usually gets wrong.",
+      "description_full": "PHP bundles the ICU library via the intl extension. That means real internationalisation: pluralization rules for all languages, gender agreements, locale-aware number and date formatting — the things every web app needs and usually gets wrong. The same extension provides locale-aware number, currency, and date formatting through NumberFormatter and IntlDateFormatter:",
+      "code_examples": [
+        "use MessageFormatter;\n\n// Pluralization that actually works for every language\n$fmt = new MessageFormatter('en_US',\n    '{count, plural, one{# item} other{# items}}'\n);\n\necho $fmt->format(['count' => 1]);   // \"1 item\"\necho $fmt->format(['count' => 5]);   // \"5 items\"\necho $fmt->format(['count' => 0]);   // \"0 items\"\n\n// Russian has four plural forms — ICU handles them automatically\n$fmt_ru = new MessageFormatter('ru_RU',\n    '{count, plural, one{# товар} few{# товара} many{# товаров} other{# товара}}'\n);\necho $fmt_ru->format(['count' => 1]);   // \"1 товар\"\necho $fmt_ru->format(['count' => 3]);   // \"3 товара\"\necho $fmt_ru->format(['count' => 11]);  // \"11 товаров\"",
+        "// Format numbers correctly for the locale\n$nf = new NumberFormatter('de_DE', NumberFormatter::DECIMAL);\necho $nf->format(1234567.89);  // \"1.234.567,89\" — German conventions\n\n$cf = new NumberFormatter('en_US', NumberFormatter::CURRENCY);\necho $cf->formatCurrency(9.99, 'USD');  // \"$9.99\"\necho $cf->formatCurrency(9.99, 'EUR');  // \"€9.99\"\n\n// Collation — sort strings correctly for the locale\n$coll = new Collator('fr_FR');\n$words = ['éclair', 'apple', 'été', 'banane'];\n$coll->sort($words);\n// Sorted according to French alphabetical rules, not ASCII byte order"
+      ],
+      "significance": {
+        "label": "Correctness at Scale",
+        "body": "Hardcoded plural rules (\"1 item, N items\") break for Arabic (six plural forms), Polish (four), and many others. ICU's CLDR data covers 700+ locales. Using intl means your app handles pluralization and formatting correctly in languages you don't know, without writing a single locale-specific branch."
+      }
+    },
+    {
+      "id": 58,
+      "title": "PHPStan & Psalm — Static Analysis as a First-Class Citizen",
+      "php_version": null,
+      "category": "Trust but Verify",
+      "slug": "phpstan-psalm-static-analysis-as-a-first-class-citizen",
+      "url": "https://haphpiness.com/#/happy/58",
+      "description": "Run PHPStan at its strictest level on a modern PHP codebase and you get TypeScript-grade type safety — with zero runtime overhead and no transpile step. This is one of the most important things PHP developers don't know they have.",
+      "description_full": "Run PHPStan at its strictest level on a modern PHP codebase and you get TypeScript-grade type safety — with zero runtime overhead and no transpile step. This is one of the most important things PHP developers don't know they have. At level 9, PHPStan catches bugs that would otherwise only surface at runtime: At higher levels, PHPStan enforces return types, detects dead code, validates array shapes, and understands generics via PHPDoc. Psalm (the alternative from Vimeo) goes even further with its type inference engine and taint analysis for security vulnerabilities.",
+      "code_examples": [
+        "# Install\ncomposer require --dev phpstan/phpstan\n\n# Run at max strictness (level 9)\nvendor/bin/phpstan analyse src --level=9",
+        "// PHPStan catches this at analysis time, not in production:\nfunction processUser(?User $user): string\n{\n    return strtoupper($user->name);\n    //                ^^^^^^^^^^^^\n    // Error: Cannot access property $name on null.\n    // Add a null check or change the type to User.\n}\n\n// After fix — PHPStan is satisfied:\nfunction processUser(?User $user): string\n{\n    if ($user === null) {\n        return 'Guest';\n    }\n    return strtoupper($user->name);\n}",
+        "# phpstan.neon — project configuration\nparameters:\n    level: 9\n    paths:\n        - src\n    strictRules:\n        disallowedBacktick: true\n        disallowedConstructs:\n            - 'empty'  # empty() masks bugs; be explicit"
+      ],
+      "significance": {
+        "label": "Confidence Without Ceremony",
+        "body": "Static analysis turns PHP's optional type system into a mandatory one — without changing the language. A codebase with PHPStan at level 9 has fewer runtime surprises than many statically-typed languages, because the analyser understands nullability, generics, and control flow in ways that simple type declarations can't express."
+      }
+    },
+    {
+      "id": 59,
+      "title": "Numeric Literal Separators — 1_000_000",
+      "php_version": "7.4",
+      "category": "Elegance in Brevity",
+      "slug": "numeric-literal-separators-1-000-000",
+      "url": "https://haphpiness.com/#/happy/59",
+      "description": "PHP 7.4 lets you insert underscores anywhere in numeric literals. The compiler ignores them; your eyes don't have to count digits.",
+      "description_full": "PHP 7.4 lets you insert underscores anywhere in numeric literals. The compiler ignores them; your eyes don't have to count digits. Works in every numeric context — integers, floats, hex, octal, binary, and scientific notation: Underscores can go between any two digits, so you can group by your domain's conventions: thousands in decimal, bytes in binary, nibbles in hex. The runtime value is identical — this is purely a readability aid.",
+      "code_examples": [
+        "// Before: count the zeros\n$population     = 8000000000;\n$diskSize       = 1099511627776;\n$maxUpload      = 10485760;\n\n// After: immediately readable\n$population     = 8_000_000_000;       // 8 billion\n$diskSize       = 1_099_511_627_776;   // 1 TiB in bytes\n$maxUpload      = 10_485_760;          // 10 MiB",
+        "// Hex colour / bitmask constants become self-documenting\nconst PERMISSION_READ    = 0b0000_0001;\nconst PERMISSION_WRITE   = 0b0000_0010;\nconst PERMISSION_EXECUTE = 0b0000_0100;\nconst PERMISSION_ALL     = 0b0000_0111;\n\n// RGB hex values\n$red    = 0xFF_00_00;\n$green  = 0x00_FF_00;\n$blue   = 0x00_00_FF;\n$white  = 0xFF_FF_FF;\n\n// Financial precision\n$price      = 1_299.99;\n$taxRate    = 0.07_5;       // 7.5%\n$threshold  = 1_000_000.00; // one million"
+      ],
+      "significance": {
+        "label": "Readability",
+        "body": "Misreading a number's magnitude is a real bug category. Off-by-a-power-of-ten errors in timeouts, file size limits, and financial calculations have real consequences. Numeric separators make the magnitude visible at a glance, in the same way that formatting a number for display would."
+      }
+    }
+  ]
+}
