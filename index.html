@@ -530,7 +530,7 @@ a:hover { color: var(--warm-amber); text-decoration: underline; }
 <body>
 
 <div class="header">
-  <h1><a href="#/" onclick="showIndex()">ha<span class="php-highlight">php</span>iness</a></h1>
+  <h1><a href="#/">ha<span class="php-highlight">php</span>iness</a></h1>
   <div class="tagline">These are things in PHP which make me genuinely_happy();</div>
 </div>
 
@@ -542,7 +542,7 @@ a:hover { color: var(--warm-amber); text-decoration: underline; }
   PHP has changed. The language that powered the early web grew up, learned from its mistakes, and became something genuinely <strong>great</strong>. These are real, objective improvements that make PHP a joy to write — features I use every day and never want to give up.
 </p>
 <p class="intro">
-  Inspired by <a href="http://phpsadness.com/" target="_blank">PHP Sadness</a> — but this time, we're smiling.
+  Inspired by <a href="https://phpsadness.com/" target="_blank" rel="noopener noreferrer">PHP Sadness</a> — but this time, we're smiling.
 </p>
 
 <!-- ── Excellent Error Reporting ── -->
@@ -960,7 +960,7 @@ htmlspecialchars($string, ENT_COMPAT | ENT_HTML401, 'UTF-8', false);
 // After: Crystal clear intent.
 htmlspecialchars($string, double_encode: false);</code></pre>
 <p>Named arguments aren't just syntactic sugar — they're self-documenting code. When you read <code>double_encode: false</code>, you know exactly what's happening without checking the docs. They also let you skip optional parameters entirely, calling only what matters.</p>
-<p>Combined with <a href="https://php.net/array_slice" target="_blank" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">array_slice</span></a> and other functions that have many optional parameters, named arguments turn frustrating API calls into readable, maintainable code.</p>
+<p>Combined with <a href="https://php.net/array_slice" target="_blank" rel="noopener noreferrer" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">array_slice</span></a> and other functions that have many optional parameters, named arguments turn frustrating API calls into readable, maintainable code.</p>
 <div class="significance"><h3><span class="sig-label">Significance: </span>Readability</h3><div class="sig-body">Code is read far more often than it is written. Named arguments make function calls self-documenting, reducing the cognitive load of understanding existing code and eliminating an entire class of positional bugs.</div></div>
 <div class="nav-buttons nav-bottom">
   <a href="#/happy/67">&laquo; Previous Happiness</a>
@@ -1098,7 +1098,7 @@ function createClient(string $host, array $options = []) {
     $opts = [...self::DEFAULT_OPTIONS, ...$options];
     // ...
 }</code></pre>
-<p>The spread operator for arrays follows the same <code>...</code> syntax used for function arguments, keeping the language consistent. Later values override earlier ones, just like <a href="https://php.net/array_merge" target="_blank" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">array_merge</span></a>, but with cleaner syntax.</p>
+<p>The spread operator for arrays follows the same <code>...</code> syntax used for function arguments, keeping the language consistent. Later values override earlier ones, just like <a href="https://php.net/array_merge" target="_blank" rel="noopener noreferrer" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">array_merge</span></a>, but with cleaner syntax.</p>
 <div class="significance"><h3><span class="sig-label">Significance: </span>Expressiveness</h3><div class="sig-body">Small syntactic improvements compound. The spread operator for arrays saves a function call, reads more naturally, and brings PHP's array handling in line with modern JavaScript and Python. It's one less reason to reach for <code>array_merge()</code>.</div></div>
 <div class="nav-buttons nav-bottom">
   <a href="#/happy/4">&laquo; Previous Happiness</a>
@@ -1618,7 +1618,7 @@ $user = UserFactory::create(
     role: Role::Admin,
     verified: true,
 );</code></pre>
-<p>Named arguments work with all functions — built-in and user-defined. They interoperate with positional arguments (positional first, then named). They even work with <a href="https://php.net/call_user_func_array" target="_blank" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">call_user_func_array</span></a> when you pass an associative array.</p>
+<p>Named arguments work with all functions — built-in and user-defined. They interoperate with positional arguments (positional first, then named). They even work with <a href="https://php.net/call_user_func_array" target="_blank" rel="noopener noreferrer" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">call_user_func_array</span></a> when you pass an associative array.</p>
 <div class="significance"><h3><span class="sig-label">Significance: </span>Readability</h3><div class="sig-body">Named arguments turn cryptic function calls into self-documenting expressions. They're especially powerful for PHP's large standard library, where many functions have accumulated optional parameters over decades. You no longer need to memorize parameter positions.</div></div>
 <div class="nav-buttons nav-bottom">
   <a href="#/happy/17">&laquo; Previous Happiness</a>
@@ -1666,7 +1666,7 @@ $values   = array_values($filtered);  // Re-index after filter
 $combined = array_combine($keys, $values);
 $unique   = array_unique($tags);
 $chunks   = array_chunk($items, 50);   // Batch processing</code></pre>
-<p>PHP arrays are ordered hash maps — they work as lists, dictionaries, sets, stacks, and queues. The standard library gives you <a href="https://php.net/array_map" target="_blank" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">array_map</span></a>, <a href="https://php.net/array_filter" target="_blank" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">array_filter</span></a>, <a href="https://php.net/array_reduce" target="_blank" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">array_reduce</span></a>, and 75+ other array functions out of the box.</p>
+<p>PHP arrays are ordered hash maps — they work as lists, dictionaries, sets, stacks, and queues. The standard library gives you <a href="https://php.net/array_map" target="_blank" rel="noopener noreferrer" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">array_map</span></a>, <a href="https://php.net/array_filter" target="_blank" rel="noopener noreferrer" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">array_filter</span></a>, <a href="https://php.net/array_reduce" target="_blank" rel="noopener noreferrer" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">array_reduce</span></a>, and 75+ other array functions out of the box.</p>
 <div class="significance"><h3><span class="sig-label">Significance: </span>Versatility</h3><div class="sig-body">PHP's array is the Swiss Army knife of data structures. Its combination of ordered keys, mixed types, and a massive standard library of manipulation functions means you rarely need external collection libraries. With arrow functions, the functional style is now as concise as any language.</div></div>
 <div class="nav-buttons nav-bottom">
   <a href="#/happy/18">&laquo; Previous Happiness</a>
@@ -1772,7 +1772,7 @@ $acc = accumulator();
 $acc->current(); // 0
 $acc->send(10);  // 10
 $acc->send(20);  // 30</code></pre>
-<p>Generators follow the same <code>Iterator</code> interface as any other iterable, so they work seamlessly with <code>foreach</code>, <a href="https://php.net/iterator_to_array" target="_blank" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">iterator_to_array</span></a>, and the spread operator.</p>
+<p>Generators follow the same <code>Iterator</code> interface as any other iterable, so they work seamlessly with <code>foreach</code>, <a href="https://php.net/iterator_to_array" target="_blank" rel="noopener noreferrer" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">iterator_to_array</span></a>, and the spread operator.</p>
 <div class="significance"><h3><span class="sig-label">Significance: </span>Efficiency</h3><div class="sig-body">Generators make memory efficiency the default rather than an optimization. Processing large datasets with generators uses the same clean syntax as processing small arrays — no pagination logic, no batch callbacks, no manual iterator implementations.</div></div>
 <div class="nav-buttons nav-bottom">
   <a href="#/happy/20">&laquo; Previous Happiness</a>
@@ -1819,7 +1819,7 @@ class Money implements JsonSerializable {
 
 echo json_encode(new Money(1999, 'USD'));
 // {"amount":19.99,"currency":"USD"}</code></pre>
-<p>The <a href="https://php.net/json_encode" target="_blank" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">json_encode</span></a> and <a href="https://php.net/json_decode" target="_blank" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">json_decode</span></a> functions handle all edge cases: Unicode, numeric precision, recursive structures, custom serialization. They're fast (PHP's JSON extension is implemented in C) and battle-tested across millions of applications.</p>
+<p>The <a href="https://php.net/json_encode" target="_blank" rel="noopener noreferrer" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">json_encode</span></a> and <a href="https://php.net/json_decode" target="_blank" rel="noopener noreferrer" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">json_decode</span></a> functions handle all edge cases: Unicode, numeric precision, recursive structures, custom serialization. They're fast (PHP's JSON extension is implemented in C) and battle-tested across millions of applications.</p>
 <div class="significance"><h3><span class="sig-label">Significance: </span>Web-Native</h3><div class="sig-body">PHP is a web language, and JSON is the web's data format. Having fast, reliable JSON support built into the language core means every PHP application can speak the lingua franca of web APIs without any additional dependencies.</div></div>
 <div class="nav-buttons nav-bottom">
   <a href="#/happy/21">&laquo; Previous Happiness</a>
@@ -1865,7 +1865,7 @@ foreach ($period as $month) {
 
 // Parse anything
 $parsed = DateTimeImmutable::createFromFormat('d/m/Y', '12/03/2026');</code></pre>
-<p>The distinction between <a href="https://php.net/DateTimeImmutable" target="_blank" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">DateTimeImmutable</span></a> and <a href="https://php.net/DateTime" target="_blank" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">DateTime</span></a> is one of PHP's best design decisions. Use <code>DateTimeImmutable</code> everywhere and date-related bugs virtually disappear.</p>
+<p>The distinction between <a href="https://php.net/DateTimeImmutable" target="_blank" rel="noopener noreferrer" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">DateTimeImmutable</span></a> and <a href="https://php.net/DateTime" target="_blank" rel="noopener noreferrer" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">DateTime</span></a> is one of PHP's best design decisions. Use <code>DateTimeImmutable</code> everywhere and date-related bugs virtually disappear.</p>
 <div class="significance"><h3><span class="sig-label">Significance: </span>Correctness</h3><div class="sig-body">Date and time handling is one of programming's hardest problems (time zones, daylight saving, leap seconds). PHP's DateTime classes handle these correctly out of the box, and DateTimeImmutable prevents the mutation bugs that plagued the mutable DateTime class.</div></div>
 <div class="nav-buttons nav-bottom">
   <a href="#/happy/22">&laquo; Previous Happiness</a>
@@ -1908,7 +1908,7 @@ $hash = password_hash($password, PASSWORD_ARGON2ID, [
 // Get algorithm info
 $info = password_get_info($hash);
 // ['algo' => '2y', 'algoName' => 'bcrypt', 'options' => ['cost' => 12]]</code></pre>
-<p>The <a href="https://php.net/password_hash" target="_blank" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">password_hash</span></a> function generates a random salt automatically, encodes the algorithm and cost in the hash string, and uses a timing-safe comparison. It's nearly impossible to misuse. When <code>PASSWORD_DEFAULT</code> changes to a stronger algorithm in a future PHP version, <a href="https://php.net/password_needs_rehash" target="_blank" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">password_needs_rehash</span></a> handles the migration transparently.</p>
+<p>The <a href="https://php.net/password_hash" target="_blank" rel="noopener noreferrer" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">password_hash</span></a> function generates a random salt automatically, encodes the algorithm and cost in the hash string, and uses a timing-safe comparison. It's nearly impossible to misuse. When <code>PASSWORD_DEFAULT</code> changes to a stronger algorithm in a future PHP version, <a href="https://php.net/password_needs_rehash" target="_blank" rel="noopener noreferrer" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">password_needs_rehash</span></a> handles the migration transparently.</p>
 <div class="significance"><h3><span class="sig-label">Significance: </span>Security by Default</h3><div class="sig-body">Before <code>password_hash()</code>, developers used md5(), sha1(), or rolled their own salting. The result was millions of insecure password stores. By making the secure approach the easiest approach — literally two functions — PHP eliminated an entire class of security vulnerabilities across its ecosystem.</div></div>
 <div class="nav-buttons nav-bottom">
   <a href="#/happy/23">&laquo; Previous Happiness</a>
@@ -2239,7 +2239,7 @@ $managerEmail = $employee
   <a href="#/happy/32">Next Happiness &raquo;</a>
 </div>
 <h2><code>json_validate()</code> — Validate Without Decoding</h2>
-<p>PHP 8.3 added <a href="https://php.net/json_validate" target="_blank" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">json_validate</span></a> — a function that checks if a string is valid JSON without actually decoding it. Before this, you had to call <code>json_decode()</code> and check <code>json_last_error()</code>, which meant allocating memory for a data structure you didn't need.</p>
+<p>PHP 8.3 added <a href="https://php.net/json_validate" target="_blank" rel="noopener noreferrer" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">json_validate</span></a> — a function that checks if a string is valid JSON without actually decoding it. Before this, you had to call <code>json_decode()</code> and check <code>json_last_error()</code>, which meant allocating memory for a data structure you didn't need.</p>
 <pre><code>// Before: decode the entire payload just to check if it's valid
 $data = json_decode($input);
 if (json_last_error() !== JSON_ERROR_NONE) {
@@ -2487,7 +2487,7 @@ $allViewers = array_all($users, fn($u) => $u['role'] === 'viewer');
 // Short-circuits — stops as soon as the answer is known
 $found = array_any($hugeArray, fn($item) => $item->isExpired());
 // Stops at the first expired item, doesn't scan the rest</code></pre>
-<p>These functions accept callbacks, short-circuit when possible, and work with keys as well as values. They complement <a href="https://php.net/array_filter" target="_blank" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">array_filter</span></a>, <a href="https://php.net/array_map" target="_blank" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">array_map</span></a>, and <a href="https://php.net/array_reduce" target="_blank" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">array_reduce</span></a> to form a complete functional array toolkit.</p>
+<p>These functions accept callbacks, short-circuit when possible, and work with keys as well as values. They complement <a href="https://php.net/array_filter" target="_blank" rel="noopener noreferrer" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">array_filter</span></a>, <a href="https://php.net/array_map" target="_blank" rel="noopener noreferrer" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">array_map</span></a>, and <a href="https://php.net/array_reduce" target="_blank" rel="noopener noreferrer" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">array_reduce</span></a> to form a complete functional array toolkit.</p>
 <div class="significance"><h3><span class="sig-label">Significance: </span>Expressiveness</h3><div class="sig-body">"Find the first X" and "do any/all match?" are among the most common array operations in any codebase. Dedicated functions for these patterns replace hand-rolled loops, make intent explicit, and short-circuit for performance — the standard library doing what a standard library should.</div></div>
 <div class="nav-buttons nav-bottom">
   <a href="#/happy/35">&laquo; Previous Happiness</a>
@@ -2840,7 +2840,7 @@ class Transforms {
   <a href="#/happy/46">Next Happiness &raquo;</a>
 </div>
 <h2>URI Extension — Proper URL Parsing at Last</h2>
-<p>PHP 8.5 introduces a built-in URI extension with immutable, standards-compliant URL objects. It supports both RFC 3986 and the WHATWG URL Standard — replacing the limited <a href="https://php.net/parse_url" target="_blank" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">parse_url</span></a> with something that actually handles real-world URLs correctly.</p>
+<p>PHP 8.5 introduces a built-in URI extension with immutable, standards-compliant URL objects. It supports both RFC 3986 and the WHATWG URL Standard — replacing the limited <a href="https://php.net/parse_url" target="_blank" rel="noopener noreferrer" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">parse_url</span></a> with something that actually handles real-world URLs correctly.</p>
 <pre><code>use Uri\Rfc3986\Uri;
 
 // Parse and inspect
@@ -3080,7 +3080,7 @@ $rect-&gt;width  = 100;
 $rect-&gt;height = 50;
 
 echo "{$rect-&gt;origin-&gt;x}, {$rect-&gt;origin-&gt;y}";  // 10, 20</code></pre>
-<p>For performance-critical inner loops, you can preload FFI definitions at startup via <code>ffi.preload</code> in <code>php.ini</code>, making the binding cost negligible. Projects like <a href="https://reactphp.org/" target="_blank" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">ReactPHP</span></a> and PHP-ML use FFI for exactly this.</p>
+<p>For performance-critical inner loops, you can preload FFI definitions at startup via <code>ffi.preload</code> in <code>php.ini</code>, making the binding cost negligible. Projects like <a href="https://reactphp.org/" target="_blank" rel="noopener noreferrer" class="link-php"><span class="link-php-tag">php</span><span class="link-php-name">ReactPHP</span></a> and PHP-ML use FFI for exactly this.</p>
 <div class="significance"><h3><span class="sig-label">Significance: </span>Systems Access</h3><div class="sig-body">FFI erases the boundary between PHP and the native world. Image processing, cryptography, hardware interfaces, and high-performance numerics are all accessible without leaving PHP. It turns PHP into a scripting layer for the entire C ecosystem.</div></div>
 <div class="nav-buttons nav-bottom">
   <a href="#/happy/49">&laquo; Previous Happiness</a>
@@ -3848,7 +3848,7 @@ $threshold  = 1_000_000.00; // one million</code></pre>
 </div><!-- /content -->
 
 <div class="footer">
-  ha<em>PHP</em>iness &middot; built by <a href="https://github.com/kemo">kemo</a> &middot; inspired by <a href="http://phpsadness.com/">PHP Sadness</a> &middot; because PHP grew up
+  ha<em>PHP</em>iness &middot; built by <a href="https://github.com/kemo">kemo</a> &middot; inspired by <a href="https://phpsadness.com/">PHP Sadness</a> &middot; because PHP grew up
 </div>
 
 <script>
@@ -3889,8 +3889,6 @@ $threshold  = 1_000_000.00; // one million</code></pre>
   }
 
   window.addEventListener('hashchange', route);
-  window.showIndex = function () { location.hash = '#/'; };
-
   // Initial route
   route();
 })();
