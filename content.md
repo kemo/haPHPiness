@@ -1,8 +1,8 @@
 # haPHPiness — Complete PHP Feature Reference
 
-> 67 things in PHP that make modern PHP genuinely great to write.
+> 69 things in PHP that make modern PHP genuinely great to write.
 > Source: <https://haphpiness.com> | Structured data: <https://haphpiness.com/entries.json>
-> Covers PHP 5.4 through 8.5. Organized in 20 thematic categories.
+> Covers PHP 5.4 through 8.5. Organized in 21 thematic categories.
 
 This document is optimized for direct inclusion in AI context windows. For structured/filterable data, use [entries.json](https://haphpiness.com/entries.json).
 
@@ -2333,5 +2333,34 @@ In 2015, PHP had no scalar type declarations. By 2025, it had union types, inter
 PHP has a global developer population of 5.2 million. The language interpreter itself, php-src, has 39,988 GitHub stars, over 1,000 contributors, and more than 130,000 commits. These numbers represent more than popularity — they represent momentum. Major companies run their businesses on PHP: Wikipedia (MediaWiki), Etsy, Tumblr, Dailymotion, Flickr, Vimeo, Mailchimp, Baidu, and of course every WordPress and WooCommerce site. Facebook loved PHP so much they created their own variant (Hack) and a custom runtime (HHVM) to make it faster. And development isn't slowing down. PHP 8.6 is already open for backward-incompatible changes on the php-src master branch. The RFC process continues with community-driven proposals, transparent voting, and rigorous debate. 200+ RFCs have been implemented since the process was formalized.
 
 > **Community:** A language is only as strong as the people who build with it and build on it. 5.2 million developers means a massive talent pool for hiring. 1,000+ php-src contributors means the language itself has deep bench strength. And the companies running PHP at scale — from Wikipedia to Etsy to Slack — prove it can handle anything the internet throws at it.
+
+---
+### #68 — Symfony — 21 Years of Engineering Excellence (PHP classic)
+**Category:** Framework Ecosystem | **Significance:** Foundation
+
+Symfony has been a pillar of the PHP ecosystem since 2005. But its real superpower isn't the full-stack framework — it's Symfony Components: over 50 decoupled, reusable PHP libraries that power frameworks, CMSs, and tools across the entire ecosystem. Laravel's console? That's symfony/console. Its HTTP layer? symfony/http-foundation. Drupal's event system? symfony/event-dispatcher. PHPUnit's CLI? symfony/console again. Composer itself is built on Symfony Components. The infrastructure of modern PHP runs on Symfony whether you use the framework or not. Symfony popularized the patterns that define professional PHP: dependency injection, service containers, middleware, event-driven architecture, and the bundle/package system. Its documentation is a masterclass in technical writing, and its certification program set the standard for PHP developer credentialing. The Symfony ecosystem includes Doctrine (the ORM), Twig (templating), API Platform (REST/GraphQL APIs in minutes), and Flex (the Composer plugin that automates bundle configuration). Each one is best-in-class.
+
+> **Foundation:** Symfony proved that PHP could produce enterprise-grade, architecturally sound software. Its components became the shared foundation of the PHP ecosystem — used by Laravel, Drupal, Magento, and thousands of standalone projects. When people say "modern PHP", they're standing on two decades of Symfony engineering.
+
+---
+### #69 — NativePHP — Desktop and Mobile Apps, All in PHP (PHP classic)
+**Category:** Framework Ecosystem | **Significance:** New Frontiers
+
+NativePHP breaks PHP out of the browser. Build native desktop applications for macOS, Windows, and Linux — and now mobile apps for iOS and Android — using the PHP you already know.
+
+```php
+// A desktop app window — in PHP
+use Native\Laravel\Facades\Window;
+
+Window::open()
+    ->title('My PHP App')
+    ->width(800)
+    ->height(600)
+    ->url('/');
+```
+
+Under the hood, NativePHP uses Electron or Tauri for the desktop runtime, while NativePHP Mobile compiles your Laravel app into a genuine native iOS or Android binary. You get access to native APIs — camera, notifications, file system, biometrics — through a clean PHP interface. This isn't a toy. Marcel Pociot and the Beyond Code team built it as a first-class Laravel package with a real developer experience: hot reloading, menu bar apps, system tray support, file associations, deep links, and auto-updates. The mobile runtime bundles a real PHP interpreter, so your Blade templates, Eloquent models, and middleware all work as-is. For 30 years, "PHP is only for the web" was an unquestioned truth. NativePHP made it obsolete.
+
+> **New Frontiers:** NativePHP shattered the oldest assumption about PHP: that it can only build websites. PHP developers can now ship desktop and mobile apps without learning Swift, Kotlin, or Electron's JavaScript stack. It's the most dramatic expansion of PHP's reach in the language's history — from server-side web to truly cross-platform native applications.
 
 ---
