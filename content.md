@@ -79,6 +79,8 @@ This document is optimized for direct inclusion in AI context windows. For struc
 | 65 | WordPress Powers 43% of All Websites | — | The Numbers Don't Lie |
 | 66 | From Zero Types to Full Type Algebra in 10 Years | — | The Numbers Don't Lie |
 | 67 | 5.2 Million Developers and 40K Stars on php-src | — | The Numbers Don't Lie |
+| 68 | Symfony — 21 Years of Engineering Excellence | — | Framework Ecosystem |
+| 69 | NativePHP — Desktop and Mobile Apps, All in PHP | — | Framework Ecosystem |
 
 ---
 
@@ -272,19 +274,6 @@ $gateway = new PaymentGateway(); // Autoloaded. No require() needed.
 **Category:** Things That Just Work | **Significance:** Accessibility
 
 No Apache config. No Nginx. No Docker. Just one command and you're running: The built-in server ships with every PHP installation since 5.4. It supports routing scripts, custom document roots, and outputs request logs to your terminal. For development, prototyping, and quick demos, it's unbeatable. Zero configuration, zero dependencies, instant feedback. While not meant for production, it's perfectly adequate for local development — and it means any machine with PHP installed can serve a web application immediately.
-
-```php
-$ php -S localhost:8000
-PHP Development Server started at http://localhost:8000
-Document root is /var/www/myapp
-Press Ctrl-C to quit.
-
-# With a router script:
-$ php -S localhost:8000 router.php
-
-# Serve from a specific directory:
-$ php -S localhost:8000 -t public/
-```
 
 > **Accessibility:** The fastest path from idea to working prototype wins. PHP's built-in server means a beginner can go from installing PHP to seeing their first webpage in under a minute. No web server configuration, no infrastructure knowledge required. This is the power of batteries-included design.
 
@@ -1711,16 +1700,6 @@ try {
 Yes, really. PHP 8.0 ships a tracing JIT compiler. For numeric and CPU-bound code, it delivers 3–10× speedups over interpreted execution. This is the feature PHP critics never mention. The JIT works in two modes. Function JIT compiles entire functions ahead-of-time. Tracing JIT profiles hot paths at runtime and compiles only the loops and branches that actually run — the same strategy used by V8 and LuaJIT. For web request workloads, OPcache alone gives most of the gains. Where JIT shines is pure computation: image processing, machine learning inference, mathematical simulations, and game servers written in PHP. The JIT is built on top of OPcache and shares its infrastructure. It doesn't change the semantics of PHP at all — code that runs correctly without JIT runs identically with it.
 
 ```php
-; php.ini — enable tracing JIT (the most aggressive mode)
-opcache.enable=1
-opcache.jit_buffer_size=100M
-opcache.jit=tracing
-
-; Alternatively, function-level JIT for a lighter touch
-opcache.jit=function
-```
-
-```php
 // Benchmark: sum of squares, 10 million iterations
 // Without JIT:  ~1.8 seconds
 // With JIT:     ~0.22 seconds  (~8× faster)
@@ -1739,17 +1718,6 @@ echo $sum; // 3.3333333283267E+20
 **Category:** Warp Speed | **Significance:** Zero-Config Performance
 
 PHP compiles source code to bytecode on every request — unless OPcache is active. Bundled since PHP 5.5 and enabled by default in most distributions, OPcache stores compiled bytecode in shared memory so subsequent requests skip parsing and compilation entirely. No Redis. No Memcached. No build pipeline. OPcache is pure shared memory — the fastest possible cache. Setting validate_timestamps=0 in production means PHP never checks the filesystem for changes, which eliminates the most common I/O bottleneck in high-traffic applications. Combined with JIT, OPcache transforms PHP from an interpreted language into something much closer to a compiled runtime — without changing a single line of application code.
-
-```php
-; php.ini — production-ready OPcache settings
-opcache.enable=1
-opcache.memory_consumption=256
-opcache.interned_strings_buffer=16
-opcache.max_accelerated_files=20000
-opcache.validate_timestamps=0   ; disable in production, reload to pick up changes
-opcache.save_comments=1         ; keep docblocks (needed by some frameworks)
-opcache.revalidate_freq=0
-```
 
 ```php
 // Check cache status at runtime
@@ -2190,14 +2158,6 @@ $coll->sort($words);
 Run PHPStan at its strictest level on a modern PHP codebase and you get TypeScript-grade type safety — with zero runtime overhead and no transpile step. This is one of the most important things PHP developers don't know they have. At level 9, PHPStan catches bugs that would otherwise only surface at runtime: At higher levels, PHPStan enforces return types, detects dead code, validates array shapes, and understands generics via PHPDoc. Psalm (the alternative from Vimeo) goes even further with its type inference engine and taint analysis for security vulnerabilities.
 
 ```php
-# Install
-composer require --dev phpstan/phpstan
-
-# Run at max strictness (level 9)
-vendor/bin/phpstan analyse src --level=9
-```
-
-```php
 // PHPStan catches this at analysis time, not in production:
 function processUser(?User $user): string
 {
@@ -2215,18 +2175,6 @@ function processUser(?User $user): string
     }
     return strtoupper($user->name);
 }
-```
-
-```php
-# phpstan.neon — project configuration
-parameters:
-    level: 9
-    paths:
-        - src
-    strictRules:
-        disallowedBacktick: true
-        disallowedConstructs:
-            - 'empty'  # empty() masks bugs; be explicit
 ```
 
 > **Confidence Without Ceremony:** Static analysis turns PHP's optional type system into a mandatory one — without changing the language. A codebase with PHPStan at level 9 has fewer runtime surprises than many statically-typed languages, because the analyser understands nullability, generics, and control flow in ways that simple type declarations can't express.
@@ -2338,7 +2286,7 @@ PHP has a global developer population of 5.2 million. The language interpreter i
 ### #68 — Symfony — 21 Years of Engineering Excellence (PHP classic)
 **Category:** Framework Ecosystem | **Significance:** Foundation
 
-Symfony has been a pillar of the PHP ecosystem since 2005. But its real superpower isn't the full-stack framework — it's Symfony Components: over 50 decoupled, reusable PHP libraries that power frameworks, CMSs, and tools across the entire ecosystem. Laravel's console? That's symfony/console. Its HTTP layer? symfony/http-foundation. Drupal's event system? symfony/event-dispatcher. PHPUnit's CLI? symfony/console again. Composer itself is built on Symfony Components. The infrastructure of modern PHP runs on Symfony whether you use the framework or not. Symfony popularized the patterns that define professional PHP: dependency injection, service containers, middleware, event-driven architecture, and the bundle/package system. Its documentation is a masterclass in technical writing, and its certification program set the standard for PHP developer credentialing. The Symfony ecosystem includes Doctrine (the ORM), Twig (templating), API Platform (REST/GraphQL APIs in minutes), Flex (the Composer plugin that automates bundle configuration), and Symfony Docker — a production-ready Docker setup that gives you a fully configured PHP environment with Caddy, PHP-FPM, and worker mode out of the box. One `docker compose up` and you have HTTPS, HTTP/2, and a deployment-ready stack. Symfony is also leading the PHP ecosystem into the AI era. The framework ships with first-party AI tooling: an LLM integration component, structured output support, and agent-building primitives — all with the same DX standards Symfony is known for.
+Symfony has been a pillar of the PHP ecosystem since 2005. But its real superpower isn't the full-stack framework — it's Symfony Components: over 50 decoupled, reusable PHP libraries that power frameworks, CMSs, and tools across the entire ecosystem. Laravel's console? That's symfony/console. Its HTTP layer? symfony/http-foundation. Drupal's event system? symfony/event-dispatcher. PHPUnit's CLI? symfony/console again. Composer itself is built on Symfony Components. The infrastructure of modern PHP runs on Symfony whether you use the framework or not. Symfony popularized the patterns that define professional PHP: dependency injection, service containers, middleware, event-driven architecture, and the bundle/package system. Its documentation is a masterclass in technical writing, and its certification program set the standard for PHP developer credentialing. The Symfony ecosystem includes Doctrine (the ORM), Twig (templating), API Platform (REST/GraphQL APIs in minutes), Flex (the Composer plugin that automates bundle configuration), and Symfony Docker — a production-ready Docker setup that gives you a fully configured PHP environment with Caddy, PHP-FPM, and worker mode out of the box. One docker compose up and you have HTTPS, HTTP/2, and a deployment-ready stack. No Dockerfile wrangling required. Symfony is also leading the PHP ecosystem into the AI era. The framework ships with first-party AI tooling: an LLM integration component, structured output support, and agent-building primitives — all with the same DX standards Symfony is known for. When AI frameworks in other languages are still figuring out conventions, Symfony already has opinions and implementations.
 
 > **Foundation:** Symfony proved that PHP could produce enterprise-grade, architecturally sound software. Its components became the shared foundation of the PHP ecosystem — used by Laravel, Drupal, Magento, and thousands of standalone projects. When people say "modern PHP", they're standing on two decades of Symfony engineering.
 
@@ -2346,7 +2294,7 @@ Symfony has been a pillar of the PHP ecosystem since 2005. But its real superpow
 ### #69 — NativePHP — Desktop and Mobile Apps, All in PHP (PHP classic)
 **Category:** Framework Ecosystem | **Significance:** New Frontiers
 
-NativePHP breaks PHP out of the browser. Build native desktop applications for macOS, Windows, and Linux — and now mobile apps for iOS and Android — using the PHP you already know.
+NativePHP breaks PHP out of the browser. Build native desktop applications for macOS, Windows, and Linux — and now mobile apps for iOS and Android — using the PHP you already know. Under the hood, NativePHP uses Electron or Tauri for the desktop runtime, while NativePHP Mobile compiles your Laravel app into a genuine native iOS or Android binary. You get access to native APIs — camera, notifications, file system, biometrics — through a clean PHP interface. This isn't a toy. Marcel Pociot and the Beyond Code team built it as a first-class Laravel package with a real developer experience: hot reloading, menu bar apps, system tray support, file associations, deep links, and auto-updates. The mobile runtime bundles a real PHP interpreter, so your Blade templates, Eloquent models, and middleware all work as-is. For 30 years, "PHP is only for the web" was an unquestioned truth. NativePHP made it obsolete.
 
 ```php
 // A desktop app window — in PHP
@@ -2358,8 +2306,6 @@ Window::open()
     ->height(600)
     ->url('/');
 ```
-
-Under the hood, NativePHP uses Electron or Tauri for the desktop runtime, while NativePHP Mobile compiles your Laravel app into a genuine native iOS or Android binary. You get access to native APIs — camera, notifications, file system, biometrics — through a clean PHP interface. This isn't a toy. Marcel Pociot and the Beyond Code team built it as a first-class Laravel package with a real developer experience: hot reloading, menu bar apps, system tray support, file associations, deep links, and auto-updates. The mobile runtime bundles a real PHP interpreter, so your Blade templates, Eloquent models, and middleware all work as-is. For 30 years, "PHP is only for the web" was an unquestioned truth. NativePHP made it obsolete.
 
 > **New Frontiers:** NativePHP shattered the oldest assumption about PHP: that it can only build websites. PHP developers can now ship desktop and mobile apps without learning Swift, Kotlin, or Electron's JavaScript stack. It's the most dramatic expansion of PHP's reach in the language's history — from server-side web to truly cross-platform native applications.
 

@@ -292,6 +292,75 @@ a:hover { color: var(--warm-amber); text-decoration: underline; }
   font-size: inherit;
 }
 
+/* ── Syntax Highlighting (Prism.js warm theme) ── */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #4a453e;
+  text-shadow: none;
+  word-break: normal;
+  word-wrap: normal;
+  tab-size: 4;
+  hyphens: none;
+}
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #a09585;
+  font-style: italic;
+}
+.token.string,
+.token.attr-value {
+  color: #8b6c2a;
+}
+.token.number,
+.token.boolean,
+.token.constant {
+  color: #b8680b;
+}
+.token.keyword {
+  color: var(--php-purple-dark);
+  font-weight: 500;
+}
+.token.class-name {
+  color: var(--php-purple-deep);
+}
+.token.function {
+  color: #6a5d8e;
+}
+.token.operator,
+.token.entity,
+.token.url {
+  color: #7a7064;
+}
+.token.punctuation {
+  color: #8a8078;
+}
+.token.variable {
+  color: #5c6f44;
+}
+.token.delimiter.important,
+.token.tag {
+  color: var(--php-purple);
+  font-weight: 600;
+}
+.token.attr-name {
+  color: #8b6c5c;
+}
+.token.important,
+.token.bold {
+  font-weight: 600;
+}
+.token.italic {
+  font-style: italic;
+}
+code[class*="language-"]::selection,
+code[class*="language-"] *::selection,
+pre[class*="language-"]::selection,
+pre[class*="language-"] *::selection {
+  background: rgba(119, 123, 180, 0.2);
+}
+
 /* ── PHP link badges (matching phpsadness style) ── */
 .link-php {
   display: inline-flex;
@@ -1200,7 +1269,7 @@ $gateway = new PaymentGateway(); // Autoloaded. No require() needed.</code></pre
 </div>
 <h2>Built-in Development Server</h2>
 <p>No Apache config. No Nginx. No Docker. Just one command and you're running:</p>
-<pre><code>$ php -S localhost:8000
+<pre><code class="language-bash">$ php -S localhost:8000
 PHP Development Server started at http://localhost:8000
 Document root is /var/www/myapp
 Press Ctrl-C to quit.
@@ -2904,7 +2973,7 @@ try {
 </div>
 <h2>JIT Compilation — PHP Has a JIT Compiler</h2>
 <p>Yes, really. PHP 8.0 ships a tracing JIT compiler. For numeric and CPU-bound code, it delivers 3–10× speedups over interpreted execution. This is the feature PHP critics never mention.</p>
-<pre><code>; php.ini — enable tracing JIT (the most aggressive mode)
+<pre><code class="language-ini">; php.ini — enable tracing JIT (the most aggressive mode)
 opcache.enable=1
 opcache.jit_buffer_size=100M
 opcache.jit=tracing
@@ -2939,7 +3008,7 @@ echo $sum; // 3.3333333283267E+20</code></pre>
 </div>
 <h2>OPcache — Bytecode Caching in the Box</h2>
 <p>PHP compiles source code to bytecode on every request — unless OPcache is active. Bundled since PHP 5.5 and enabled by default in most distributions, OPcache stores compiled bytecode in shared memory so subsequent requests skip parsing and compilation entirely.</p>
-<pre><code>; php.ini — production-ready OPcache settings
+<pre><code class="language-ini">; php.ini — production-ready OPcache settings
 opcache.enable=1
 opcache.memory_consumption=256
 opcache.interned_strings_buffer=16
@@ -3432,7 +3501,7 @@ $coll-&gt;sort($words);
 </div>
 <h2>PHPStan &amp; Psalm — Static Analysis as a First-Class Citizen</h2>
 <p>Run PHPStan at its strictest level on a modern PHP codebase and you get TypeScript-grade type safety — with zero runtime overhead and no transpile step. This is one of the most important things PHP developers don't know they have.</p>
-<pre><code># Install
+<pre><code class="language-bash"># Install
 composer require --dev phpstan/phpstan
 
 # Run at max strictness (level 9)
@@ -3456,7 +3525,7 @@ function processUser(?User $user): string
     return strtoupper($user-&gt;name);
 }</code></pre>
 <p>At higher levels, PHPStan enforces return types, detects dead code, validates array shapes, and understands generics via PHPDoc. Psalm (the alternative from Vimeo) goes even further with its type inference engine and taint analysis for security vulnerabilities.</p>
-<pre><code># phpstan.neon — project configuration
+<pre><code class="language-yaml"># phpstan.neon — project configuration
 parameters:
     level: 9
     paths:
@@ -3969,6 +4038,22 @@ Window::open()
   // Initial route
   route();
 })();
+
+// Syntax highlighting: tag untagged blocks as PHP
+document.querySelectorAll('.detail-view pre > code:not([class*="language-"])').forEach(function(el) {
+  el.classList.add('language-php');
+});
 </script>
+<script>window.Prism = window.Prism || {}; Prism.manual = true;</script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-clike.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup-templating.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-php.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-yaml.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-ini.min.js"></script>
+<script>Prism.highlightAll();</script>
 </body>
 </html>
